@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
+const fs = require("fs");
 const isDev = require("electron-is-dev");
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -54,3 +55,9 @@ app.on("activate", function() {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+// console.log(process.env.USERNAME);
+const user = process.env.USERNAME;
+const winAbsPath = `C:/Users/${user}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
+const logData = fs.readFileSync(winAbsPath).toString();
+console.log(logData);
