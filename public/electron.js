@@ -59,8 +59,16 @@ app.on("activate", function() {
 // console.log(process.env.USERNAME);
 const user = process.env.USERNAME;
 const winAbsPath = `C:/Users/${user}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
-const logData = fs.readFileSync(winAbsPath, "utf8").toString();
+const logData = JSON.parse(
+  JSON.stringify(
+    fs
+      .readFileSync(winAbsPath, "utf8")
+      .toString()
+      .trim()
+  )
+);
 const regex = /\{(?:[^{}]|())*\}/g;
+console.log(logData);
+// const regex = /(PlayerInventory.GetPlayerCards)(.*?)*\}/g;
 const match = logData.match(regex);
-console.log(JSON.parse(match));
-// console.log(logData);
+// console.log(match);
