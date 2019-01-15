@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, Menu, dialog } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const isDev = require("electron-is-dev");
@@ -18,6 +18,79 @@ function createWindow() {
       ? "http://localhost:3000/"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
+
+  // Base template taken from the docs itself
+  const template = [
+    {
+      label: "File",
+      submenu: [
+        {
+          label: "Import Log File",
+          accelerator: "CmdOrCtrl+O",
+          click() {
+            openFile();
+          }
+        }
+      ]
+    },
+    {
+      label: "Edit",
+      submenu: [
+        { role: "undo" },
+        { role: "redo" },
+        { type: "separator" },
+        { role: "cut" },
+        { role: "copy" },
+        { role: "paste" },
+        { role: "pasteandmatchstyle" },
+        { role: "delete" },
+        { role: "selectall" }
+      ]
+    },
+    {
+      label: "View",
+      submenu: [
+        { role: "reload" },
+        { role: "forcereload" },
+        { role: "toggledevtools" },
+        { type: "separator" },
+        { role: "resetzoom" },
+        { role: "zoomin" },
+        { role: "zoomout" },
+        { type: "separator" },
+        { role: "togglefullscreen" }
+      ]
+    },
+    {
+      role: "window",
+      submenu: [{ role: "minimize" }, { role: "close" }]
+    },
+    {
+      role: "help",
+      submenu: [
+        {
+          label: "Learn More",
+          click() {
+            require("electron").shell.openExternal("https://electronjs.org");
+          }
+        }
+      ]
+    },
+    {
+      label: "Developer",
+      submenu: [
+        {
+          label: "Toggle Developer Tools",
+          accelerator: process.platform === "darwin" ? "Alt+Command+I" : "F12",
+          click() {
+            mainWindow.webContents.toggleDevTools();
+          }
+        }
+      ]
+    }
+  ];
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -56,6 +129,7 @@ app.on("activate", function() {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
+
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
 const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
@@ -63,11 +137,41 @@ const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/outpu
 // Read the file and format slightly removing new lines and carriage
 const findNewLines = /(\n)/g;
 const findCarriage = /(\r)/g;
-const logData = fs
-  .readFileSync(winAbsPath, "utf8")
-  .replace(findNewLines, "")
-  .replace(findCarriage, "")
-  .replace(" ", "");
+let logData = '';
+try {
+  logData = fs
+    .readFileSync(winAbsPath, "utf8")
+    .replace(findNewLines, "")
+    .replace(findCarriage, "")
+    .replace(" ", "");
+} catch (err) {
+  console.log(err);
+  // Send data explaining that they have to choose file themselves
+}
+
+// If user has to import the log file themselves
+function openFile() {
+  // Opens dialog window to navagate to log file
+  const fileArr = dialog.showOpenDialog(mainWindow, {
+    properties: ["openFile"],
+    filters: [
+      {
+        name: "Text Log Files",
+        extensions: ["txt"]
+      }
+    ]
+  });
+
+  // if no files
+  if (!fileArr) return;
+  const filePath = fileArr[0];
+  const logData = fs
+    .readFileSync(filePath, "utf8")
+    .replace(findNewLines, "")
+    .replace(findCarriage, "")
+    .replace(" ", "");
+    console.log(logData);
+}
 
 // Use regular express and collect all matches into the var, match
 const regex = /\{(?:[^{}]|())*\}/g;
@@ -85,8 +189,8 @@ match.map(i => {
   if (i.search(stringPattern) > 1) {
     playerCards = JSON.parse(i);
   }
+  return null;
 });
 
 console.log(playerCards);
 console.log(playerTokens);
-
