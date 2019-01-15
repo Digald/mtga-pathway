@@ -56,9 +56,11 @@ app.on("activate", function() {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-// console.log(process.env.USERNAME);
-const user = process.env.USERNAME;
-const winAbsPath = `C:/Users/${user}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
+// WINDOWS Get user home drive and username
+const userHome = process.env.HOME;
+const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
+
+// Read the file and format slightly removing new lines and carriage
 const findNewLines = /(\n)/g;
 const findCarriage = /(\r)/g;
 const logData = fs
@@ -66,22 +68,25 @@ const logData = fs
   .replace(findNewLines, "")
   .replace(findCarriage, "")
   .replace(" ", "");
+
+// Use regular express and collect all matches into the var, match
 const regex = /\{(?:[^{}]|())*\}/g;
-// console.log(logData);
-// const regex = /(PlayerInventory.GetPlayerCards)(.*?)*\}/g;
 const match = logData.match(regex);
+
+// Define vars to capture the player information
+// Map over each of the matches extracting desired data
 let playerTokens;
 let playerCards;
 match.map(i => {
-  if (i.includes("gold")) {
-    // console.log(i);
-    playerTokens = i;
+  if (i.includes("gold") && i.includes("playerId")) {
+    playerTokens = JSON.parse(i);
   }
   const stringPattern = /"\d\d\d\d\d":.\d?\d,/g;
   if (i.search(stringPattern) > 1) {
-    // console.log(i);
-    playerCards = i;
+    playerCards = JSON.parse(i);
   }
 });
 
-console.log(JSON.parse(playerCards));
+console.log(playerCards);
+console.log(playerTokens);
+
