@@ -128,7 +128,24 @@ app.on("activate", function() {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+// const { allCards } = require("mtga");
+const unzipData = require("./functions/unzipData");
+const searchLogFile = require("./functions/searchLogFile");
+const parseCards = require("./functions/parseCards");
 
+// Check if data needs to be unzipped, usually only the first time
+console.log(
+  fs.existsSync(
+    path.resolve(__dirname, "functions", "scryfall-oracle-cards.json")
+  )
+);
+if (
+  !fs.existsSync(
+    path.resolve(__dirname, "functions", "scryfall-oracle-cards.json")
+  )
+) {
+  unzipData();
+}
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
@@ -137,7 +154,7 @@ const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/outpu
 // Read the file and format slightly removing new lines and carriage
 const findNewLines = /(\n)/g;
 const findCarriage = /(\r)/g;
-let logData = '';
+let logData = "";
 try {
   logData = fs
     .readFileSync(winAbsPath, "utf8")
@@ -170,27 +187,12 @@ function openFile() {
     .replace(findNewLines, "")
     .replace(findCarriage, "")
     .replace(" ", "");
-    console.log(logData);
+  console.log(logData);
 }
 
-// Use regular express and collect all matches into the var, match
-const regex = /\{(?:[^{}]|())*\}/g;
-const match = logData.match(regex);
+// Return player data and then destructure the object
+const playerData = searchLogFile(logData);
+const { playerTokens, playerCards } = playerData;
 
-// Define vars to capture the player information
-// Map over each of the matches extracting desired data
-let playerTokens;
-let playerCards;
-match.map(i => {
-  if (i.includes("gold") && i.includes("playerId")) {
-    playerTokens = JSON.parse(i);
-  }
-  const stringPattern = /"\d\d\d\d\d":.\d?\d,/g;
-  if (i.search(stringPattern) > 1) {
-    playerCards = JSON.parse(i);
-  }
-  return null;
-});
-
-console.log(playerCards);
-console.log(playerTokens);
+parseCards(playerCards);
+console.log("sup");
