@@ -1,5 +1,4 @@
 const packageCollection = require("./packageCollection");
-const cacheAllCardData = require("./cacheAllCardData");
 const axios = require("axios");
 const settings = require("electron-settings");
 const fs = require("fs");
@@ -8,7 +7,6 @@ const path = require("path");
 module.exports = async function(playerCards) {
   const playerMainCollection = packageCollection(playerCards);
 
-  cacheAllCardData(playerMainCollection);
   // fs.readFile(
   //   path.resolve(__dirname, "scryfall-oracle-cards.json"),
   //   "utf-8",
