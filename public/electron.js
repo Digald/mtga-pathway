@@ -128,24 +128,14 @@ app.on("activate", function() {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-// const { allCards } = require("mtga");
-const unzipData = require("./functions/unzipData");
+const settings = require('electron-settings');
 const searchLogFile = require("./functions/searchLogFile");
 const parseCards = require("./functions/parseCards");
+const cacheAllCardData = require("./functions/parseCards");
 
-// Check if data needs to be unzipped, usually only the first time
-console.log(
-  fs.existsSync(
-    path.resolve(__dirname, "functions", "scryfall-oracle-cards.json")
-  )
-);
-if (
-  !fs.existsSync(
-    path.resolve(__dirname, "functions", "scryfall-oracle-cards.json")
-  )
-) {
-  unzipData();
-}
+// if (!settings.get('rawJson.allCards')) {
+//   cacheAllCardData();
+// }
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
