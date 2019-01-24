@@ -1,4 +1,5 @@
 const packageCollection = require("./packageCollection");
+const apiCalls = require('./apiCall');
 const axios = require("axios");
 const settings = require("electron-settings");
 const fs = require("fs");
@@ -6,6 +7,7 @@ const path = require("path");
 
 module.exports = async function(playerCards) {
   const playerMainCollection = packageCollection(playerCards);
+  apiCalls(playerMainCollection);
 
   // fs.readFile(
   //   path.resolve(__dirname, "scryfall-oracle-cards.json"),
