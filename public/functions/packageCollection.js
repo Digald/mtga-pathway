@@ -10,8 +10,8 @@ module.exports = function(playerCards) {
   const playerMainCollection = [];
   cardIds.forEach((id, index) => {
     playerMainCollection.push({
-      arenaId: id,
-      num: cardAmt[index]
+      arena_id: id,
+      count: cardAmt[index]
     });
   });
   return playerMainCollection;

@@ -1,9 +1,12 @@
 /**
- * BE SURE TO MANUALLY ADD SCRYFALL-ORACLE-CARDS.JSON TO THE DATA DIRECTORY BEFORE RUNNING THIS FILE.
+ * BE SURE TO MANUALLY ADD SCRYFALL-DEFAULT-CARDS.JSON TO THE DATA DIRECTORY BEFORE RUNNING THIS FILE from https://scryfall.com/docs/api/bulk-data
  *
  * THIS FILE IS USED TO SEED THE SOUCE CODE REPO WITH THE LATEST CARD UPDATES
+ * 
+ * SIMPLY RUN: YARN SEED
  *
  * REMOVE SCRYFALL JSON FILE BEFORE PUSHING TO YOUR REPO.
+ * 
  */
 
 const fs = require("fs");
@@ -13,7 +16,7 @@ const path = require("path");
 const pathToMainJson = path.resolve(
   __dirname,
   "data",
-  "scryfall-oracle-cards.json"
+  "scryfall-default-cards.json"
 );
 
 // Import that particular file
@@ -41,6 +44,9 @@ const setList = [
 allData.forEach(card => {
   // Out of all the cards, check which ones have an arena_id
   if (card.arena_id && card.legalities.standard === "legal") {
+    // Extract desired data
+    
+
     // For those that are in mtga, extract cards for each specific sets
     switch (card.set) {
       case "xln":

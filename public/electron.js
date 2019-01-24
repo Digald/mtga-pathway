@@ -128,10 +128,8 @@ app.on("activate", function() {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-const settings = require('electron-settings');
 const searchLogFile = require("./functions/searchLogFile");
 const parseCards = require("./functions/parseCards");
-const cacheAllCardData = require("./functions/parseCards");
 
 // if (!settings.get('rawJson.allCards')) {
 //   cacheAllCardData();

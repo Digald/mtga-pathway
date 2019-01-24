@@ -1,43 +1,41 @@
 const packageCollection = require("./packageCollection");
-const apiCalls = require('./apiCall');
-const axios = require("axios");
 const settings = require("electron-settings");
-const fs = require("fs");
-const path = require("path");
+
+// Import json data
+const dom = require("../data/dom.json");
+const grn = require("../data/grn.json");
+const m19 = require("../data/m19.json");
+const otherArenaSets = require("../data/otherArenaSets.json");
+const rix = require("../data/rix.json");
+const rna = require("../data/rna.json");
+const xln = require("../data/xln.json");
 
 module.exports = async function(playerCards) {
   const playerMainCollection = packageCollection(playerCards);
-  apiCalls(playerMainCollection);
 
-  // fs.readFile(
-  //   path.resolve(__dirname, "scryfall-oracle-cards.json"),
-  //   "utf-8",
-  //   function(err, data) {
-  //     if (err) {
-  //       console.log(err);
-  //     }
+  // Combine all json data into a single array and store it locally
+  const allMtgArenaCards = [
+    ...xln,
+    ...rna,
+    ...rix,
+    ...m19,
+    ...grn,
+    ...dom,
+    ...otherArenaSets
+  ];
 
-  //     const jsonData = JSON.parse(JSON.stringify(data));
-  //     if (!settings.get("onlyArenaJson")) {
-  //       const onlyArenaJson = [];
-  //       jsonData.map(card => {
-  //         if (card.arena_id) {
-  //           onlyArenaJson.push(card);
-  //         }
-  //       });
-  //       settings.set("onlyArenaJson", {
-  //         cards: onlyArenaJson
-  //       });
-  //     }
+  settings.set("mtgaCardData", {
+    allMtgArenaCards
+  });
 
-  //     const cardJson = settings.get("onlyArenaJson.cards");
-  //     playerMainCollection.map(collection => {
-  //       cardJson.map(card => {
-  //         if (collection.arenaId == card.arena_id) {
-  //           console.log(card.name);
-  //         }
-  //       });
-  //     });
-  //   }
-  // );
+  const pullOutPlayerCollectionData = playerMainCollection.map(card => {
+    const allCards = settings.get("mtgaCardData.allMtgArenaCards");
+    let singleCardData = allCards.filter(
+      data => data.arena_id == card.arena_id
+    );
+    singleCardData[0].count = card.count;
+    return singleCardData[0];
+  });
+
+  console.log(pullOutPlayerCollectionData);
 };
