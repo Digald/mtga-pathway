@@ -1,6 +1,7 @@
 const packageCollection = require("./packageCollection");
 const settings = require("electron-settings");
 
+
 // Import json data
 const dom = require("../data/dom.json");
 const grn = require("../data/grn.json");
@@ -28,14 +29,18 @@ module.exports = async function(playerCards) {
     allMtgArenaCards
   });
 
-  const pullOutPlayerCollectionData = playerMainCollection.map(card => {
-    const allCards = settings.get("mtgaCardData.allMtgArenaCards");
-    let singleCardData = allCards.filter(
-      data => data.arena_id == card.arena_id
-    );
-    singleCardData[0].count = card.count;
-    return singleCardData[0];
-  });
+  const pullOutPlayerCollectionData = settings
+    .get("mtgaCardData.allMtgArenaCards")
+    .map(card => {
+      console.log("new card");
+      const returnCard = playerMainCollection.forEach(mycard => {
+        if (card.arena_id == mycard.arena_id) {
+          return true;
+        }
+      });
+      if (returnCard) {
+        return card;
+      }
+    });
 
-  console.log(pullOutPlayerCollectionData);
 };
