@@ -129,8 +129,7 @@ app.on("activate", function() {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 const searchLogFile = require("./functions/searchLogFile");
-// const parseCards = require("./functions/parseCards");
-const parseCardsV2 = require('./functions/parseCardsV2');
+const updateRawCollection = require("./functions/updateRawCollection");
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
@@ -179,6 +178,5 @@ function openFile() {
 const playerData = searchLogFile(logData);
 const { playerTokens, playerCards } = playerData;
 
-// parseCards(playerCards);
-parseCardsV2(playerCards);
+updateRawCollection(playerCards);
 console.log("sup");
