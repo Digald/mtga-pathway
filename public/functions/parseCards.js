@@ -2,8 +2,8 @@ const settings = require("electron-settings");
 const fs = require("fs");
 const path = require("path");
 
-module.exports = function(playerCards) {
-
+module.exports = function(playerMainCollection) {
+  console.log('have to parse');
   //
   fs.readFile(
     path.resolve(__dirname, "../data/arenaCards.json"),
@@ -31,9 +31,7 @@ module.exports = function(playerCards) {
       });
       const pulledPlayerCards = await Promise.all(pullOutPlayersCards);
 
-      settings.set("mtgaCardData.playerMtgArenaCards", {
-        pulledPlayerCards
-      });
+      settings.set("mtgaCardData.playerMtgArenaCards", pulledPlayerCards);
     } // end callback
   );
 };

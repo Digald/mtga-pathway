@@ -7,7 +7,6 @@
  */
 
 module.exports = function(prevArr, currArr) {
-  const differences = currArr.filter(element => !prevArr.includes(element));
-  console.log(differences);
+  const differences = currArr.filter(element => !prevArr.includes(element);
   return differences;
 };
