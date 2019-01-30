@@ -8,14 +8,19 @@ module.exports = function(playerCards) {
   // Reorganized player collection array
   const playerMainCollection = packageCollection(playerCards);
 
-  // Check if new cards need to be added to the set
   const storedRawData = settings.get("rawData.cards");
+
+  // Check if there are any differences in cards from last time the app was used
   let diff = [];
   if (!storedRawData) {
+    // If there is no saved data found
     settings.set("rawData.cards", playerMainCollection);
+    diff = ["first-time"];
   } else {
+    // If there is already data saved, check if it needs to be udpated. Find the differences and combine them
     console.log(storedRawData.length);
     console.log(playerMainCollection.length);
+    // CREATES DUPLICATE ELEMENTS IF IT'S A NEW ITEM AND THE COUNT HAS CHANGED
     const diff1 = calculateIdDiff(storedRawData, playerMainCollection);
     const diff2 = calculateCountDiff(storedRawData, playerMainCollection);
     diff = [...diff1, ...diff2];
@@ -24,9 +29,15 @@ module.exports = function(playerCards) {
   console.log(diff);
 
   if (diff.length > 0) {
-    const newRawData = settings.get("rawData.cards").push(diff);
-    settings.set("rawData.cards", newRawData);
-    parseCards(settings.get("rawData.cards"));
+    if (diff[0] === "first-time") {
+      parseCards(playerMainCollection);
+    } else {
+      const newRawData = settings.get("rawData.cards").push(diff);
+      console.log(typeof newRawData)
+      settings.set("rawData.cards", newRawData);
+      console.log(typeof settings.get('rawData.cards'));
+      parseCards(settings.get("rawData.cards"));
+    }
   } else {
     return "No Cards to Update";
   }

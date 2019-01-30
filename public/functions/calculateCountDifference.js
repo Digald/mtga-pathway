@@ -10,7 +10,9 @@ module.exports = function(prevArr, currArr) {
   const differences = currArr.filter(
     element =>
       !prevArr.some(element2 => {
-        return element.count === element2.count;
+        if (element.arena_id === element2.arena_id) {
+          return element.count === element2.count;
+        }
       })
   );
   return differences;
