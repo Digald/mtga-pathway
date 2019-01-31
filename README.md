@@ -8,9 +8,13 @@ There are three main phases to overcome as I work on this project:
 1) Obtain log file player data and parse into useful information - In Progress
 2) Aquire data on popular decks through an API or through scraping the data
 3) Interface view and render data
+4) Final App Logic and Display Matches
 
-(0/3) Complete
+(0/4) Complete
 
+## Updates
+
+If a new set comes out or new card data needs to be added to the app, manually run the instructions on seedCardData.js found in /public/seedCardData.js.
 
 ## Getting Started
 
