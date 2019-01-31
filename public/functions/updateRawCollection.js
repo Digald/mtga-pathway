@@ -1,4 +1,4 @@
-const calculateIdDiff = require("./calculateIdDifference");
+const sortDifferences = require("./sortDifferences");
 const calculateCountDiff = require("./calculateCountDifference");
 const packageCollection = require("./packageCollection");
 const parseCards = require("./parseCards");
@@ -20,10 +20,7 @@ module.exports = function(playerCards) {
     // If there is already data saved, check if it needs to be udpated. Find the differences and combine them
     console.log(storedRawData.length);
     console.log(playerMainCollection.length);
-    // CREATES DUPLICATE ELEMENTS IF IT'S A NEW ITEM AND THE COUNT HAS CHANGED
-    const diff1 = calculateIdDiff(storedRawData, playerMainCollection);
-    const diff2 = calculateCountDiff(storedRawData, playerMainCollection);
-    diff = [...diff1, ...diff2];
+    diff = calculateCountDiff(storedRawData, playerMainCollection);
   }
 
   console.log(diff);
@@ -32,13 +29,14 @@ module.exports = function(playerCards) {
     if (diff[0] === "first-time") {
       parseCards(playerMainCollection);
     } else {
-      const newRawData = settings.get("rawData.cards").push(diff);
-      console.log(typeof newRawData)
+      const newRawData = [...settings.get("rawData.cards"), ...diff];
+      console.log(typeof newRawData);
       settings.set("rawData.cards", newRawData);
-      console.log(typeof settings.get('rawData.cards'));
+      console.log(typeof settings.get("rawData.cards"));
       parseCards(settings.get("rawData.cards"));
     }
   } else {
+    console.log('nothing to update');
     return "No Cards to Update";
   }
 };
