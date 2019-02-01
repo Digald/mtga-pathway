@@ -1,13 +1,17 @@
 /**
- * Desc
+ * Calculates the difference between two input arrays only returns the brand new cards obtained
  *
- * @param {array} prevArr Desc
- * @param {array} currArr Dec
- * @return {array} Dec
+ * @param {array} prevArr This is the previous list of card ids that player had when using the app the last time
+ * @param {array} currArr This is the current collection the user has as of starting up the app
+ * @return {array} Brand new cards in player's collection
  */
 
-module.exports = function() {
-  /**
-   * The problem is, after the first time, I only want to send brand new cards to be translated in parseCarse(), but cards that I already have with a new count are just added on during the loop, and don't need to be translated
-   */
+module.exports = function(prevArr, currArr) {
+  const differences = currArr.filter(
+    element =>
+      !prevArr.some(element2 => {
+        return element.arena_id === element2.arena_id;
+      })
+  );
+  return differences;
 };
