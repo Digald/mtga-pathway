@@ -38,11 +38,15 @@ module.exports = function(fromPlayerCollection, newQuantities = []) {
 
       // Finally set the player cards into storage
       let spreadNewPlayerCards = [];
-      if (!settings.get("mtaCardData.playerMtgaCards")) {
-        console.log('this should only be a first time spread');
+      // console.log(settings.get("mtgaCardData.playerMtgaCards"));
+      if (
+        !settings.get("mtgaCardData.playerMtgaCards") ||
+        settings.get("mtgaCardData.playerMtgaCards").length < 1
+      ) {
+        console.log("this should only be a first time spread");
         spreadNewPlayerCards = pulledPlayerCards;
       } else {
-        console.log('just new cards spread in');
+        console.log("just new cards spread in");
         spreadNewPlayerCards = [
           ...settings.get("mtgaCardData.playerMtgaCards"),
           ...pulledPlayerCards

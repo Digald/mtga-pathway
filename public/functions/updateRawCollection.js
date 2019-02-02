@@ -30,9 +30,11 @@ module.exports = function(playerCards) {
   else {
     allDiff = calculateCountDiff(storedRawData, playerMainCollection);
     onlyNewCards = sortDifferences(storedRawData, playerMainCollection);
+    // allDiff = [{ arena_id: "68656", quantity: 3 }];
   }
 
-  const newQuantities = extractNewCardQuantity(allDiff, onlyNewCards);
+  let newQuantities = extractNewCardQuantity(allDiff, onlyNewCards);
+  // newQuantities = [{ arena_id: "68656", quantity: 3 }];
 
   //If this is the first time running or there are new cards to parse, allDiff.length will be greater than 0
   if (allDiff.length > 0) {
