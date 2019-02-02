@@ -13,7 +13,7 @@ module.exports = function(playerCards) {
   cardIds.forEach((id, index) => {
     playerMainCollection.push({
       arena_id: id,
-      count: cardAmt[index]
+      quantity: cardAmt[index]
     });
   });
 

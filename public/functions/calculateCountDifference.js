@@ -11,7 +11,7 @@ module.exports = function(prevArr, currArr) {
     element =>
       !prevArr.some(element2 => {
         if (element.arena_id === element2.arena_id) {
-          return element.count === element2.count;
+          return element.quantity === element2.quantity;
         }
       })
   );

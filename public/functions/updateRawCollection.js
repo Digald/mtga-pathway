@@ -28,13 +28,10 @@ module.exports = function(playerCards) {
 
   // If there is already data saved, check if it needs to be udpated. Find the differences and combine them
   else {
-    // console.log(storedRawData.length);
-    // console.log(playerMainCollection.length);
     allDiff = calculateCountDiff(storedRawData, playerMainCollection);
     onlyNewCards = sortDifferences(storedRawData, playerMainCollection);
   }
-  // console.log(allDiff);
-  // console.log(onlyNewCards);
+
   const newQuantities = extractNewCardQuantity(allDiff, onlyNewCards);
 
   //If this is the first time running or there are new cards to parse, allDiff.length will be greater than 0
@@ -47,7 +44,7 @@ module.exports = function(playerCards) {
     // Run else statement when new cards are found
     else {
       settings.set("rawData.cards", playerMainCollection);
-      parseCards(onlyNewCards);
+      parseCards(onlyNewCards, newQuantities);
     }
 
     // Nothing new to update, more logic to be added

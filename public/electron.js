@@ -179,4 +179,4 @@ const playerData = searchLogFile(logData);
 const { playerTokens, playerCards } = playerData;
 
 updateRawCollection(playerCards);
-console.log("sup");
+console.log("Back in electron.js");
