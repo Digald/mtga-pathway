@@ -8,14 +8,14 @@ const settings = require("electron-settings");
 
 module.exports = function(cardsToUpdate) {
   const playerMtgaCards = settings.get("mtgaCardData.playerMtgaCards");
-  console.log(playerMtgaCards);
-  console.log(cardsToUpdate);
   playerMtgaCards.forEach(card => {
     cardsToUpdate.forEach(newData => {
-      if (card.arena_id === newData.arena_id) {
-        card.quantity = newData.quantity;
-        console.log('card quantity updated');
+      if (card && newData) {
+        if (card.arena_id == newData.arena_id) {
+          card.quantity = newData.quantity;
+        }
       }
     });
   });
+  settings.set("mtgaCardData.playerMtgaCards", playerMtgaCards);
 };

@@ -30,10 +30,12 @@ module.exports = function(playerCards) {
   else {
     allDiff = calculateCountDiff(storedRawData, playerMainCollection);
     onlyNewCards = sortDifferences(storedRawData, playerMainCollection);
+    // FOR TESTING GETTING NEW CARDS ONLY
     // allDiff = [{ arena_id: "68656", quantity: 3 }];
   }
 
   let newQuantities = extractNewCardQuantity(allDiff, onlyNewCards);
+  // FOR TESTING GETTING NEW CARDS ONLY
   // newQuantities = [{ arena_id: "68656", quantity: 3 }];
 
   //If this is the first time running or there are new cards to parse, allDiff.length will be greater than 0

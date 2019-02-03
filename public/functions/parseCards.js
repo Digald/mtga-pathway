@@ -38,7 +38,6 @@ module.exports = function(fromPlayerCollection, newQuantities = []) {
 
       // Finally set the player cards into storage
       let spreadNewPlayerCards = [];
-      // console.log(settings.get("mtgaCardData.playerMtgaCards"));
       if (
         !settings.get("mtgaCardData.playerMtgaCards") ||
         settings.get("mtgaCardData.playerMtgaCards").length < 1
@@ -53,10 +52,12 @@ module.exports = function(fromPlayerCollection, newQuantities = []) {
         ];
       }
       settings.set("mtgaCardData.playerMtgaCards", spreadNewPlayerCards);
+
+      // After parsing all player cards, update quantities for card already owned
       if (newQuantities.length > 0) {
         updateCardQuantity(newQuantities);
       }
-      console.log("Player Cards have been set");
+      console.log("Player Cards have been Set");
     } // end callback
   );
 };
