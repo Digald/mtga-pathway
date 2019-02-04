@@ -3,6 +3,7 @@ const { app, BrowserWindow, Menu, dialog } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const isDev = require("electron-is-dev");
+const openFile = require('./functions/openFile.js');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -28,7 +29,7 @@ function createWindow() {
           label: "Import Log File",
           accelerator: "CmdOrCtrl+O",
           click() {
-            openFile();
+            openFile(mainWindow);
           }
         }
       ]
@@ -128,54 +129,15 @@ app.on("activate", function() {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-const searchLogFile = require("./functions/searchLogFile");
-const updateRawCollection = require("./functions/updateRawCollection");
 const executeCollectingPlayerData = require("./functions/executeCollectingPlayerData");
-const settings = require("electron-settings");
+const readLogFile = require('./functions/readLogFile');
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
 const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
 
 // Read the file and format slightly removing new lines and carriage
-const findNewLines = /(\n)/g;
-const findCarriage = /(\r)/g;
-let logData = "";
-try {
-  logData = fs
-    .readFileSync(winAbsPath, "utf8")
-    .replace(findNewLines, "")
-    .replace(findCarriage, "")
-    .replace(" ", "");
-} catch (err) {
-  console.log(err);
-  // Send data explaining that they have to choose file themselves
-}
-
-// If user has to import the log file themselves
-function openFile() {
-  // Opens dialog window to navagate to log file
-  const fileArr = dialog.showOpenDialog(mainWindow, {
-    properties: ["openFile"],
-    filters: [
-      {
-        name: "Text Log Files",
-        extensions: ["txt"]
-      }
-    ]
-  });
-
-  // if no files
-  if (!fileArr) return;
-  const filePath = fileArr[0];
-  logData = fs
-    .readFileSync(filePath, "utf8")
-    .replace(findNewLines, "")
-    .replace(findCarriage, "")
-    .replace(" ", "");
-
-  executeCollectingPlayerData(logData);
-}
+const logData = readLogFile(winAbsPath);
 
 executeCollectingPlayerData(logData);
 console.log("Back in electron.js");
