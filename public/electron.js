@@ -130,6 +130,8 @@ app.on("activate", function() {
 // code. You can also put them in separate files and require them here.
 const searchLogFile = require("./functions/searchLogFile");
 const updateRawCollection = require("./functions/updateRawCollection");
+const executeCollectingPlayerData = require("./functions/executeCollectingPlayerData");
+const settings = require("electron-settings");
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
@@ -166,17 +168,14 @@ function openFile() {
   // if no files
   if (!fileArr) return;
   const filePath = fileArr[0];
-  const logData = fs
+  logData = fs
     .readFileSync(filePath, "utf8")
     .replace(findNewLines, "")
     .replace(findCarriage, "")
     .replace(" ", "");
-  console.log(logData);
+
+  executeCollectingPlayerData(logData);
 }
 
-// Return player data and then destructure the object
-const playerData = searchLogFile(logData);
-const { playerTokens, playerCards } = playerData;
-
-updateRawCollection(playerCards);
+executeCollectingPlayerData(logData);
 console.log("Back in electron.js");

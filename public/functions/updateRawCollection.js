@@ -50,9 +50,10 @@ module.exports = function(playerCards) {
       settings.set("rawData.cards", playerMainCollection);
       parseCards(onlyNewCards, newQuantities);
     }
+  }
 
-    // Nothing new to update, more logic to be added
-  } else {
+  // Nothing new to update, more logic to be added
+  else {
     console.log("nothing to update");
     return "No Cards to Update";
   }
