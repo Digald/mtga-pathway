@@ -1,7 +1,6 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, Menu, dialog } = require("electron");
 const path = require("path");
-const fs = require("fs");
 const isDev = require("electron-is-dev");
 const openFile = require('./functions/openFile.js');
 
