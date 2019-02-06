@@ -1,13 +1,18 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import "./Dashboard.css";
+// Components
+import CornerSpace from "../../Components/CornerSpace/CornerSpace";
+import TopBar from "../../Components/TopBar/TopBar";
+import SideBar from "../../Components/SideBar/SideBar";
 
 class Dashboard extends Component {
   render() {
     return (
-      <div>
-        <h1>Hello World</h1>
-        <Link to="deckfinder">To Deck Finder</Link>
+      <div className="Dashboard main-grid">
+        <CornerSpace />
+        <TopBar />
+        <SideBar />
+        <div />
       </div>
     );
   }
