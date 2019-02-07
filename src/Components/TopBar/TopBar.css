@@ -7,11 +7,16 @@
   height: 100%;
 }
 
-.TopBar__page {
+.TopBar__title {
+  display:flex;
+}
+
+.TopBar__title__name {
   font-size: 18px;
   color: #ffffff;
   letter-spacing: 0.23em;
   font-weight: 400;
+  margin-left: 5px;
 }
 
 .TopBar__tokens {

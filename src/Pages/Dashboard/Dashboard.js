@@ -6,11 +6,15 @@ import TopBar from "../../Components/TopBar/TopBar";
 import SideBar from "../../Components/SideBar/SideBar";
 
 class Dashboard extends Component {
+  state = {
+    activePage: "dashboard"
+  };
+
   render() {
     return (
       <div className="Dashboard main-grid">
         <CornerSpace />
-        <TopBar />
+        <TopBar activePage={this.state.activePage}/>
         <SideBar />
         <div />
       </div>
