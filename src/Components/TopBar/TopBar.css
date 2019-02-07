@@ -1,4 +1,35 @@
 .TopBar {
   grid-area: 1 / 2 / 2 / 3;
   background-color: #1b1b3a;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+}
+
+.TopBar__page {
+  font-size: 18px;
+  color: #ffffff;
+  letter-spacing: 0.23em;
+  font-weight: 400;
+}
+
+.TopBar__tokens {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  color: #f84aa7;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.TopBar__tokens li {
+  margin: 0 10px;
+  display: flex;
+}
+.TopBar__tokens li p {
+  margin-right: 3px;
+}
+.TopBar__tokens li img {
+  margin-left: 3px;
 }
