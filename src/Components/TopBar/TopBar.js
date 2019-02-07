@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./TopBar.css";
 import mythic from "../../assets/tokens/mythic.svg";
 import rare from "../../assets/tokens/rare.svg";
 import uncommon from "../../assets/tokens/uncommon.svg";
@@ -7,7 +8,6 @@ import coins from "../../assets/tokens/coins.svg";
 import gem from "../../assets/tokens/gem.svg";
 import deck_little from "../../assets/navigation/deck-little.svg";
 import dash_little from "../../assets/navigation/dash-little.svg";
-import "./TopBar.css";
 
 class TopBar extends Component {
   render() {

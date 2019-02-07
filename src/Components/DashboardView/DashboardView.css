@@ -1,0 +1,9 @@
+.DashboardView {
+    grid-area: 2 / 2 / 3 / 3;
+    padding: 5%;
+}
+
+.DashboardView__title {
+    font-weight: 100;
+    margin: 0;
+}

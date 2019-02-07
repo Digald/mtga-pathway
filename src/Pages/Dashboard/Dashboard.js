@@ -4,6 +4,7 @@ import "./Dashboard.css";
 import CornerSpace from "../../Components/CornerSpace/CornerSpace";
 import TopBar from "../../Components/TopBar/TopBar";
 import SideBar from "../../Components/SideBar/SideBar";
+import DashBoardView from '../../Components/DashboardView/DashboardView';
 
 class Dashboard extends Component {
   state = {
@@ -15,8 +16,8 @@ class Dashboard extends Component {
       <div className="Dashboard main-grid">
         <CornerSpace />
         <TopBar activePage={this.state.activePage}/>
-        <SideBar />
-        <div />
+        <SideBar activePage={this.state.activePage}/>
+        <DashBoardView/>
       </div>
     );
   }
