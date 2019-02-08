@@ -3,7 +3,15 @@
     padding: 5%;
 }
 
-.DashboardView__title {
+.DashboardView__container {
+    border-bottom: 1px solid black;
+}
+
+.DashboardView__container:last-child {
+    border-bottom: none;
+}
+
+.DashboardView__container__title {
     font-weight: 100;
     margin: 0;
 }
