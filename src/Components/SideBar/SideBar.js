@@ -14,9 +14,9 @@ class SideBar extends Component {
     if (activePage === "dashboard") {
       dash = dash_inactive;
       deck = deck_active
-    } else if (activePage === "decklist") {
+    } else if (activePage === "deckfinder") {
       dash = dash_active;
-      deck = dash_inactive;
+      deck = deck_inactive;
     }
     return (
       <div className="SideBar">

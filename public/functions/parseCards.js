@@ -17,22 +17,22 @@ module.exports = function(fromPlayerCollection, newQuantities = []) {
 
       // Saves all that data locally
       settings.set("mtgaCardData.allMtgaCards", JSON.parse(data));
-
+      const newCardData = [];
       // Map through the new cards you want to translate
       const pullOutPlayersCards = fromPlayerCollection.map(async playerCard => {
         // foundCard will contain the data on parsed card
         let foundCard;
-
         // Now loop through all standard cards with forEach, if the arena_ids match, assign it to foundCard variable
         await settings.get("mtgaCardData.allMtgaCards").forEach(async card => {
           if (playerCard.arena_id == card.arena_id) {
             foundCard = card;
             foundCard.quantity = playerCard.quantity;
+            newCardData.push(foundCard);
           }
         });
         return foundCard;
       });
-
+      settings.set('renderUpdates.newCards', newCardData);
       // Wait for the promise before using the parsed player cards
       const pulledPlayerCards = await Promise.all(pullOutPlayersCards);
 

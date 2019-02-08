@@ -7,16 +7,12 @@ import SideBar from "../../Components/SideBar/SideBar";
 import DashBoardView from '../../Components/DashboardView/DashboardView';
 
 class Dashboard extends Component {
-  state = {
-    activePage: "dashboard"
-  };
-
   render() {
     return (
       <div className="Dashboard main-grid">
         <CornerSpace />
-        <TopBar activePage={this.state.activePage}/>
-        <SideBar activePage={this.state.activePage}/>
+        <TopBar title="DASHBOARD" activePage="dashboard"/>
+        <SideBar activePage="dashboard"/>
         <DashBoardView/>
       </div>
     );

@@ -11,18 +11,18 @@ import dash_little from "../../assets/navigation/dash-little.svg";
 
 class TopBar extends Component {
   render() {
-    const { activePage } = this.props;
+    const { activePage, title } = this.props;
     let icon;
     if (activePage === "dashboard") {
       icon = dash_little;
-    } else if (activePage === "decklist") {
+    } else if (activePage === "deckfinder") {
       icon = deck_little;
     }
     return (
       <div className="TopBar">
         <div className="TopBar__title">
           <img src={icon} alt="" />
-          <h1 className="TopBar__title__name">DASHBOARD</h1>
+          <h1 className="TopBar__title__name">{title}</h1>
         </div>
         <ul className="TopBar__tokens">
           <li>

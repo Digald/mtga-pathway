@@ -20,6 +20,9 @@ module.exports = function(playerCards) {
   // Array only going to contain new cards obtained
   let onlyNewCards = [];
 
+  // Array containing only cards with updated quantities
+  let newQuantities = [];
+
   // If there is no saved data found
   if (!storedRawData) {
     settings.set("rawData.cards", playerMainCollection);
@@ -30,12 +33,11 @@ module.exports = function(playerCards) {
   else {
     allDiff = calculateCountDiff(storedRawData, playerMainCollection);
     onlyNewCards = sortDifferences(storedRawData, playerMainCollection);
+    newQuantities = extractNewCardQuantity(allDiff, onlyNewCards);
     // onlyNewCards = [{arena_id: "67804", quantity: 1}];
     // allDiff = [{ arena_id: "68656", quantity: 3 }, {arena_id: "67804", quantity: 1}];
+    // newQuantities = [{ arena_id: "68656", quantity: 3 }];
   }
-
-  let newQuantities = extractNewCardQuantity(allDiff, onlyNewCards);
-  // newQuantities = [{ arena_id: "68656", quantity: 3 }];
 
   //If this is the first time running or there are new cards to parse, allDiff.length will be greater than 0
   if (allDiff.length > 0) {
