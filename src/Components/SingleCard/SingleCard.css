@@ -1,0 +1,12 @@
+.SingleCard {
+  margin-bottom: 10px;
+}
+
+.SingleCard__title {
+  margin: 0;
+}
+
+.SingleCard__image {
+  height: auto;
+  width: 200px;
+}

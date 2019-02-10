@@ -19,6 +19,7 @@ module.exports = function(cardsToUpdate) {
       }
     });
   });
+  console.log(updatedQuantityData);
   settings.set('renderUpdates.newQuantities', updatedQuantityData);
   settings.set("mtgaCardData.playerMtgaCards", playerMtgaCards);
 };

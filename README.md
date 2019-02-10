@@ -16,6 +16,24 @@ There are three main phases to overcome as I work on this project:
 
 If a new set comes out or new card data needs to be added to the app, manually run the instructions on seedCardData.js found in /public/seedCardData.js.
 
+## Electron Settings Queries
+```
+rawData: {
+    cards: // Array of arena id's and quantity from the log file
+}
+
+mtgaCardData: {
+    playerMtgaCards: // Array of card data in player's collection,
+    allMtgaCards: // Array of all card data from the log file
+    playerTokens: // Array of all player wildcards, gems, gold, etc,
+}
+
+renderUpdates: {
+    newCards: // Array of cards newly added to collection
+    newQuantities: // Array of cards with updated quantities 
+}
+```
+
 ## Getting Started
 
 TBD
