@@ -28,9 +28,8 @@ mtgaCardData: {
     playerTokens: // Array of all player wildcards, gems, gold, etc,
 }
 
-renderUpdates: {
+dataToRender: {
     newCards: // Array of cards newly added to collection
-    newQuantities: // Array of cards with updated quantities 
 }
 ```
 

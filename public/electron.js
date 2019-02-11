@@ -137,8 +137,12 @@ const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/outpu
 
 // Read the file and format slightly removing new lines and carriage
 const logData = readLogFile(winAbsPath);
-ipcMain.on("read-log", function(event) {
-  executeCollectingPlayerData(logData);
-  event.sender.send('loading-status', 'done');
+
+// Wait for event to start grabbing the log files
+ipcMain.on("read-log", async function(event) {
+  console.log('read-log');
+  await executeCollectingPlayerData(logData);
+  console.log('send-response')
+  event.sender.send('loading-status', true);
 });
 console.log("Back in electron.js");

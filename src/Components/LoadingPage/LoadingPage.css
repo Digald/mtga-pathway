@@ -1,0 +1,8 @@
+.LoadingPage {
+    background-color: #ff3562;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

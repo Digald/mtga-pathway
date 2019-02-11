@@ -24,29 +24,11 @@ const allData = JSON.parse(fs.readFileSync(pathToMainJson, "utf-8"));
 
 // Initialize mtg set variables for writing json data
 let arenaCards = [];
-const sets = ["xln", "rix", "dom", "m19", "grn", "rna"];
-
-// let xln = [];
-// let rix = [];
-// let dom = [];
-// let m19 = [];
-// let grn = [];
-// let rna = [];
-// let otherArenaSets = [];
-// const setList = [
-//   { name: "xln", data: xln },
-//   { name: "rix", data: rix },
-//   { name: "dom", data: dom },
-//   { name: "m19", data: m19 },
-//   { name: "grn", data: grn },
-//   { name: "rna", data: rna },
-//   { name: "otherArenaSets", data: otherArenaSets }
-// ];
 
 // The loop that will break the files down
 allData.forEach(card => {
   // Out of all the cards, check which ones have an arena_id
-  if (card.arena_id && card.legalities.standard === "legal") {
+  if (card.arena_id && card.legalities.standard === "legal" && card !== null) {
     // Extract desired data
     const desiredData = {
       object: card.object,
@@ -63,30 +45,6 @@ allData.forEach(card => {
 
     // For those that are in mtga, extract cards for each specific sets
     arenaCards.push(desiredData);
-
-    // switch (card.set) {
-    //   case "xln":
-    //     xln.push(desiredData);
-    //     break;
-    //   case "rix":
-    //     rix.push(desiredData);
-    //     break;
-    //   case "dom":
-    //     dom.push(desiredData);
-    //     break;
-    //   case "m19":
-    //     m19.push(desiredData);
-    //     break;
-    //   case "grn":
-    //     grn.push(desiredData);
-    //     break;
-    //   case "rna":
-    //     rna.push(desiredData);
-    //     break;
-    //   default:
-    //     otherArenaSets.push(desiredData);
-    //     break;
-    // }
   }
 });
 
@@ -96,10 +54,3 @@ fs.writeFileSync(
   path.resolve(__dirname, "data", `arenaCards.json`),
   JSON.stringify(arenaCards, null, 2)
 );
-
-// setList.forEach(set => {
-//   fs.writeFileSync(
-//     path.resolve(__dirname, "data", `${set.name}.json`),
-//     JSON.stringify(set.data, null, 2)
-//   );
-// });
