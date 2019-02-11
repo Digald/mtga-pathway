@@ -2,6 +2,7 @@ const settings = require("electron-settings");
 const fs = require("fs");
 const path = require("path");
 const updateCardQuantity = require("./updateCardQuantity");
+const {ipcMain} = require('electron');
 
 module.exports = function(fromPlayerCollection, newQuantities = []) {
   console.log("have to parse");

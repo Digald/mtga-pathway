@@ -8,10 +8,15 @@ import coins from "../../assets/tokens/coins.svg";
 import gem from "../../assets/tokens/gem.svg";
 import deck_little from "../../assets/navigation/deck-little.svg";
 import dash_little from "../../assets/navigation/dash-little.svg";
+const settings = window.require('electron-settings');
 
 class TopBar extends Component {
+  state = {
+    tokens: settings.get('mtgaCardData.playerTokens')
+  }
   render() {
     const { activePage, title } = this.props;
+    const {tokens} = this.state;
     let icon;
     if (activePage === "dashboard") {
       icon = dash_little;
@@ -26,27 +31,27 @@ class TopBar extends Component {
         </div>
         <ul className="TopBar__tokens">
           <li>
-            <p>0</p>
-            <img src={mythic} alt="mythic" />
+            <p>{tokens.wcMythic}</p>
+            <img src={mythic} alt="M" />
           </li>
           <li>
-            <p>0</p>
-            <img src={rare} alt="rare" />
+            <p>{tokens.wcRare}</p>
+            <img src={rare} alt="R" />
           </li>
           <li>
-            <p>0</p>
-            <img src={uncommon} alt="uncommon" />
+            <p>{tokens.wcUncommon}</p>
+            <img src={uncommon} alt="UC" />
           </li>
           <li>
-            <p>0</p>
-            <img src={common} alt="common" />
+            <p>{tokens.wcCommon}</p>
+            <img src={common} alt="C" />
           </li>
           <li>
-            <p>0</p>
+            <p>{tokens.gold}</p>
             <img src={coins} alt="coins" />
           </li>
           <li>
-            <p>0</p>
+            <p>{tokens.gems}</p>
             <img src={gem} alt="gem" />
           </li>
         </ul>

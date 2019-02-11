@@ -17,6 +17,10 @@ class App extends Component {
         isLoaded: arg
       });
     });
+
+    ipcRenderer.on("test", (event, arg) => {
+      console.log(arg);
+    });
   }
 
   componentDidMount() {

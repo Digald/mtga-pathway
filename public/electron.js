@@ -140,9 +140,7 @@ const logData = readLogFile(winAbsPath);
 
 // Wait for event to start grabbing the log files
 ipcMain.on("read-log", async function(event) {
-  console.log('read-log');
   await executeCollectingPlayerData(logData);
-  console.log('send-response')
   event.sender.send('loading-status', true);
 });
 console.log("Back in electron.js");

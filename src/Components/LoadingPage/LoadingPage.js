@@ -7,7 +7,7 @@ class LoadingPage extends Component {
       <div className="LoadingPage">
         <img src={loader} alt="Loading..."/>
         <p>Is this your first time loading the app?</p>
-        <p>Putting together data may take a few minutes.</p>
+        <p>Putting together data may take a minute.</p>
       </div>
     );
   }
