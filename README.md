@@ -6,11 +6,11 @@ Find the closest competitive or meta MTGA decks you are closest to building with
 There are three main phases to overcome as I work on this project:
 
 1) Obtain log file player data and parse into useful information - Complete
-2) View and user interface - In-Progress
-3) Aquire data on popular decks through an API or through scraping
+2) View and user interface - Kind Of Complete
+3) Aquire data on popular decks through an API or through scraping - In Progress
 4) Final App Logic and Display Matches
 
-(1/4) Complete
+(2/4) Complete
 
 ## Updates
 

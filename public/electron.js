@@ -130,6 +130,7 @@ app.on("activate", function() {
 // code. You can also put them in separate files and require them here.
 const executeCollectingPlayerData = require("./functions/executeCollectingPlayerData");
 const readLogFile = require("./functions/readLogFile");
+const initiateScrape = require('./functions/deck-initiateScrape');
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
@@ -146,5 +147,6 @@ ipcMain.on("read-log", async function(event) {
 
 ipcMain.on('grab-decks', function(event, args) {
   console.log(args);
+  initiateScrape();
 });
 console.log("Back in electron.js");
