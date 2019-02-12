@@ -3,10 +3,7 @@ import "./DeckGrid.css";
 
 class DeckGrid extends Component {
   render() {
-    return (
-      <div className="DeckGrid">
-      </div>
-    );
+    return <div className="DeckGrid">DeckGrid</div>;
   }
 }
 

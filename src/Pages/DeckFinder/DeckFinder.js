@@ -4,14 +4,22 @@ import "./DeckFinder.css";
 import CornerSpace from "../../Components/CornerSpace/CornerSpace";
 import TopBar from "../../Components/TopBar/TopBar";
 import SideBar from "../../Components/SideBar/SideBar";
+import LoadingPage from "../../Components/LoadingPage/LoadingPage";
+import DeckFinderView from "../../Components/DeckFinderView/DeckFinderView";
 
 class DeckFinder extends Component {
+  state = {
+    isLoaded: false
+  };
   render() {
+    const { isLoaded } = this.props;
+    if (!isLoaded) return <LoadingPage />;
     return (
       <div className="DeckFinder main-grid">
         <CornerSpace />
-        <TopBar title="DECK FINDER" activePage="deckfinder"/>
-        <SideBar activePage="deckfinder"/>
+        <TopBar title="DECK FINDER" activePage="deckfinder" />
+        <SideBar activePage="deckfinder" />
+        <DeckFinderView />
       </div>
     );
   }

@@ -143,4 +143,8 @@ ipcMain.on("read-log", async function(event) {
   await executeCollectingPlayerData(logData);
   event.sender.send('loading-status', true);
 });
+
+ipcMain.on('grab-decks', function(event, args) {
+  console.log(args);
+});
 console.log("Back in electron.js");

@@ -1,0 +1,17 @@
+.DeckFinderView {
+    display: grid;
+    grid-template-columns: auto; 
+    grid-template-rows: 100px auto;
+}
+
+.DeckFinderView__container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+}
+
+.DeckFinderView__container__btnContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import "./LoadingPage.css";
 import loader from '../../assets/loader.svg';
+const {ipcRenderer} = window.require('electron');
+
 class LoadingPage extends Component {
+
+  componentDidMount() {
+    ipcRenderer.send("read-log");
+  }
+
   render() {
     return (
       <div className="LoadingPage">

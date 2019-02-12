@@ -1,6 +1,5 @@
 .DisplayCards {
   max-width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  grid-template-rows: repeat(3, auto);
+  display: flex;
+  flex-wrap: wrap;
 }
