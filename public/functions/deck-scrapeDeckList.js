@@ -6,20 +6,56 @@ const cheerio = require("cheerio");
  *
  * @param {object} singleDeck Contains the name, colors, and url of the deck in question
  *
- * @return {object} Contains the name, colors, url, and newly added decklist array
+ * @return {array} Contains an arry of objects for each card in the deck. Objects include name and quantity.
  */
 
 module.exports = async function(singleDeck) {
-    const data = await axios.get(singleDeck.url);
-    const $ = cheerio.load(data.data);
+  let response;
+  try {
+    response = await axios.get(singleDeck.url);
+  } catch (err) {
+    console.log(err);
+  }
+  const $ = cheerio.load(response.data);
 
-    $(' #tab-arena .deck-view-deck-table tbody tr').each(function(i, elem) {
-        if ($(this).children('.deck-header').text()) {
-            return;
-        }
-        $(this).children().each(function(i, elem) {
-            console.log($(this).text().trim());
-        });
-    });
+  // deckList containers list of objects for each card, cardType is where the card belongs in the deck
+  const deckList = [];
+  let cardType = "";
 
+  // Loop through each line in the decklist
+  $(" #tab-arena .deck-view-deck-table tbody tr").each(function(i, elem) {
+    const singleCardData = {};
+    if (
+      $(this)
+        .children(".deck-header")
+        .text()
+    ) {
+      cardType = $(this)
+        .children(".deck-header")
+        .text()
+        .trim();
+      return;
+    }
+
+    // card name
+    singleCardData.name = $(this)
+      .children(".deck-col-card")
+      .text()
+      .trim();
+
+    // quantity
+    singleCardData.quantity = $(this)
+      .children(".deck-col-qty")
+      .text()
+      .trim();
+
+    // card type/placement
+    singleCardData.type = cardType
+      .match(/[a-zA-Z]/g)
+      .slice(0, -1)
+      .join("");
+
+    deckList.push(singleCardData);
+  });
+  return deckList;
 };

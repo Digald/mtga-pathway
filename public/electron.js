@@ -128,9 +128,10 @@ app.on("activate", function() {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+const settings = require("electron-settings");
 const executeCollectingPlayerData = require("./functions/executeCollectingPlayerData");
 const readLogFile = require("./functions/readLogFile");
-const initiateScrape = require('./functions/deck-initiateScrape');
+const initiateScrape = require("./functions/deck-initiateScrape");
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
@@ -142,11 +143,12 @@ const logData = readLogFile(winAbsPath);
 // Wait for event to start grabbing the log files
 ipcMain.on("read-log", async function(event) {
   await executeCollectingPlayerData(logData);
-  event.sender.send('loading-status', true);
+  event.sender.send("loading-status", true);
 });
 
-ipcMain.on('grab-decks', function(event, args) {
+ipcMain.on("grab-decks", async function(event, args) {
   console.log(args);
-  initiateScrape();
+  const minedDecks = await initiateScrape();
+  settings.set("mtgaCardData.minedDecks", minedDecks);
 });
 console.log("Back in electron.js");

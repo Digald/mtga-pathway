@@ -4,6 +4,8 @@ const scrapeDeckList = require("./deck-scrapeDeckList");
 
 /**
  * Gets data from request, parses the html and collects relevent data into an array
+ *
+ * @return {array} Contains list of objects start with meta data for the deck as well as the deck list and quantities
  */
 
 module.exports = async function() {
@@ -11,18 +13,24 @@ module.exports = async function() {
   const allDecksData = [];
   // Initial url of all decks
   const mainUrl = "https://www.mtggoldfish.com/metagame/standard/full#paper";
-  const getDeckInfo = await axios.get(mainUrl);
+  let getDeckInfo;
+  try {
+    getDeckInfo = await axios.get(mainUrl);
+  } catch (err) {
+    console.log(err);
+  }
   const $ = cheerio.load(getDeckInfo.data);
 
   // Grab meta data for each deck
-  $(".archetype-tile").each(function(i, elem) {
+  $(".archetype-tile").each(async function(i, elem) {
     let singleDeck = {};
 
     // name
     singleDeck.name = $(this)
       .find(".deck-price-online")
       .children()
-      .text();
+      .text()
+      .trim();
 
     // colors
     const colorsList = [];
@@ -30,7 +38,11 @@ module.exports = async function() {
       .find(".manacost")
       .children()
       .each(function(i, elem) {
-        colorsList.push($(this).attr("alt"));
+        colorsList.push(
+          $(this)
+            .attr("alt")
+            .trim()
+        );
       });
     singleDeck.colors = colorsList;
 
@@ -38,12 +50,17 @@ module.exports = async function() {
     const baseUrl = "https://www.mtggoldfish.com";
     const pathLink = $(this)
       .find("h2 .deck-price-paper a")
-      .attr("href");
+      .attr("href")
+      .trim();
     const finalUrl = baseUrl + pathLink.replace("#paper", "#arena");
     singleDeck.url = finalUrl;
 
-    const finishedSingleDeck = scrapeDeckList(singleDeck);
+    // decklist
+    const finishedSingleDeck = await scrapeDeckList(singleDeck);
+    singleDeck.deckList = finishedSingleDeck;
+    console.log(singleDeck);
 
-    // console.log(finishedSingleDeck);
+    allDecksData.push(singleDeck);
   });
+  return allDecksData;
 };
