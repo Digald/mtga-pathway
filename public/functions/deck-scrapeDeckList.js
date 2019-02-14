@@ -23,7 +23,7 @@ module.exports = async function(singleDeck) {
   let cardType = "";
 
   // Loop through each line in the decklist
-  $(" #tab-arena .deck-view-deck-table tbody tr").each(function(i, elem) {
+  await $(" #tab-arena .deck-view-deck-table tbody tr").each(function(i, elem) {
     const singleCardData = {};
     if (
       $(this)
@@ -52,7 +52,7 @@ module.exports = async function(singleDeck) {
     // card type/placement
     singleCardData.type = cardType
       .match(/[a-zA-Z]/g)
-      .slice(0, -1)
+      .slice(0)
       .join("");
 
     deckList.push(singleCardData);

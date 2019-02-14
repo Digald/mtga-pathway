@@ -149,6 +149,7 @@ ipcMain.on("read-log", async function(event) {
 ipcMain.on("grab-decks", async function(event, args) {
   console.log(args);
   const minedDecks = await initiateScrape();
+  console.log(minedDecks);
   settings.set("mtgaCardData.minedDecks", minedDecks);
 });
 console.log("Back in electron.js");

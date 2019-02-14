@@ -22,7 +22,7 @@ module.exports = async function() {
   const $ = cheerio.load(getDeckInfo.data);
 
   // Grab meta data for each deck
-  $(".archetype-tile").each(async function(i, elem) {
+  await $(".archetype-tile").each(async function(i, elem) {
     let singleDeck = {};
 
     // name
@@ -59,8 +59,8 @@ module.exports = async function() {
     const finishedSingleDeck = await scrapeDeckList(singleDeck);
     singleDeck.deckList = finishedSingleDeck;
     console.log(singleDeck);
-
     allDecksData.push(singleDeck);
   });
+  console.log(allDecksData);
   return allDecksData;
 };
