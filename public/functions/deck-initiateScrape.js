@@ -1,9 +1,12 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 const scrapeDeckList = require("./deck-scrapeDeckList");
+const settings = require("electron-settings");
 
 /**
  * Gets data from request, parses the html and collects relevent data into an array
+ *
+ * @param {object} event event passed from the ipcMain
  *
  * @return {array} Contains list of objects start with meta data for the deck as well as the deck list and quantities
  */
@@ -11,15 +14,17 @@ const scrapeDeckList = require("./deck-scrapeDeckList");
 module.exports = async function() {
   // Initate data
   const allDecksData = [];
+  settings.set("mtgaCardData.minedDecks", allDecksData);
+
   // Initial url of all decks
   const mainUrl = "https://www.mtggoldfish.com/metagame/standard/full#paper";
-  let getDeckInfo;
+  let response;
   try {
-    getDeckInfo = await axios.get(mainUrl);
+    response = await axios.get(mainUrl);
   } catch (err) {
     console.log(err);
   }
-  const $ = cheerio.load(getDeckInfo.data);
+  const $ = cheerio.load(response.data);
 
   // Grab meta data for each deck
   await $(".archetype-tile").each(async function(i, elem) {
@@ -58,9 +63,12 @@ module.exports = async function() {
     // decklist
     const finishedSingleDeck = await scrapeDeckList(singleDeck);
     singleDeck.deckList = finishedSingleDeck;
-    console.log(singleDeck);
+
+    // set single deck and move on to next one in loop
+    const minedDecks = settings.get("mtgaCardData.minedDecks");
+    settings.set("mtgaCardData.minedDecks", [...minedDecks, singleDeck]);
     allDecksData.push(singleDeck);
   });
-  console.log(allDecksData);
+
   return allDecksData;
 };
