@@ -10,7 +10,7 @@ class SingleCard extends Component {
         <p className="SingleCard__title">{name}</p>
         <img className="SingleCard__image"
           src={image_uris.normal}
-          alt={`Rarity:${rarity} Mana Cost:${mana_cost}`}
+          alt={`Rarity:${rarity}, Mana Cost:${mana_cost}`}
         />
       </div>
     );

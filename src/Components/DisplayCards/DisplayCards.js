@@ -15,12 +15,22 @@ class DisplayCards extends Component {
         {newCards.map(card => {
           if (
             card === null ||
-            !card.hasOwnProperty("image_uris") ||
             !card.hasOwnProperty("name") ||
             !card.hasOwnProperty("rarity") ||
             !card.hasOwnProperty("mana_cost")
-          )
+          ) {
             return "";
+          } else if (!card.hasOwnProperty("image_uris")) {
+            return (
+              <SingleCard
+                key={card.arena_id}
+                name={card.name}
+                image_uris="#"
+                mana_cost={card.mana_cost}
+                rarity={card.rarity}
+              />
+            );
+          }
           return (
             <SingleCard
               key={card.arena_id}

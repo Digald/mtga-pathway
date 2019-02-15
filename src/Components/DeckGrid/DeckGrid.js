@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./DeckGrid.css";
-const { ipcRenderer } = window.require("electron");
+import SingleDeck from "../SingleDeck/SingleDeck";
 const settings = window.require("electron-settings");
+const { ipcRenderer } = window.require("electron");
 
 class DeckGrid extends Component {
   state = {
@@ -30,12 +31,7 @@ class DeckGrid extends Component {
     return (
       <div className="DeckGrid">
         {displayDecks.map(deck => {
-          return (
-            <div key={deck.url}>
-              <p>{deck.name}</p>
-              <p>{deck.url}</p>
-            </div>
-          );
+          return <SingleDeck />;
         })}
       </div>
     );
