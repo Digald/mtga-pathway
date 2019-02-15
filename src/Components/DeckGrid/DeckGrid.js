@@ -31,7 +31,7 @@ class DeckGrid extends Component {
     return (
       <div className="DeckGrid">
         {displayDecks.map(deck => {
-          return <SingleDeck />;
+          return <SingleDeck deck={deck}/>;
         })}
       </div>
     );

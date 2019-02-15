@@ -2,7 +2,7 @@
 const { app, BrowserWindow, Menu, dialog, ipcMain } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
-const openFile = require("./functions/openFile.js");
+const openFile = require("./functions/log-functions/openFile.js");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -129,7 +129,7 @@ app.on("activate", function() {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 const executeCollectingPlayerData = require("./functions/log-functions/executeCollectingPlayerData");
-const readLogFile = require("./functions/readLogFile");
+const readLogFile = require("./functions/log-functions/readLogFile");
 const initiateScrape = require("./functions/scrape-functions/initiateScrape");
 
 // WINDOWS Get user home drive and username

@@ -3,7 +3,12 @@ import "./SingleDeck.css";
 
 class SingleDeck extends Component {
   render() {
-    return <div className="SingleDeck" />;
+    const { deck } = this.props;
+    return (
+      <div className="SingleDeck">
+        <p>{deck.name}</p>
+      </div>
+    );
   }
 }
 
