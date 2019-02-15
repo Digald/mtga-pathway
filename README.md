@@ -26,6 +26,7 @@ mtgaCardData: {
     playerMtgaCards: // Array of card data in player's collection,
     allMtgaCards: // Array of all card data from the log file
     playerTokens: // Array of all player wildcards, gems, gold, etc,
+    minedDecks: // Array of decks from source providing data
 }
 
 dataToRender: {

@@ -10,7 +10,7 @@ class DashboardView extends Component {
       <div className="DashboardView">
         <div className="DashboardView__container">
           <h2 className="DashboardView__container__title">Saved Decks</h2>
-          <DeckGrid />
+          <DeckGrid fromPage="DashboardView"/>
         </div>
         <div className="DashboardView__container">
           <h2 className="DashboardView__container__title">

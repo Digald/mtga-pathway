@@ -11,7 +11,7 @@ const settings = require("electron-settings");
  * @return {array} Contains list of objects start with meta data for the deck as well as the deck list and quantities
  */
 
-module.exports = async function() {
+module.exports = async function(event) {
   // Initate data
   const allDecksData = [];
   settings.set("mtgaCardData.minedDecks", allDecksData);
@@ -26,6 +26,8 @@ module.exports = async function() {
   }
   const $ = cheerio.load(response.data);
 
+  const loopLength = $(".archetype-tile").length;
+  let loopCount = 0;
   // Grab meta data for each deck
   await $(".archetype-tile").each(async function(i, elem) {
     let singleDeck = {};
@@ -68,7 +70,17 @@ module.exports = async function() {
     const minedDecks = settings.get("mtgaCardData.minedDecks");
     settings.set("mtgaCardData.minedDecks", [...minedDecks, singleDeck]);
     allDecksData.push(singleDeck);
+    loopCount += 1;
   });
 
-  return allDecksData;
+  function checkForReturn() {
+    if (loopCount === loopLength) {
+      event.sender.send("grab-decks-response", "done");
+      return allDecksData;
+    } else {
+      setTimeout(checkForReturn, 5000);
+    }
+  }
+
+  return checkForReturn();
 };

@@ -12,7 +12,8 @@ class LoadingPage extends Component {
   render() {
     return (
       <div className="LoadingPage">
-        <img src={loader} alt="Loading..."/>
+        <h2 className="LoadingPage__title">LOADING...</h2>
+        <img src={loader} alt=""/>
         <p>Is this your first time loading the app?</p>
         <p>Putting together data may take a minute.</p>
       </div>

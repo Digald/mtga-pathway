@@ -15,7 +15,7 @@ class DeckFinderView extends Component {
           </div>
           <DeckFilter />
         </div>
-        <DeckGrid />
+        <DeckGrid fromPage="DeckFinderView"/>
       </div>
     );
   }

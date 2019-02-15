@@ -128,7 +128,6 @@ app.on("activate", function() {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-const settings = require("electron-settings");
 const executeCollectingPlayerData = require("./functions/executeCollectingPlayerData");
 const readLogFile = require("./functions/readLogFile");
 const initiateScrape = require("./functions/deck-initiateScrape");
@@ -147,9 +146,6 @@ ipcMain.on("read-log", async function(event) {
 });
 
 ipcMain.on("grab-decks", async function(event, args) {
-  console.log(args);
-  // const minedDecks = await initiateScrape(event);
-  console.log('send response');
-  event.sender.send('grab-decks-response', "got it!");
+  await initiateScrape(event);
 });
 console.log("Back in electron.js");
