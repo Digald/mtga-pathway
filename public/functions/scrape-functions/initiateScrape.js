@@ -1,6 +1,6 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
-const scrapeDeckList = require("./deck-scrapeDeckList");
+const scrapeDeckList = require("./scrapeDeckList");
 const settings = require("electron-settings");
 
 /**

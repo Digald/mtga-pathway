@@ -128,9 +128,9 @@ app.on("activate", function() {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-const executeCollectingPlayerData = require("./functions/executeCollectingPlayerData");
+const executeCollectingPlayerData = require("./functions/log-functions/executeCollectingPlayerData");
 const readLogFile = require("./functions/readLogFile");
-const initiateScrape = require("./functions/deck-initiateScrape");
+const initiateScrape = require("./functions/scrape-functions/initiateScrape");
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
