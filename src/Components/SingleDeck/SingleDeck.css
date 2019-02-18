@@ -1,0 +1,15 @@
+.SingleDeck {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+    border: 2px solid black;
+}
+
+.SingleDeck__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SingleDeck__header__colors {
+    display: flex;
+}

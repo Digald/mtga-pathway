@@ -8,7 +8,7 @@ module.exports = function(fromPlayerCollection, newQuantities = []) {
 
   // Read data inside JSON file containing all standard card data
   fs.readFile(
-    path.resolve(__dirname, "../data/arenaCards.json"),
+    path.resolve(__dirname, "../../data/arenaCards.json"),
     "utf8",
     async (err, data) => {
       if (err) {

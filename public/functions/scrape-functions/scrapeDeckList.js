@@ -49,12 +49,41 @@ module.exports = async function(singleDeck) {
       .text()
       .trim();
 
+    // Image
+    singleCardData.image = $(this)
+      .find(".deck-col-card a")
+      .data("full-image");
+
+    // Mana cost; gonna have to loop
+    const cardCost = [];
+    $(this)
+      .find(".manacost")
+      .children()
+      .each(function(i, elem) {
+        cardCost.push(
+          $(this)
+            .attr("alt")
+            .trim()
+        );
+      });
+    singleCardData.mana_cost = cardCost;
+
+    // rarity
+    singleCardData.rarity = $(this)
+      .children(".deck-col-price")
+      .text()
+      .trim()
+      .split("")
+      .slice(2)
+      .join('');
+
     // card type/placement
     singleCardData.type = cardType
       .match(/[a-zA-Z]/g)
       .slice(0)
       .join("");
 
+    console.log(singleCardData);
     deckList.push(singleCardData);
   });
   return deckList;
