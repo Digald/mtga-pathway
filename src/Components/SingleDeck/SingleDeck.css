@@ -1,15 +1,25 @@
 .SingleDeck {
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto auto;
-    border: 2px solid black;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto auto;
+  border: 2px solid black;
 }
 
 .SingleDeck__header {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
 }
 
 .SingleDeck__header__colors {
-    display: flex;
+  display: flex;
+}
+
+.SingleDeck__background {
+  height: 250px;
+}
+
+.SingleDeck__percentages {
+  text-align: center;
+  padding: 10px;
 }
