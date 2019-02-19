@@ -83,7 +83,6 @@ module.exports = async function(singleDeck) {
       .slice(0)
       .join("");
 
-    console.log(singleCardData);
     deckList.push(singleCardData);
   });
   return deckList;

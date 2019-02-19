@@ -28,10 +28,11 @@ class DeckGrid extends Component {
     } else if (fromPage === "DashboardView") {
       displayDecks = savedDecks;
     }
+    console.log(displayDecks);
     return (
       <div className="DeckGrid">
-        {displayDecks.map(deck => {
-          return <SingleDeck deck={deck}/>;
+        {displayDecks.map((deck, i) => {
+          return <SingleDeck key={i} deck={deck} />;
         })}
       </div>
     );
