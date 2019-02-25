@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./SingleDeck.css";
 import { Link } from "react-router-dom";
 import SaveDeleteDecksBtn from "../SaveDeleteDecksBtn/SaveDeleteDecksBtn";
+import DeckPercentageBoxes from '../DeckPercentageBoxes/DeckPercentageBoxes';
 import B from "../../assets/manasymbols/B.svg";
 import G from "../../assets/manasymbols/G.svg";
 import W from "../../assets/manasymbols/W.svg";
@@ -113,20 +114,7 @@ class SingleDeck extends Component {
         <Link to="#">
           <div className="SingleDeck__background" />
         </Link>
-        <div className="SingleDeck__percentages">
-          <div className="SingleDeck__percentages__single">
-            <p className="SingleDeck__percentages__single__percent">45%</p>
-            <p className="SingleDeck__percentages__single__wildcard">
-              W/Wildcards
-            </p>
-          </div>
-          <div className="SingleDeck__percentages__single">
-            <p className="SingleDeck__percentages__single__percent">45%</p>
-            <p className="SingleDeck__percentages__single__wildcard">
-              WO/Wildcards
-            </p>
-          </div>
-        </div>
+        <DeckPercentageBoxes/>
       </div>
     );
   }

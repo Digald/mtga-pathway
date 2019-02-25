@@ -1,4 +1,6 @@
 .CornerSpace {
   grid-area: 1 / 1 / 2 / 2;
   background-color: #ff3562;
+  top: 0;
+  position: sticky;
 }

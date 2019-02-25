@@ -5,10 +5,12 @@
   justify-content: space-around;
   align-items: center;
   height: 100%;
+  top: 0;
+  position: sticky;
 }
 
 .TopBar__title {
-  display:flex;
+  display: flex;
 }
 
 .TopBar__title__name {
