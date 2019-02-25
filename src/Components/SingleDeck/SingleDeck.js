@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./SingleDeck.css";
 import { Link } from "react-router-dom";
+import SaveDeleteDecksBtn from "../SaveDeleteDecksBtn/SaveDeleteDecksBtn";
 import B from "../../assets/manasymbols/B.svg";
 import G from "../../assets/manasymbols/G.svg";
 import W from "../../assets/manasymbols/W.svg";
@@ -33,6 +34,20 @@ class SingleDeck extends Component {
     return displaySymbol;
   };
 
+  deleteDeck = () => {
+    const { url } = this.props.deck;
+    const savedDecks = settings.get("mtgaCardData.savedDecks");
+    console.log(this.props.deck.url);
+    savedDecks.forEach((element, i) => {
+      if (element.url === url) {
+        console.log(i);
+        savedDecks.splice(i, 1);
+      }
+      return;
+    });
+    settings.set('mtgaCardData.savedDecks', savedDecks);
+  };
+
   saveDeck = () => {
     const { deck } = this.props;
     let savedDecks = settings.get("mtgaCardData.savedDecks");
@@ -43,10 +58,18 @@ class SingleDeck extends Component {
     savedDecks.push(deck);
     settings.set("mtgaCardData.savedDecks", savedDecks);
     console.log(settings.get("mtgaCardData.savedDecks"));
-    console.log("deck saved");
   };
 
   render() {
+    const { fromPage, deck } = this.props;
+    let Button;
+    if (fromPage === "DashboardView") {
+      Button = (
+        <SaveDeleteDecksBtn text="DELETE" clickEvent={this.deleteDeck} />
+      );
+    } else if (fromPage === "DeckFinderView") {
+      Button = <SaveDeleteDecksBtn text="SAVE" clickEvent={this.saveDeck} />;
+    }
     const { name, colors } = this.props.deck;
     const image = this.props.deck.deckList[0].image;
     const background = {
@@ -72,12 +95,7 @@ class SingleDeck extends Component {
               );
             })}
           </div>
-          <button
-            className="SingleDeck__header__save"
-            onClick={() => this.saveDeck()}
-          >
-            SAVE
-          </button>
+          {Button}
         </div>
         <Link to="#">
           <div className="SingleDeck__background" />
