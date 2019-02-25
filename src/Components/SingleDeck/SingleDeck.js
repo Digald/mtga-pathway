@@ -11,6 +11,9 @@ const settings = window.require("electron-settings");
 const { ipcRenderer } = window.require("electron");
 
 class SingleDeck extends Component {
+  state = {
+    buttonText: "SAVE"
+  };
   renderSymbols = color => {
     let displaySymbol;
     switch (color) {
@@ -55,20 +58,30 @@ class SingleDeck extends Component {
       settings.set("mtgaCardData.savedDecks", []);
       savedDecks = settings.get("mtgaCardData.savedDecks");
     }
-    savedDecks.push(deck);
+    const result = savedDecks.find(element => {
+      return element.url === deck.url;
+    });
+    if (!result) {
+      savedDecks.push(deck);
+    }
     settings.set("mtgaCardData.savedDecks", savedDecks);
-    console.log(settings.get("mtgaCardData.savedDecks"));
+    this.setState({
+      buttonText: "ADDED"
+    });
   };
 
   render() {
-    const { fromPage, deck } = this.props;
+    const { buttonText } = this.state;
+    const { fromPage } = this.props;
     let Button;
     if (fromPage === "DashboardView") {
       Button = (
         <SaveDeleteDecksBtn text="DELETE" clickEvent={this.deleteDeck} />
       );
     } else if (fromPage === "DeckFinderView") {
-      Button = <SaveDeleteDecksBtn text="SAVE" clickEvent={this.saveDeck} />;
+      Button = (
+        <SaveDeleteDecksBtn text={buttonText} clickEvent={this.saveDeck} />
+      );
     }
     const { name, colors } = this.props.deck;
     const image = this.props.deck.deckList[0].image;
