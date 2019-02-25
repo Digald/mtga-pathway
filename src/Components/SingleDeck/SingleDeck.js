@@ -8,6 +8,7 @@ import W from "../../assets/manasymbols/W.svg";
 import U from "../../assets/manasymbols/U.svg";
 import R from "../../assets/manasymbols/R.svg";
 const settings = window.require("electron-settings");
+const { ipcRenderer } = window.require("electron");
 
 class SingleDeck extends Component {
   renderSymbols = color => {
@@ -37,15 +38,14 @@ class SingleDeck extends Component {
   deleteDeck = () => {
     const { url } = this.props.deck;
     const savedDecks = settings.get("mtgaCardData.savedDecks");
-    console.log(this.props.deck.url);
     savedDecks.forEach((element, i) => {
       if (element.url === url) {
-        console.log(i);
         savedDecks.splice(i, 1);
       }
       return;
     });
-    settings.set('mtgaCardData.savedDecks', savedDecks);
+    settings.set("mtgaCardData.savedDecks", savedDecks);
+    ipcRenderer.send("delete-saved-deck", "delete-saved-deck");
   };
 
   saveDeck = () => {

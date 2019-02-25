@@ -148,4 +148,10 @@ ipcMain.on("read-log", async function(event) {
 ipcMain.on("grab-decks", async function(event, args) {
   await initiateScrape(event);
 });
+
+ipcMain.on("delete-saved-deck", (event, arg) => {
+  if (arg === "delete-saved-deck") {
+    event.sender.send("delete-saved-deck", "delete-saved-deck");
+  }
+});
 console.log("Back in electron.js");

@@ -18,6 +18,12 @@ class DeckGrid extends Component {
         });
       }
     });
+
+    ipcRenderer.on("delete-saved-deck", (event, arg) => {
+      if (arg === "delete-saved-deck") {
+        this.setState({ savedDecks: settings.get("mtgaCardData.savedDecks") });
+      }
+    });
   }
   render() {
     const { decksList, savedDecks } = this.state;
