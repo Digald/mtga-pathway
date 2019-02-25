@@ -10,4 +10,9 @@
 .SideBar__icon {
     margin-top: 50px;
     padding: 10px;
+    position: fixed;
+}
+
+.icon2 {
+    top: 175px;
 }

@@ -20,10 +20,10 @@ class SideBar extends Component {
     }
     return (
       <div className="SideBar">
-        <Link to="/" className="SideBar__icon">
+        <Link to="/" className="SideBar__icon icon1">
           <img src={dash} alt="Dashboard" />
         </Link>
-        <Link to="/deckfinder" className="SideBar__icon">
+        <Link to="/deckfinder" className="SideBar__icon icon2">
           <img src={deck} alt="Decklist" />
         </Link>
       </div>
