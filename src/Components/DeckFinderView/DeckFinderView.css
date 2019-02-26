@@ -1,13 +1,14 @@
 .DeckFinderView {
     display: grid;
     grid-template-columns: auto; 
-    grid-template-rows: 150px auto;
+    grid-template-rows: auto auto;
 }
 
 .DeckFinderView__container {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
+    padding: 2rem;
 }
 
 .DeckFinderView__container__btnContainer {

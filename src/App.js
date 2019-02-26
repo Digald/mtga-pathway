@@ -3,6 +3,7 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import DeckFinder from "./Pages/DeckFinder/DeckFinder";
+import DeckList from "./Pages/DeckList/DeckList";
 const { ipcRenderer } = window.require("electron");
 
 class App extends Component {
@@ -36,6 +37,7 @@ class App extends Component {
               <DeckFinder {...props} isLoaded={this.state.isLoaded} />
             )}
           />
+          <Route exact path="/decklist" component={DeckList} />
         </Switch>
       </Router>
     );

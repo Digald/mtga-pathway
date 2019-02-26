@@ -91,7 +91,7 @@ class SingleDeck extends Component {
     };
     return (
       <div className="SingleDeck" style={background}>
-        <Link className="SingleDeck__titlelink" to="#">
+        <Link className="SingleDeck__titlelink" to="/decklist">
           <div className="SingleDeck__title">
             <p>{name}</p>
           </div>
@@ -111,7 +111,7 @@ class SingleDeck extends Component {
           </div>
           {Button}
         </div>
-        <Link to="#">
+        <Link to="/decklist">
           <div className="SingleDeck__background" />
         </Link>
         <DeckPercentageBoxes/>

@@ -1,0 +1,43 @@
+.DeckFilter {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.DeckFilter__white-color {
+  background: url("../../assets/manasymbols/W.svg") no-repeat;
+}
+.DeckFilter__blue-color {
+  background: url("../../assets/manasymbols/U.svg") no-repeat;
+}
+.DeckFilter__black-color {
+  background: url("../../assets/manasymbols/B.svg") no-repeat;
+}
+.DeckFilter__red-color {
+  background: url("../../assets/manasymbols/R.svg") no-repeat;
+}
+.DeckFilter__green-color {
+  background: url("../../assets/manasymbols/G.svg") no-repeat;
+}
+
+.DeckFilter button {
+  box-sizing: content-box;
+  width: 3rem;
+  height: 3rem;
+  background-color: white;
+  margin: 0 1px;
+  padding: 0;
+}
+
+.defaultf {
+  border: none;
+}
+
+.includesf {
+  border-bottom: 0.5rem solid #ff3562;
+}
+
+.onlyf {
+  border-bottom: 0.5rem solid #693668;
+}

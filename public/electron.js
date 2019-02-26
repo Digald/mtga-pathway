@@ -131,6 +131,7 @@ app.on("activate", function() {
 const executeCollectingPlayerData = require("./functions/log-functions/executeCollectingPlayerData");
 const readLogFile = require("./functions/log-functions/readLogFile");
 const initiateScrape = require("./functions/scrape-functions/initiateScrape");
+//require('electron-react-devtools').install() to run dev tools
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
