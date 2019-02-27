@@ -1,0 +1,19 @@
+.ColorToggle__white-color {
+    background: url("../../assets/manasymbols/W.svg") no-repeat;
+  }
+  .ColorToggle__blue-color {
+    background: url("../../assets/manasymbols/U.svg") no-repeat;
+  }
+  .ColorToggle__black-color {
+    background: url("../../assets/manasymbols/B.svg") no-repeat;
+  }
+  .ColorToggle__red-color {
+    background: url("../../assets/manasymbols/R.svg") no-repeat;
+  }
+  .ColorToggle__green-color {
+    background: url("../../assets/manasymbols/G.svg") no-repeat;
+  }
+
+  .toggleFilter {
+    border-bottom: 0.3rem solid #ff3562 !important;
+  }

@@ -1,30 +1,45 @@
 import React, { Component } from "react";
 import "./DeckFilter.css";
+import ColorToggle from "../../Components/ColorToggle/ColorToggle";
 
 class DeckFilter extends Component {
   state = {
-    cssModifier: "defaultf"
+    isChecked: ""
   };
 
   handleClick = () => {
-    console.log('clicked');
-    this.setState({
-      cssModifier: "includesf"
-    });
+    const { isChecked } = this.state;
+    if (isChecked === "checked") {
+      this.setState({
+        isChecked: ""
+      });
+    } else {
+      this.setState({
+        isChecked: "checked"
+      });
+    }
   };
 
   render() {
-    const { cssModifier } = this.state;
     return (
       <div className="DeckFilter">
-        <button
-          onClick={() => this.handleClick()}
-          className={`DeckFilter__white-color ${cssModifier}`}
-        />
-        <button className={`DeckFilter__blue-color ${cssModifier}`} />
-        <button className={`DeckFilter__black-color ${cssModifier}`} />
-        <button className={`DeckFilter__red-color ${cssModifier}`} />
-        <button className={`DeckFilter__green-color ${cssModifier}`} />
+        <p className="DeckFilter__title">Filter</p>
+        <div className="DeckFilter__colorList">
+          <ColorToggle color="white-color" />
+          <ColorToggle color="blue-color" />
+          <ColorToggle color="black-color" />
+          <ColorToggle color="red-color" />
+          <ColorToggle color="green-color" />
+        </div>
+        <label className="DeckFilter__container">
+          Find Selected Colors Only
+          <input
+            type="checkbox"
+            onChange={() => this.handleClick()}
+            checked={this.state.isChecked}
+          />
+          <span className="checkmark" />
+        </label>
       </div>
     );
   }
