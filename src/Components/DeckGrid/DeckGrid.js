@@ -7,7 +7,9 @@ const { ipcRenderer } = window.require("electron");
 class DeckGrid extends Component {
   state = {
     decksList: settings.get("mtgaCardData.minedDecks") || [],
-    savedDecks: settings.get("mtgaCardData.savedDecks") || []
+    savedDecks: settings.get("mtgaCardData.savedDecks") || [],
+    filteredColors: [],
+    restrictColors: false
   };
   constructor() {
     super();
@@ -24,9 +26,52 @@ class DeckGrid extends Component {
         this.setState({ savedDecks: settings.get("mtgaCardData.savedDecks") });
       }
     });
+
+    this.filterColors = this.filterColors.bind(this);
+    ipcRenderer.on("get-filter-color", this.filterColors);
+
+    this.restrictColors = this.restrictColors.bind(this);
+    ipcRenderer.on("get-restrict-color", this.restrictColors);
   }
+
+  filterColors = (event, color) => {
+    const { filteredColors } = this.state;
+    console.log(filteredColors);
+    if (filteredColors.indexOf(color) === -1) {
+      filteredColors.push(color);
+      this.setState({
+        filteredColors
+      });
+      return;
+    }
+    const colorIndex = filteredColors.indexOf(color);
+    filteredColors.splice(colorIndex, 1);
+    this.setState({
+      filteredColors
+    });
+    return;
+  };
+
+  restrictColors = (event, arg) => {
+    if (arg !== "checked") {
+      this.setState({
+        restrictColors: false
+      });
+      return;
+    }
+    this.setState({
+      restrictColors: true
+    });
+    return;
+  };
+
   render() {
-    const { decksList, savedDecks } = this.state;
+    const {
+      decksList,
+      savedDecks,
+      filteredColors,
+      restrictColors
+    } = this.state;
     const { fromPage } = this.props;
     let displayDecks;
     if (fromPage === "DeckFinderView") {
@@ -37,6 +82,34 @@ class DeckGrid extends Component {
     return (
       <div className="DeckGrid">
         {displayDecks.map((deck, i) => {
+
+          // Find decks that includes selected colors
+          if (!restrictColors) {
+            const toDisplay = filteredColors.map(mana => {
+              if (deck.colors.indexOf(mana) !== -1) {
+                return true;
+              }
+              return false;
+            });
+            if (toDisplay.includes(false)) {
+              return "";
+            }
+            return <SingleDeck key={i} fromPage={fromPage} deck={deck} />;
+          }
+
+          // Find decks that ONLY contain selected colors
+          const toDisplay = filteredColors.map(mana => {
+            if (
+              deck.colors.indexOf(mana) !== -1 &&
+              filteredColors.length === deck.colors.length
+            ) {
+              return true;
+            }
+            return false;
+          });
+          if (toDisplay.includes(false)) {
+            return "";
+          }
           return <SingleDeck key={i} fromPage={fromPage} deck={deck} />;
         })}
       </div>

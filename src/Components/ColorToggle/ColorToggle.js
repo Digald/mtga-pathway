@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./ColorToggle.css";
+const { ipcRenderer } = window.require("electron");
 
 class ColorToggle extends Component {
   state = {
@@ -7,10 +8,11 @@ class ColorToggle extends Component {
   };
 
   handleClick = color => {
-    console.log(color);
+    // console.log(color);
     this.setState({
       cssModifier: !this.state.cssModifier
     });
+    ipcRenderer.send("send-filter-color", this.props.symbol);
   };
 
   render() {

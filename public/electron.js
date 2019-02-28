@@ -156,3 +156,11 @@ ipcMain.on("delete-saved-deck", (event, arg) => {
   }
 });
 console.log("Back in electron.js");
+
+ipcMain.on('send-restrict-color', (event, arg) => {
+  event.sender.send('get-restrict-color', arg);
+});
+
+ipcMain.on('send-filter-color', (event, arg) => {
+  event.sender.send('get-filter-color', arg);
+});
