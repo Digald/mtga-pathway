@@ -149,13 +149,13 @@ ipcMain.on("read-log", async function(event) {
 ipcMain.on("grab-decks", async function(event, args) {
   await initiateScrape(event);
 });
+console.log("Back in electron.js");
 
 ipcMain.on("delete-saved-deck", (event, arg) => {
   if (arg === "delete-saved-deck") {
     event.sender.send("delete-saved-deck", "delete-saved-deck");
   }
 });
-console.log("Back in electron.js");
 
 ipcMain.on('send-restrict-color', (event, arg) => {
   event.sender.send('get-restrict-color', arg);
@@ -163,4 +163,8 @@ ipcMain.on('send-restrict-color', (event, arg) => {
 
 ipcMain.on('send-filter-color', (event, arg) => {
   event.sender.send('get-filter-color', arg);
+});
+
+ipcMain.on('send-single-decklist', (event, arg) => {
+  event.sender.send('get-single-decklist', arg);
 });

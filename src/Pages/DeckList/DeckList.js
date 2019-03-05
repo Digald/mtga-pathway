@@ -4,6 +4,7 @@ import "./DeckList.css";
 import CornerSpace from "../../Components/CornerSpace/CornerSpace";
 import TopBar from "../../Components/TopBar/TopBar";
 import SideBar from "../../Components/SideBar/SideBar";
+import DeckListView from '../../Components/DeckListView/DeckListView';
 
 class DeckList extends Component {
   render() {
@@ -12,7 +13,7 @@ class DeckList extends Component {
         <CornerSpace />
         <TopBar title="DECKLIST" activePage="deckfinder" />
         <SideBar activePage="deckfinder" />
-        <p>Sup my dood</p>
+        <DeckListView/>
       </div>
     );
   }

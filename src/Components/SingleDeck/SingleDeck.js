@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./SingleDeck.css";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import SaveDeleteDecksBtn from "../SaveDeleteDecksBtn/SaveDeleteDecksBtn";
-import DeckPercentageBoxes from '../DeckPercentageBoxes/DeckPercentageBoxes';
+import DeckPercentageBoxes from "../DeckPercentageBoxes/DeckPercentageBoxes";
+import DeckListView from "../DeckListView/DeckListView";
 import B from "../../assets/manasymbols/B.svg";
 import G from "../../assets/manasymbols/G.svg";
 import W from "../../assets/manasymbols/W.svg";
@@ -71,6 +72,10 @@ class SingleDeck extends Component {
     });
   };
 
+  checkClick = () => {
+    ipcRenderer.send("send-single-decklist", this.props.deck);
+  };
+
   render() {
     const { buttonText } = this.state;
     const { fromPage } = this.props;
@@ -91,7 +96,11 @@ class SingleDeck extends Component {
     };
     return (
       <div className="SingleDeck" style={background}>
-        <Link className="SingleDeck__titlelink" to="/decklist">
+        <Link
+          className="SingleDeck__titlelink"
+          to="/decklist"
+          onClick={() => this.checkClick()}
+        >
           <div className="SingleDeck__title">
             <p>{name}</p>
           </div>
@@ -111,10 +120,10 @@ class SingleDeck extends Component {
           </div>
           {Button}
         </div>
-        <Link to="/decklist">
+        <Link to="/decklist" onClick={() => this.checkClick()}>
           <div className="SingleDeck__background" />
         </Link>
-        <DeckPercentageBoxes/>
+        <DeckPercentageBoxes />
       </div>
     );
   }
