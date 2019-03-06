@@ -30,7 +30,8 @@ mtgaCardData: {
 }
 
 dataToRender: {
-    newCards: // Array of cards newly added to collection
+    newCards: // Array of cards newly added to collection,
+    decklist: // Object containing the details of a single deck
 }
 ```
 

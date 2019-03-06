@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import "./SingleDeck.css";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SaveDeleteDecksBtn from "../SaveDeleteDecksBtn/SaveDeleteDecksBtn";
 import DeckPercentageBoxes from "../DeckPercentageBoxes/DeckPercentageBoxes";
-import DeckListView from "../DeckListView/DeckListView";
 import B from "../../assets/manasymbols/B.svg";
 import G from "../../assets/manasymbols/G.svg";
 import W from "../../assets/manasymbols/W.svg";
@@ -73,7 +72,7 @@ class SingleDeck extends Component {
   };
 
   checkClick = () => {
-    ipcRenderer.send("send-single-decklist", this.props.deck);
+    settings.set("dataToRender.decklist", this.props.deck);
   };
 
   render() {
