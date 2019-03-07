@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./LoadingPage.css";
-import loader from '../../assets/loader.svg';
+// import loader from '../../assets/loader.svg';
 const {ipcRenderer} = window.require('electron');
 
 class LoadingPage extends Component {
@@ -13,7 +13,8 @@ class LoadingPage extends Component {
     return (
       <div className="LoadingPage">
         <h2 className="LoadingPage__title">LOADING...</h2>
-        <img src={loader} alt=""/>
+        {/* <img src={loader} alt=""/> */}
+        <div className="lds-dual-ring"></div>
         <p>Is this your first time loading the app?</p>
         <p>Putting together data may take a minute.</p>
       </div>

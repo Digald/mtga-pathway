@@ -131,6 +131,7 @@ app.on("activate", function() {
 const executeCollectingPlayerData = require("./functions/log-functions/executeCollectingPlayerData");
 const readLogFile = require("./functions/log-functions/readLogFile");
 const initiateScrape = require("./functions/scrape-functions/initiateScrape");
+const initialMatches = require('./functions/match-functions/initialMatches');
 //require('electron-react-devtools').install() to run dev tools
 
 // WINDOWS Get user home drive and username
@@ -165,6 +166,6 @@ ipcMain.on('send-filter-color', (event, arg) => {
   event.sender.send('get-filter-color', arg);
 });
 
-ipcMain.on('send-single-decklist', (event, arg) => {
-  event.sender.send('get-single-decklist', arg);
+ipcMain.on('match-cards', (event, arg) => {
+  initialMatches(arg);
 });

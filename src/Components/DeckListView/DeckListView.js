@@ -23,17 +23,12 @@ class DeckListView extends Component {
   }
 
   render() {
-    console.log(this.state);
     const { decklist, types } = this.state;
     return (
       <div className="DeckListView">
         <h2>{decklist.name}</h2>
         {types.map(type => {
-          const renderList = decklist.deckList.map(card => {
-            if (card.type === type) {
-              return <CardData card={card} />;
-            }
-          });
+          return <CardData key={type} card={decklist.deckList} type={type} />
         })}
       </div>
     );
