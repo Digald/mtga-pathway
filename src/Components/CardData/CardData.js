@@ -25,9 +25,10 @@ class CardData extends Component {
             return (
               <div key={card.name} className="CardData__card">
                 <p className="CardData__card__attr">{card.name}</p>
-                {card.mana_cost.map(mana => {
+                {card.mana_cost.map((mana, index) => {
                   return (
                     <img
+                      key={index}
                       className="CardData__card__mana"
                       src={images[mana.toUpperCase() + ".svg"]}
                       alt={mana}

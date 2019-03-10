@@ -40,8 +40,7 @@ class SingleDeck extends Component {
   };
 
   componentDidMount() {
-    ipcRenderer.send('match-cards', this.props.deck);
-    console.log(this.props.deck);
+    ipcRenderer.send("match-cards", this.props.deck);
   }
 
   deleteDeck = () => {

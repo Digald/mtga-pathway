@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, dialog, ipcMain } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
 const openFile = require("./functions/log-functions/openFile.js");
@@ -131,7 +131,7 @@ app.on("activate", function() {
 const executeCollectingPlayerData = require("./functions/log-functions/executeCollectingPlayerData");
 const readLogFile = require("./functions/log-functions/readLogFile");
 const initiateScrape = require("./functions/scrape-functions/initiateScrape");
-const initialMatches = require('./functions/match-functions/initialMatches');
+const getMatches = require('./functions/scrape-functions/getMatches');
 //require('electron-react-devtools').install() to run dev tools
 
 // WINDOWS Get user home drive and username
@@ -167,5 +167,5 @@ ipcMain.on('send-filter-color', (event, arg) => {
 });
 
 ipcMain.on('match-cards', (event, arg) => {
-  initialMatches(arg);
+  getMatches(arg);
 });
