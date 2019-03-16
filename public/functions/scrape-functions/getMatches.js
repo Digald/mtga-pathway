@@ -55,8 +55,53 @@ module.exports = function(deck) {
   });
 
   // Calculate percentage WO/wildcares
-  currDeck.complete_WO_Wildcards =
-    (currDeck.totalHas / currDeck.totalNeeds) * 100;
-  console.log(notMatched);
-  // console.log(currDeck);
+  currDeck.complete_WO_Wildcards = (
+    (currDeck.totalHas / currDeck.totalNeeds) *
+    100
+  ).toFixed(0);
+
+  currDeck.complete_W_Wildcards = 0;
+  const { wcCommon, wcUncommon, wcRare, wcMythic } = playerTokens;
+  let common = 0,
+    uncommon = 0,
+    rare = 0,
+    mythic = 0;
+
+  notMatched.map(card => {
+    console.log(card);
+    if (card.rarity === "Common") {
+      common += card.quantity - card.playerHas;
+    } else if (card.rarity === "Uncommon") {
+      uncommon += card.quantity - card.playerHas;
+    } else if (card.rarity === "Rare") {
+      rare += card.quantity - card.playerHas;
+    } else if (card.rarity === "Mythic") {
+      mythic += card.quantity - card.playerHas;
+    }
+  });
+  common -= parseInt(wcCommon);
+  uncommon -= parseInt(wcUncommon);
+  rare -= parseInt(wcRare);
+  mythic -= parseInt(wcMythic);
+
+  if (common < 0) {
+    common = 0;
+  }
+  if (uncommon < 0) {
+    uncommon = 0;
+  }
+  if (rare < 0) {
+    rare = 0;
+  }
+  if (mythic < 0) {
+    mythic = 0;
+  }
+
+  currDeck.complete_W_Wildcards = (
+    ((currDeck.totalNeeds - (common + uncommon + rare + mythic)) /
+      currDeck.totalNeeds) *
+    100
+  ).toFixed(0);
+
+  return currDeck;
 };

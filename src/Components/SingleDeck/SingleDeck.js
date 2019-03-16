@@ -126,7 +126,7 @@ class SingleDeck extends Component {
         <Link to="/decklist" onClick={() => this.checkClick()}>
           <div className="SingleDeck__background" />
         </Link>
-        <DeckPercentageBoxes />
+        <DeckPercentageBoxes deck={this.props.deck}/>
       </div>
     );
   }

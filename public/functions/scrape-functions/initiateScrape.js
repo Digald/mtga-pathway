@@ -1,7 +1,7 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 const scrapeDeckList = require("./scrapeDeckList");
-const getMatches = require('./getMatches');
+const getMatches = require("./getMatches");
 const settings = require("electron-settings");
 
 /**
@@ -68,14 +68,15 @@ module.exports = async function(event) {
     singleDeck.deckList = finishedSingleDeck;
 
     // set single deck and move on to next one in loop
-    // getMatches(singleDeck);
+    const calculatedSingleDeck = getMatches(singleDeck);
     const minedDecks = settings.get("mtgaCardData.minedDecks");
-    settings.set("mtgaCardData.minedDecks", [...minedDecks, singleDeck]);
-    allDecksData.push(singleDeck);
+    settings.set("mtgaCardData.minedDecks", [
+      ...minedDecks,
+      calculatedSingleDeck
+    ]);
+    allDecksData.push(calculatedSingleDeck);
     loopCount += 1;
   });
-
-  
 
   function checkForReturn() {
     if (loopCount === loopLength) {

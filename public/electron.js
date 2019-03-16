@@ -167,5 +167,5 @@ ipcMain.on('send-filter-color', (event, arg) => {
 });
 
 ipcMain.on('match-cards', (event, arg) => {
-  getMatches(arg);
+  // getMatches(arg);
 });
