@@ -14,7 +14,6 @@ class CardData extends Component {
     const images = this.importAll(
       require.context("../../assets/manasymbols", false, /\.(png|jpe?g|svg)$/)
     );
-    console.log(images);
     console.log(this.props);
     const { card, type } = this.props;
     return (
@@ -35,8 +34,13 @@ class CardData extends Component {
                     />
                   );
                 })}
-                <p className="CardData__card__attr">{card.rarity}</p>
-                <p className="CardData__card__attr">x/{card.quantity}</p>
+                <p className={`CardData__card__attr CardData__${card.rarity}`}>
+                  {card.rarity}
+                </p>
+                <p className="CardData__card__attr">
+                  {card.playerHas}/{card.quantity}
+                </p>
+                {card.playerHas !== card.quantity ? "<-- Incomplete" : ""}
               </div>
             );
           }

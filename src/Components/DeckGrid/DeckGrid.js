@@ -79,10 +79,14 @@ class DeckGrid extends Component {
     } else if (fromPage === "DashboardView") {
       displayDecks = savedDecks;
     }
+    // Sorts all decks from highest to lowest percentages
+    displayDecks = displayDecks.sort((a, b) => {
+      return b.complete_W_Wildcards - a.complete_W_Wildcards;
+    });
+    console.log(displayDecks.complete_WO_Wildcards);
     return (
       <div className="DeckGrid">
         {displayDecks.map((deck, i) => {
-
           // Find decks that includes selected colors
           if (!restrictColors) {
             const toDisplay = filteredColors.map(mana => {
@@ -94,6 +98,7 @@ class DeckGrid extends Component {
             if (toDisplay.includes(false)) {
               return "";
             }
+            console.log(deck);
             return <SingleDeck key={i} fromPage={fromPage} deck={deck} />;
           }
 

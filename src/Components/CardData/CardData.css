@@ -14,3 +14,20 @@
 .CardData__type {
     font-weight: bolder;
 }
+
+.CardData__Common {
+    font-weight: bold;
+    color: black;
+}
+.CardData__Uncommon {
+    font-weight: bold;
+    color: silver;
+}
+.CardData__Rare {
+    font-weight: bold;
+    color: gold;
+}
+.CardData__Mythic {
+    font-weight: bold;
+    color: red;
+}
