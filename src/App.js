@@ -4,6 +4,7 @@ import "./App.css";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import DeckFinder from "./Pages/DeckFinder/DeckFinder";
 import DeckList from "./Pages/DeckList/DeckList";
+import Settings from './Pages/Settings/Settings';
 const { ipcRenderer } = window.require("electron");
 
 class App extends Component {
@@ -38,6 +39,7 @@ class App extends Component {
             )}
           />
           <Route exact path="/decklist" component={DeckList} />
+          <Route exact path="/settings" component={Settings} />
         </Switch>
       </Router>
     );

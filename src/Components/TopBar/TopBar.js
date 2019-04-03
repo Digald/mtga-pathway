@@ -8,6 +8,7 @@ import coins from "../../assets/tokens/coins.svg";
 import gem from "../../assets/tokens/gem.svg";
 import deck_little from "../../assets/navigation/deck-little.svg";
 import dash_little from "../../assets/navigation/dash-little.svg";
+import cog_little from '../../assets/navigation/cog-little.svg';
 const settings = window.require('electron-settings');
 
 class TopBar extends Component {
@@ -22,6 +23,8 @@ class TopBar extends Component {
       icon = dash_little;
     } else if (activePage === "deckfinder") {
       icon = deck_little;
+    } else if (activePage === 'settings') {
+      icon = cog_little;
     }
     return (
       <div className="TopBar">
