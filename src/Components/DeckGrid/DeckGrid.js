@@ -13,19 +13,12 @@ class DeckGrid extends Component {
   };
   constructor() {
     super();
-    ipcRenderer.on("grab-decks-response", (event, arg) => {
-      if (arg === "done") {
-        this.setState({
-          decksList: settings.get("mtgaCardData.minedDecks")
-        });
-      }
-    });
 
-    ipcRenderer.on("delete-saved-deck", (event, arg) => {
-      if (arg === "delete-saved-deck") {
-        this.setState({ savedDecks: settings.get("mtgaCardData.savedDecks") });
-      }
-    });
+    this.updateDeckList = this.updateDeckList.bind(this);
+    ipcRenderer.on("grab-decks-response", this.updateDeckList);
+
+    this.updatedSavedDecks = this.updatedSavedDecks.bind(this);
+    ipcRenderer.on("delete-saved-deck", this.updatedSavedDecks);
 
     this.filterColors = this.filterColors.bind(this);
     ipcRenderer.on("get-filter-color", this.filterColors);
@@ -33,6 +26,20 @@ class DeckGrid extends Component {
     this.restrictColors = this.restrictColors.bind(this);
     ipcRenderer.on("get-restrict-color", this.restrictColors);
   }
+
+  updateDeckList = (event, arg) => {
+    if (arg === "done") {
+      this.setState({
+        decksList: settings.get("mtgaCardData.minedDecks")
+      });
+    }
+  };
+
+  updatedSavedDecks = (event, arg) => {
+    if (arg === "delete-saved-deck") {
+      this.setState({ savedDecks: settings.get("mtgaCardData.savedDecks") });
+    }
+  };
 
   filterColors = (event, color) => {
     const { filteredColors } = this.state;

@@ -4,7 +4,7 @@ import "./App.css";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import DeckFinder from "./Pages/DeckFinder/DeckFinder";
 import DeckList from "./Pages/DeckList/DeckList";
-import Settings from './Pages/Settings/Settings';
+import Settings from "./Pages/Settings/Settings";
 const { ipcRenderer } = window.require("electron");
 
 class App extends Component {
@@ -14,12 +14,15 @@ class App extends Component {
 
   constructor() {
     super();
-    ipcRenderer.on("loading-status", (event, arg) => {
-      this.setState({
-        isLoaded: arg
-      });
-    });
+    this.checkLoadingStatus = this.checkLoadingStatus.bind(this);
+    ipcRenderer.on("loading-status", this.checkLoadingStatus);
   }
+
+  checkLoadingStatus = (event, arg) => {
+    this.setState({
+      isLoaded: arg
+    });
+  };
 
   render() {
     return (

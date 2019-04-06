@@ -8,14 +8,17 @@ class ScrapeButton extends Component {
   };
   constructor() {
     super();
-    ipcRenderer.on("grab-decks-response", (event, arg) => {
-      if (arg === "done") {
-        this.setState({
-          btnStatus: "default"
-        });
-      }
-    });
+    this.decksRecieved = this.decksRecieved.bind(this);
+    ipcRenderer.on("grab-decks-response", this.decksRecieved);
   }
+
+  decksRecieved = (event, arg) => {
+    if (arg === "done") {
+      this.setState({
+        btnStatus: "default"
+      });
+    }
+  };
 
   handleClick = () => {
     console.log("clicked");
