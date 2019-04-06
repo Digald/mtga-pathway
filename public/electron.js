@@ -3,6 +3,7 @@ const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
 const openFile = require("./functions/log-functions/openFile.js");
+const settings = require('electron-settings');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -137,7 +138,7 @@ const getMatches = require('./functions/scrape-functions/getMatches');
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
 const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
-
+settings.set('rawData.path', winAbsPath);
 // Read the file and format slightly removing new lines and carriage
 const logData = readLogFile(winAbsPath);
 

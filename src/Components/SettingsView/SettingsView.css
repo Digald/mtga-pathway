@@ -1,3 +1,19 @@
 .SettingsView {
     padding: 1rem;
 }
+
+.SettingsView__warning {
+    border: 1px solid black;
+    padding: 5px;
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.SettingsView__important-text {
+    font-weight: bold;
+}
+
+.SettingsView__info {
+    border: 1px solid black;
+    padding: 5px;
+    background-color: rgba(0, 255, 0, 0.5);
+}

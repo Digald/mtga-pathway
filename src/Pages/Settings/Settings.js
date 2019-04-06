@@ -11,7 +11,7 @@ class DeckList extends Component {
     return (
       <div className="DeckList main-grid">
         <CornerSpace />
-        <TopBar title="SETTINGS" activePage="settings" />
+        <TopBar title="SYS INFO" activePage="settings" />
         <SideBar activePage="settings" />
         <SettingsView />
       </div>
