@@ -13,7 +13,7 @@ module.exports = function(AbsPath) {
       .replace(" ", "");
   } catch (err) {
     console.log(err);
-    // Send data explaining that they have to choose file themselves
+    console.log('Not the right file');
   }
   return logData;
 };

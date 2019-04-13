@@ -21,5 +21,5 @@ module.exports = function(mainWindow) {
   settings.set('rawData.path', filePath);
   const logData = readLogFile(filePath);
 
-  executeCollectingPlayerData(logData);
+  executeCollectingPlayerData(logData, mainWindow);
 };

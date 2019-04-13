@@ -144,7 +144,7 @@ const logData = readLogFile(winAbsPath);
 
 // Wait for event to start grabbing the log files
 ipcMain.on("read-log", async function(event) {
-  await executeCollectingPlayerData(logData);
+  await executeCollectingPlayerData(logData, mainWindow);
   event.sender.send("loading-status", true);
 });
 
@@ -168,5 +168,5 @@ ipcMain.on('send-filter-color', (event, arg) => {
 });
 
 ipcMain.on('match-cards', (event, arg) => {
-  // getMatches(arg);
+  getMatches(arg);
 });

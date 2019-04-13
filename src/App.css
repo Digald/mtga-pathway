@@ -9,3 +9,10 @@ body, #root {
   grid-template-columns: 100px auto;
   grid-template-rows: 50px auto;
 }
+
+.log-warning {
+  /* background-color: red; */
+  padding: 5%;
+  color: red;
+  font-weight: bold;
+}
