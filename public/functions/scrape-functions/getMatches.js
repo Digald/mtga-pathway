@@ -68,7 +68,6 @@ module.exports = function(deck) {
     mythic = 0;
 
   notMatched.map(card => {
-    console.log(card);
     if (card.rarity === "Common") {
       common += card.quantity - card.playerHas;
     } else if (card.rarity === "Uncommon") {
@@ -102,6 +101,5 @@ module.exports = function(deck) {
       currDeck.totalNeeds) *
     100
   ).toFixed(0);
-
   return currDeck;
 };

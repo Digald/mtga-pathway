@@ -39,10 +39,6 @@ class SingleDeck extends Component {
     return displaySymbol;
   };
 
-  componentDidMount() {
-    ipcRenderer.send("match-cards", this.props.deck);
-  }
-
   deleteDeck = () => {
     const { url } = this.props.deck;
     const savedDecks = settings.get("mtgaCardData.savedDecks");
@@ -76,7 +72,7 @@ class SingleDeck extends Component {
   };
 
   checkClick = () => {
-    settings.set("dataToRender.decklist", this.props.deck);
+    settings.set("dataToRender.insideDecklist", this.props.deck);
   };
 
   render() {

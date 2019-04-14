@@ -4,7 +4,6 @@ import "./DeckPercentageBoxes.css";
 class DeckPercentageBoxes extends Component {
   render() {
     const { deck } = this.props;
-    console.log(deck);
     return (
       <div className="DeckPercentageBoxes">
         <div className="DeckPercentageBoxes__single">

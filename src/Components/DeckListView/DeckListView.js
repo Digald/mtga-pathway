@@ -5,7 +5,7 @@ const settings = window.require("electron-settings");
 
 class DeckListView extends Component {
   state = {
-    decklist: settings.get("dataToRender.decklist"),
+    decklist: settings.get("dataToRender.insideDecklist"),
     types: []
   };
 
@@ -24,6 +24,7 @@ class DeckListView extends Component {
 
   render() {
     const { decklist, types } = this.state;
+    console.log(decklist);
     return (
       <div className="DeckListView">
         <h2>{decklist.name}</h2>

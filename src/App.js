@@ -42,7 +42,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state);
     if (this.state.warningMessage.length > 1) {
       return <p className="log-warning">{this.state.warningMessage}</p>;
     }

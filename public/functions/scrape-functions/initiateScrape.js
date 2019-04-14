@@ -15,7 +15,7 @@ const settings = require("electron-settings");
 module.exports = async function(event) {
   // Initate data
   const allDecksData = [];
-  settings.set("mtgaCardData.minedDecks", allDecksData);
+  settings.set("mtgaCardData.minedDecks", []);
 
   // Initial url of all decks
   const mainUrl = "https://www.mtggoldfish.com/metagame/standard/full#paper";
@@ -72,7 +72,7 @@ module.exports = async function(event) {
     const minedDecks = settings.get("mtgaCardData.minedDecks");
     settings.set("mtgaCardData.minedDecks", [
       ...minedDecks,
-      calculatedSingleDeck
+      ...calculatedSingleDeck
     ]);
     allDecksData.push(calculatedSingleDeck);
     loopCount += 1;

@@ -132,7 +132,7 @@ app.on("activate", function() {
 const executeCollectingPlayerData = require("./functions/log-functions/executeCollectingPlayerData");
 const readLogFile = require("./functions/log-functions/readLogFile");
 const initiateScrape = require("./functions/scrape-functions/initiateScrape");
-const getMatches = require('./functions/scrape-functions/getMatches');
+const updateMatches = require('./functions/scrape-functions/updateMatches');
 //require('electron-react-devtools').install() to run dev tools
 
 // WINDOWS Get user home drive and username
@@ -145,13 +145,13 @@ const logData = readLogFile(winAbsPath);
 // Wait for event to start grabbing the log files
 ipcMain.on("read-log", async function(event) {
   await executeCollectingPlayerData(logData, mainWindow);
+  await updateMatches();
   event.sender.send("loading-status", true);
 });
 
 ipcMain.on("grab-decks", async function(event, args) {
   await initiateScrape(event);
 });
-console.log("Back in electron.js");
 
 ipcMain.on("delete-saved-deck", (event, arg) => {
   if (arg === "delete-saved-deck") {
@@ -165,8 +165,4 @@ ipcMain.on('send-restrict-color', (event, arg) => {
 
 ipcMain.on('send-filter-color', (event, arg) => {
   event.sender.send('get-filter-color', arg);
-});
-
-ipcMain.on('match-cards', (event, arg) => {
-  getMatches(arg);
 });

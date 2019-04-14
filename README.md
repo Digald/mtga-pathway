@@ -27,11 +27,12 @@ mtgaCardData: {
     allMtgaCards: // Array of all card data from the log file
     playerTokens: // Array of all player wildcards, gems, gold, etc,
     minedDecks: // Array of decks from source providing data
+    savedDecks: // Array of decks saved for future reference
 }
 
 dataToRender: {
     newCards: // Array of cards newly added to collection,
-    decklist: // Object containing the details of a single deck
+    insideDecklist: // Object containing the details of a single deck
 }
 ```
 
