@@ -8,15 +8,15 @@ class DeckPercentageBoxes extends Component {
       <div className="DeckPercentageBoxes">
         <div className="DeckPercentageBoxes__single">
           <p className="DeckPercentageBoxes__single__percent">
-            {deck.complete_W_Wildcards}%
-          </p>
-          <p className="DeckPercentageBoxes__single__wildcard">W/Wildcards</p>
-        </div>
-        <div className="DeckPercentageBoxes__single">
-          <p className="DeckPercentageBoxes__single__percent">
             {deck.complete_WO_Wildcards}%
           </p>
           <p className="DeckPercentageBoxes__single__wildcard">WO/Wildcards</p>
+        </div>
+        <div className="DeckPercentageBoxes__single">
+          <p className="DeckPercentageBoxes__single__percent">
+            {deck.complete_W_Wildcards}%
+          </p>
+          <p className="DeckPercentageBoxes__single__wildcard">W/Wildcards</p>
         </div>
       </div>
     );

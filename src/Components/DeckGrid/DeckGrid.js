@@ -88,7 +88,7 @@ class DeckGrid extends Component {
     }
     // Sorts all decks from highest to lowest percentages
     displayDecks = displayDecks.sort((a, b) => {
-      return b.complete_W_Wildcards - a.complete_W_Wildcards;
+      return b.complete_WO_Wildcards - a.complete_WO_Wildcards;
     });
     console.log(displayDecks.complete_WO_Wildcards);
     return (

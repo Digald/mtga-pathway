@@ -72,7 +72,7 @@ module.exports = async function(event) {
     const minedDecks = settings.get("mtgaCardData.minedDecks");
     settings.set("mtgaCardData.minedDecks", [
       ...minedDecks,
-      ...calculatedSingleDeck
+      calculatedSingleDeck
     ]);
     allDecksData.push(calculatedSingleDeck);
     loopCount += 1;

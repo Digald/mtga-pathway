@@ -67,7 +67,7 @@ module.exports = function(deck) {
     rare = 0,
     mythic = 0;
 
-  notMatched.map(card => {
+  notMatched.forEach(card => {
     if (card.rarity === "Common") {
       common += card.quantity - card.playerHas;
     } else if (card.rarity === "Uncommon") {
