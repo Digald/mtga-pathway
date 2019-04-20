@@ -1,4 +1,6 @@
 /**
+ * This is one of the first functions that reads the log file and scrapes all the card data and player token data I need from it.
+ * 
  * @param {string} logData The text of the entire mtg arena log file with spaces and carriage removed
  * @param {object} mainWindow the browser window for the app
  * @return {object} An object with two properties, playerTokens and playerCards. playerTokens holds meta game currency and playerCards holds the player's current collection

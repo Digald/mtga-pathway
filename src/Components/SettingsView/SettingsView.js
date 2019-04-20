@@ -28,8 +28,17 @@ class SettingsView extends Component {
           OS Platform:{" "}
           <span className="SettingsView__important-text">{os.platform()}</span>
         </p>
-        <p>Home Directory: {os.homedir()}</p>
-        <p className="SettingsView__info">Having trouble with MTGA Pathway? Contact me at markalaniz000@gmail.com</p>
+        <p>
+          Data Sources:{" "}
+          <ul>
+            <li>Scryfall</li>
+            <li>MTGGoldfish</li>
+          </ul>
+        </p>
+        <p className="SettingsView__info">
+          Having trouble with MTGA Pathway? Contact me at
+          markalaniz000@gmail.com
+        </p>
       </div>
     );
   }

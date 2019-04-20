@@ -7,13 +7,12 @@
  */
 
 module.exports = function(allUpdates, onlyNewCards) {
-  const newQuantities = [];
+  let newQuantities = [];
   allUpdates.forEach(element => {
-    onlyNewCards.forEach(element2 => {
-      if (element.arena_id !== element2.arena_id) {
-        newQuantities.push(element);
-      }
+    const nonMatchingIds = onlyNewCards.filter(element2 => {
+      return element.arena_id !== element2.arena_id;
     });
+    newQuantities = nonMatchingIds;
   });
   return newQuantities;
 };

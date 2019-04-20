@@ -3,9 +3,16 @@ const fs = require("fs");
 const path = require("path");
 const updateCardQuantity = require("./updateCardQuantity");
 
+/**
+ * Takes all arena id's from the log and parses them into card data taken from arenaCards.json
+ *
+ * @param {array} fromPlayerCollection array of objects containing card ids and quantities
+ * @param {array} newQuantities if no new cards are added but the quantities have changed, this is an array of those cards
+ * @return
+ */
+
 module.exports = function(fromPlayerCollection, newQuantities = []) {
   console.log("have to parse");
-
   // Read data inside JSON file containing all standard card data
   fs.readFile(
     path.resolve(__dirname, "../../data/arenaCards.json"),
@@ -23,7 +30,7 @@ module.exports = function(fromPlayerCollection, newQuantities = []) {
         // foundCard will contain the data on parsed card
         let foundCard;
 
-        // Now loop through all standard cards with forEach, if the arena_ids match, assign it to foundCard variable
+        // Now filter through all standard cards, if the arena_ids match, assign it to foundCard variable
 
         const filteredCardInfo = await settings
           .get("mtgaCardData.allMtgaCards")

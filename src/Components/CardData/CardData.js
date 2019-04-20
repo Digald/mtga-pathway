@@ -4,7 +4,7 @@ import "./CardData.css";
 class CardData extends Component {
   importAll(r) {
     let images = {};
-    r.keys().map((item, index) => {
+    r.keys().forEach((item, index) => {
       images[item.replace("./", "")] = r(item);
     });
     return images;
