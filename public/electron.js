@@ -130,8 +130,16 @@ app.on("activate", function() {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 const searchLogFile = require("./functions/log-functions/searchLogFile");
-const updateRawCollection = require("./functions/log-functions/updateRawCollection");
+// const updateRawCollection = require("./functions/log-functions/updateRawCollection");
 const readLogFile = require("./functions/log-functions/readLogFile");
+// Inside read-log event
+const calculateCountDiff = require("./functions/log-functions/calculateCountDifference");
+const sortDifferences = require("./functions/log-functions/sortDifferences");
+const extractNewCardQuantity = require("./functions/log-functions/extractNewCardQuantity");
+const packageCollection = require("./functions/log-functions/packageCollection");
+const parseCards = require("./functions/log-functions/parseCards");
+
+// Scrape and matches
 const initiateScrape = require("./functions/scrape-functions/initiateScrape");
 const updateMatches = require("./functions/scrape-functions/updateMatches");
 //require('electron-react-devtools').install() to run dev tools
@@ -150,8 +158,41 @@ ipcMain.on("read-log", async function(event) {
   const { playerTokens, playerCards } = playerData;
   // Save player token data immediately
   settings.set("mtgaCardData.playerTokens", playerTokens);
-  updateRawCollection(playerCards);
-
+  // Next Update the Raw collection of cards
+  // updateRawCollection(playerCards);
+  const playerMainCollection = packageCollection(playerCards);
+  const storedRawData = settings.get("rawData.cards");
+  let allDifferences = [];
+  let onlyNewCards = [];
+  let newQuantities = [];
+  if (!storedRawData) {
+    settings.set("rawData.cards", playerMainCollection);
+    allDifferences = ["first-time"];
+  } else {
+    allDifferences = calculateCountDiff(storedRawData, playerMainCollection);
+    onlyNewCards = sortDifferences(storedRawData, playerMainCollection);
+    newQuantities = extractNewCardQuantity(allDifferences, onlyNewCards);
+    // onlyNewCards = [{arena_id: "67804", quantity: 1}];
+    // allDiff = [{ arena_id: "68656", quantity: 3 }, {arena_id: "67804", quantity: 1}];
+    // newQuantities = [{ arena_id: "68656", quantity: 3 }];
+  }
+  //If this is the first time running or there are new cards to parse, allDiff.length will be greater than 0
+  if (allDifferences.length > 0) {
+    // Only run for using the app for the first time
+    if (allDifferences[0] === "first-time") {
+      parseCards(playerMainCollection);
+    }
+    // Run else statement when new cards are found
+    else {
+      settings.set("rawData.cards", playerMainCollection);
+      parseCards(onlyNewCards, newQuantities);
+    }
+  }
+  // Nothing new to update, more logic to be added
+  else {
+    console.log("nothing to update");
+  }
+  // Begin updating collection matches to scraped decks
   await updateMatches();
   event.sender.send("loading-status", true);
 });
