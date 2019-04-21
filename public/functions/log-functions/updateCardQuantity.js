@@ -10,10 +10,8 @@ module.exports = function(cardsToUpdate) {
   const playerMtgaCards = settings.get("mtgaCardData.playerMtgaCards");
   playerMtgaCards.forEach(card => {
     cardsToUpdate.forEach(newData => {
-      if (card && newData) {
-        if (card.arena_id == newData.arena_id) {
-          card.quantity = newData.quantity;
-        }
+      if (card && newData && card.arena_id == newData.arena_id) {
+        card.quantity = newData.quantity;
       }
     });
   });
