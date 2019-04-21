@@ -3,7 +3,7 @@ const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
 const openFile = require("./functions/log-functions/openFile.js");
-const settings = require('electron-settings');
+const settings = require("electron-settings");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -132,13 +132,13 @@ app.on("activate", function() {
 const executeCollectingPlayerData = require("./functions/log-functions/executeCollectingPlayerData");
 const readLogFile = require("./functions/log-functions/readLogFile");
 const initiateScrape = require("./functions/scrape-functions/initiateScrape");
-const updateMatches = require('./functions/scrape-functions/updateMatches');
+const updateMatches = require("./functions/scrape-functions/updateMatches");
 //require('electron-react-devtools').install() to run dev tools
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
 const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
-settings.set('rawData.path', winAbsPath);
+settings.set("rawData.path", winAbsPath);
 // Read the file and format slightly removing new lines and carriage
 const logData = readLogFile(winAbsPath);
 
@@ -159,10 +159,10 @@ ipcMain.on("delete-saved-deck", (event, arg) => {
   }
 });
 
-ipcMain.on('send-restrict-color', (event, arg) => {
-  event.sender.send('get-restrict-color', arg);
+ipcMain.on("send-restrict-color", (event, arg) => {
+  event.sender.send("get-restrict-color", arg);
 });
 
-ipcMain.on('send-filter-color', (event, arg) => {
-  event.sender.send('get-filter-color', arg);
+ipcMain.on("send-filter-color", (event, arg) => {
+  event.sender.send("get-filter-color", arg);
 });
