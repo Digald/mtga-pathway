@@ -129,7 +129,8 @@ app.on("activate", function() {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-const executeCollectingPlayerData = require("./functions/log-functions/executeCollectingPlayerData");
+const searchLogFile = require("./functions/log-functions/searchLogFile");
+const updateRawCollection = require("./functions/log-functions/updateRawCollection");
 const readLogFile = require("./functions/log-functions/readLogFile");
 const initiateScrape = require("./functions/scrape-functions/initiateScrape");
 const updateMatches = require("./functions/scrape-functions/updateMatches");
@@ -144,7 +145,13 @@ const logData = readLogFile(winAbsPath);
 
 // Wait for event to start grabbing the log files
 ipcMain.on("read-log", async function(event) {
-  await executeCollectingPlayerData(logData, mainWindow);
+  // Grab player data from the read log file
+  const playerData = await searchLogFile(logData, mainWindow);
+  const { playerTokens, playerCards } = playerData;
+  // Save player token data immediately
+  settings.set("mtgaCardData.playerTokens", playerTokens);
+  updateRawCollection(playerCards);
+
   await updateMatches();
   event.sender.send("loading-status", true);
 });
