@@ -1,5 +1,4 @@
 const { dialog } = require("electron");
-// const executeCollectingPlayerData = require("./executeCollectingPlayerData");
 const readLogFile = require("./readLogFile");
 const searchLogFile = require("./searchLogFile");
 const calculateCountDiff = require("./calculateCountDifference");
@@ -27,7 +26,6 @@ module.exports = async function(mainWindow) {
   settings.set('rawData.path', filePath);
   const logData = readLogFile(filePath);
 
-  // executeCollectingPlayerData(logData, mainWindow);
   // Grab player data from the read log file
   const playerData = await searchLogFile(logData, mainWindow);
   const { playerTokens, playerCards } = playerData;
