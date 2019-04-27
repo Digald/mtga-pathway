@@ -16,4 +16,5 @@ module.exports = function(cardsToUpdate) {
     });
   });
   settings.set("mtgaCardData.playerMtgaCards", playerMtgaCards);
+  return playerMtgaCards;
 };

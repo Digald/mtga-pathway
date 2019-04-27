@@ -1,9 +1,9 @@
 const settings = require("electron-settings");
-const sortDifferences = require("./sortDifferences");
 const calculateCountDiff = require("./calculateCountDifference");
+const sortDifferences = require("./sortDifferences");
+const extractNewCardQuantity = require("./extractNewCardQuantity");
 const packageCollection = require("./packageCollection");
 const parseCards = require("./parseCards");
-const extractNewCardQuantity = require("./extractNewCardQuantity");
 
 module.exports = function(playerCards) {
   // Reorganized player collection array
