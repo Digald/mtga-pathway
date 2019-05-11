@@ -35,7 +35,7 @@ export default class extends Component {
     return (
       <div>
         <h1>Hello Electron!</h1>
-
+        <img src='/static/manasymbols/UB.svg' alt="static test"/>
         {this.state.message && <p>{this.state.message}</p>}
 
         <form onSubmit={this.handleSubmit}>
