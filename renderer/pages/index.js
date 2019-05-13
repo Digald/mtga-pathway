@@ -1,34 +1,31 @@
-import { Component } from "react";
+import React, { Component } from "react";
+// Components
+// import CornerSpace from "../../Components/CornerSpace/CornerSpace";
+// import TopBar from "../../Components/TopBar/TopBar";
+// import SideBar from "../../Components/SideBar/SideBar";
+// import DashBoardView from "../../Components/DashboardView/DashboardView";
+// import LoadingPage from "../../Components/LoadingPage/LoadingPage";
 
-export default class extends Component {
-  state = {};
-
-  //   componentDidMount () {
-  //     // start listening the channel message
-  //     global.ipcRenderer.on('message', this.handleMessage)
-  //   }
-
-  //   componentWillUnmount () {
-  //     // stop listening the channel message
-  //     global.ipcRenderer.removeListener('message', this.handleMessage)
-  //   }
-
-  //   handleMessage = (event, message) => {
-  //     // receive a message from the main process and save it in the local state
-  //     this.setState({ message })
-  //   }
-
-  //   handleChange = event => {
-  //     this.setState({ input: event.target.value })
-  //   }
-
-  //   handleSubmit = event => {
-  //     event.preventDefault()
-  //     global.ipcRenderer.send('message', this.state.input)
-  //     this.setState({ message: null })
-  //   }
-
+class Dashboard extends Component {
   render() {
-    return <div>This is home now</div>;
+    // const { isLoaded } = this.props;
+    // if (!isLoaded) return <LoadingPage />;
+    return (
+      <div className="Dashboard main-grid">
+      sup
+        {/* <CornerSpace />
+        <TopBar title="DASHBOARD" activePage="dashboard" />
+        <SideBar activePage="dashboard" />
+        <DashBoardView /> */}
+        
+        <style jsx>{`
+          body {
+            background-color: black;
+          }
+        `}</style>
+      </div>
+    );
   }
 }
+
+export default Dashboard;
