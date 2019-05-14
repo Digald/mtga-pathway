@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // Components
 import CornerSpace from "../components/CornerSpace";
 import TopBar from "../components/TopBar";
-// import SideBar from "../../Components/SideBar/SideBar";
+import SideBar from "../components/SideBar";
 // import DashBoardView from "../../Components/DashboardView/DashboardView";
 import LoadingPage from "../components/LoadingPage";
 import Layout from "../components/Layout";
@@ -25,8 +25,8 @@ class Dashboard extends Component {
         <div className="Dashboard main-grid">
           <CornerSpace />
           {/* <TopBar title="DASHBOARD" activePage="dashboard" /> */}
-          {/* <SideBar activePage="dashboard" />
-        <DashBoardView /> */}
+          <SideBar activePage="dashboard" />
+        {/* <DashBoardView /> */}
         </div>
         <style jsx>{`
           .Dashboard {

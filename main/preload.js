@@ -4,7 +4,5 @@ const settings = require("electron-settings");
 // needed node functionality here
 process.once("loaded", () => {
   global.ipcRenderer = ipcRenderer;
-  console.log(global);
   global.esettings = settings;
-  console.log(global.esettings.getAll());
 });
