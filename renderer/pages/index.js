@@ -1,29 +1,39 @@
 import React, { Component } from "react";
 // Components
-// import CornerSpace from "../../Components/CornerSpace/CornerSpace";
-// import TopBar from "../../Components/TopBar/TopBar";
+import CornerSpace from "../components/CornerSpace";
+import TopBar from "../components/TopBar";
 // import SideBar from "../../Components/SideBar/SideBar";
 // import DashBoardView from "../../Components/DashboardView/DashboardView";
-// import LoadingPage from "../../Components/LoadingPage/LoadingPage";
+import LoadingPage from "../components/LoadingPage";
+import Layout from "../components/Layout";
 
 class Dashboard extends Component {
+  state = {
+    isLoaded: true
+  };
+
   render() {
-    // const { isLoaded } = this.props;
-    // if (!isLoaded) return <LoadingPage />;
+    const { isLoaded } = this.state;
+    if (!isLoaded)
+      return (
+        <Layout>
+          <LoadingPage />
+        </Layout>
+      );
     return (
-      <div className="Dashboard main-grid">
-      sup
-        {/* <CornerSpace />
-        <TopBar title="DASHBOARD" activePage="dashboard" />
-        <SideBar activePage="dashboard" />
+      <Layout>
+        <div className="Dashboard main-grid">
+          <CornerSpace />
+          {/* <TopBar title="DASHBOARD" activePage="dashboard" /> */}
+          {/* <SideBar activePage="dashboard" />
         <DashBoardView /> */}
-        
+        </div>
         <style jsx>{`
-          body {
-            background-color: black;
+          .Dashboard {
+            height: 100%;
           }
         `}</style>
-      </div>
+      </Layout>
     );
   }
 }
