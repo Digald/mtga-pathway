@@ -40,7 +40,7 @@ class Dashboard extends Component {
       <Layout>
         <div className="Dashboard main-grid">
           <CornerSpace />
-          {/* <TopBar title="DASHBOARD" activePage="dashboard" /> */}
+          <TopBar title="DASHBOARD" activePage="dashboard" />
           <SideBar activePage="dashboard" />
         {/* <DashBoardView /> */}
         </div>
