@@ -1,5 +1,6 @@
 import { Component } from 'react'
 
+// Delete start.js when ready for building and distributing
 export default class extends Component {
   state = {
     input: '',

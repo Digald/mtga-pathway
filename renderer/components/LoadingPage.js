@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class LoadingPage extends Component {
   componentDidMount() {
-    global.ipcRenderer.send("read-log");
+    global.ipcRenderer.send("readLog");
   }
 
   render() {

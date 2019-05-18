@@ -9,8 +9,24 @@ import Layout from "../components/Layout";
 
 class Dashboard extends Component {
   state = {
-    isLoaded: true
+    isLoaded: false
   };
+
+  componentDidMount() {
+    // start listening the channel message
+    global.ipcRenderer.on('loading-status', this.handleMessage);
+  }
+
+  componentWillUnmount () {
+    // stop listening the channel message
+    global.ipcRenderer.removeListener('loading-status', this.handleMessage)
+  }
+
+  handleMessage = (event, message) => {
+    this.setState({
+      isLoaded: message
+    })
+  }
 
   render() {
     const { isLoaded } = this.state;
