@@ -3,8 +3,8 @@ import React, { Component } from "react";
 
 class DeckGrid extends Component {
   state = {
-    decksList: settings.get("mtgaCardData.minedDecks") || [],
-    savedDecks: settings.get("mtgaCardData.savedDecks") || [],
+    decksList: global.esettings.get("mtgaCardData.minedDecks") || [],
+    savedDecks: global.esettings.get("mtgaCardData.savedDecks") || [],
     filteredColors: [],
     restrictColors: false
   };
@@ -35,14 +35,16 @@ class DeckGrid extends Component {
   updateDeckList = (event, arg) => {
     if (arg === "done") {
       this.setState({
-        decksList: settings.get("mtgaCardData.minedDecks")
+        decksList: global.esettings.get("mtgaCardData.minedDecks")
       });
     }
   };
 
   updatedSavedDecks = (event, arg) => {
     if (arg === "delete-saved-deck") {
-      this.setState({ savedDecks: settings.get("mtgaCardData.savedDecks") });
+      this.setState({
+        savedDecks: global.esettings.get("mtgaCardData.savedDecks")
+      });
     }
   };
 
