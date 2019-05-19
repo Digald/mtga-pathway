@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import SingleCard from "./SingleCard";
+import SingleCard from "./SingleCard";
 
 class DisplayCards extends Component {
   state = {

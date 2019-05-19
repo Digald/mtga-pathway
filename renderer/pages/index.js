@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import CornerSpace from "../components/CornerSpace";
 import TopBar from "../components/TopBar";
 import SideBar from "../components/SideBar";
-// import DashBoardView from "../../Components/DashboardView/DashboardView";
+import DashBoardView from "../components/DashboardView";
 import LoadingPage from "../components/LoadingPage";
 import Layout from "../components/Layout";
 
@@ -14,19 +14,19 @@ class Dashboard extends Component {
 
   componentDidMount() {
     // start listening the channel message
-    global.ipcRenderer.on('loading-status', this.handleMessage);
+    global.ipcRenderer.on("loading-status", this.handleMessage);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     // stop listening the channel message
-    global.ipcRenderer.removeListener('loading-status', this.handleMessage)
+    global.ipcRenderer.removeListener("loading-status", this.handleMessage);
   }
 
   handleMessage = (event, message) => {
     this.setState({
       isLoaded: message
-    })
-  }
+    });
+  };
 
   render() {
     const { isLoaded } = this.state;
@@ -42,7 +42,7 @@ class Dashboard extends Component {
           <CornerSpace />
           <TopBar title="DASHBOARD" activePage="dashboard" />
           <SideBar activePage="dashboard" />
-        {/* <DashBoardView /> */}
+          <DashBoardView />
         </div>
         <style jsx>{`
           .Dashboard {
