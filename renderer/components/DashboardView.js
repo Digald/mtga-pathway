@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // Components
 import DeckGrid from "./DeckGrid";
-// import DisplayCards from "./DisplayCards";
+import DisplayCards from "./DisplayCards";
 
 class DashboardView extends Component {
   render() {
