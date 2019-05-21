@@ -41,6 +41,7 @@ app.on("window-all-closed", app.quit);
 const readLogFile = require("./functions/readLogFile.js");
 const executeLogFile = require("./functions/executeLogFile.js");
 const updateMatches = require('./functions/updateMatches.js');
+const initiateScrape = require('./functions/initiateScrape.js');
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
@@ -54,4 +55,22 @@ ipcMain.on("readLog", async (event, message) => {
   // Begin updating collection matches to scraped decks
   await updateMatches();
   event.sender.send("loading-status", true);
+});
+
+ipcMain.on("grab-decks", async function(event, args) {
+  await initiateScrape(event);
+});
+
+ipcMain.on("delete-saved-deck", (event, arg) => {
+  if (arg === "delete-saved-deck") {
+    event.sender.send("delete-saved-deck", "delete-saved-deck");
+  }
+});
+
+ipcMain.on("send-restrict-color", (event, arg) => {
+  event.sender.send("get-restrict-color", arg);
+});
+
+ipcMain.on("send-filter-color", (event, arg) => {
+  event.sender.send("get-filter-color", arg);
 });
