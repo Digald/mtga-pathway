@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 // Components
 import ScrapeButton from "./ScrapeButton";
-// import DeckGrid from "./DeckGrid";
-// import DeckFilter from "./DeckFilter";
+import DeckGrid from "./DeckGrid";
+import DeckFilter from "./DeckFilter";
 
 class DeckFinderView extends Component {
   render() {
