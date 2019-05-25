@@ -29,6 +29,7 @@ class Dashboard extends Component {
   };
 
   render() {
+    // testing get
     const { isLoaded } = this.state;
     if (!isLoaded)
       return (

@@ -20,6 +20,7 @@
   "devDependencies": {
     "electron": "^4.1.0",
     "electron-builder": "^20.39.0",
+    "electron-react-devtools": "^0.5.3",
     "next": "^8.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"

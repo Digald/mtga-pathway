@@ -17,7 +17,6 @@ module.exports = function(deck) {
   const playerCards = settings.get("mtgaCardData.playerMtgaCards");
   const playerTokens = settings.get("mtgaCardData.playerTokens");
   const notMatched = [];
-
   currDeck.deckList.forEach(deckCard => {
     deckCard.quantity = parseInt(deckCard.quantity);
     const { name, quantity } = deckCard;

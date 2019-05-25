@@ -8,7 +8,7 @@ const { BrowserWindow, app, ipcMain } = require("electron");
 const isDev = require("electron-is-dev");
 const prepareNext = require("electron-next");
 const settings = require("electron-settings");
-
+global.esettings = settings;
 // Prepare the renderer once the app is ready
 let mainWindow;
 app.on("ready", async () => {
@@ -32,6 +32,9 @@ app.on("ready", async () => {
       });
 
   mainWindow.loadURL(url);
+  BrowserWindow.addDevToolsExtension(
+    "C:\\Users\\Mark\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.6.0_0"
+  );
 });
 
 // Quit the app once all windows are closed
@@ -40,8 +43,8 @@ app.on("window-all-closed", app.quit);
 // import functions
 const readLogFile = require("./functions/readLogFile.js");
 const executeLogFile = require("./functions/executeLogFile.js");
-const updateMatches = require('./functions/updateMatches.js');
-const initiateScrape = require('./functions/initiateScrape.js');
+const updateMatches = require("./functions/updateMatches.js");
+const initiateScrape = require("./functions/initiateScrape.js");
 
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;

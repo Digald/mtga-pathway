@@ -5,7 +5,7 @@ import TopBar from "../components/TopBar";
 import SideBar from "../components/SideBar";
 import Layout from "../components/Layout";
 // import LoadingPage from "../../Components/LoadingPage/LoadingPage";
-// import DeckFinderView from "../../Components/DeckFinderView/DeckFinderView";
+import DeckFinderView from "../components/DeckFinderView";
 
 class DeckFinder extends Component {
   render() {
@@ -15,7 +15,7 @@ class DeckFinder extends Component {
           <CornerSpace />
           <TopBar title="DECK FINDER" activePage="deckfinder" />
           <SideBar activePage="deckfinder" />
-          {/* <DeckFinderView /> */}
+          <DeckFinderView />
           <style jsx>{`
             .DeckFinder {
               height: 100%;
