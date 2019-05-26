@@ -87,10 +87,22 @@ ipcMain.on("get-initialData-DeckGrid", (event, arg) => {
   event.returnValue = { decksList, savedDecks };
 });
 
-ipcMain.on('get-newCards-DisplayCards', (event, arg) => {
+ipcMain.on("get-newCards-DisplayCards", (event, arg) => {
   event.returnValue = settings.get("dataToRender.newCards");
 });
 
-ipcMain.on('get-tokens-TopBar', (event, arg) => {
-  event.returnValue = settings.get('mtgaCardData.playerTokens');
+ipcMain.on("get-tokens-TopBar", (event, arg) => {
+  event.returnValue = settings.get("mtgaCardData.playerTokens");
+});
+
+ipcMain.on("set-decklist-SingleDeck", (event, arg) => {
+  settings.set("dataToRender.insideDecklist", arg);
+});
+
+ipcMain.on("get-savedDecks", (event, arg) => {
+  event.returnValue = settings.get("mtgaCardData.savedDecks");
+});
+
+ipcMain.on("set-savedDecks", (event, arg) => {
+  settings.set("mtgaCardData.savedDecks", arg);
 });

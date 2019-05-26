@@ -8,9 +8,7 @@ class SingleDeck extends Component {
     buttonText: "SAVE"
   };
 
-  componentDidMount() {
-    
-  }
+  componentDidMount() {}
 
   renderSymbols = color => {
     let displaySymbol;
@@ -38,23 +36,23 @@ class SingleDeck extends Component {
 
   deleteDeck = () => {
     const { url } = this.props.deck;
-    const savedDecks = global.esettings.get("mtgaCardData.savedDecks");
+    const savedDecks = global.ipcRenderer.sendSync("get-savedDecks");
     savedDecks.forEach((element, i) => {
       if (element.url === url) {
         savedDecks.splice(i, 1);
       }
       return;
     });
-    global.esettings.set("mtgaCardData.savedDecks", savedDecks);
+    global.ipcRenderer.send("set-savedDecks", savedDecks);
     global.ipcRenderer.send("delete-saved-deck", "delete-saved-deck");
   };
 
   saveDeck = () => {
     const { deck } = this.props;
-    let savedDecks = global.esettings.get("mtgaCardData.savedDecks");
+    let savedDecks = global.ipcRenderer.sendSync("get-savedDecks");
     if (!savedDecks) {
-      global.esettings.set("mtgaCardData.savedDecks", []);
-      savedDecks = global.esettings.get("mtgaCardData.savedDecks");
+      global.ipcRenderer.send("set-savedDecks", []);
+      savedDecks = global.ipcRenderer.sendSync("get-savedDecks");
     }
     const result = savedDecks.find(element => {
       return element.url === deck.url;
@@ -62,14 +60,14 @@ class SingleDeck extends Component {
     if (!result) {
       savedDecks.push(deck);
     }
-    global.esettings.set("mtgaCardData.savedDecks", savedDecks);
+    global.ipcRenderer.send("set-savedDecks", savedDecks);
     this.setState({
       buttonText: "ADDED"
     });
   };
 
   checkClick = () => {
-    global.esettings.set("dataToRender.insideDecklist", this.props.deck);
+    global.ipcRenderer.sendSync("set-decklist-SingleDeck", this.props.deck);
   };
 
   render() {
