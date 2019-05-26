@@ -80,7 +80,10 @@ module.exports = async function(event) {
 
   function checkForReturn() {
     if (loopCount === loopLength) {
-      event.sender.send("grab-decks-response", "done");
+      event.sender.send(
+        "grab-decks-response",
+        settings.get("mtgaCardData.minedDecks")
+      );
       return allDecksData;
     } else {
       setTimeout(checkForReturn, 5000);

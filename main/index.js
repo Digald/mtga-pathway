@@ -66,7 +66,10 @@ ipcMain.on("grab-decks", async function(event, args) {
 
 ipcMain.on("delete-saved-deck", (event, arg) => {
   if (arg === "delete-saved-deck") {
-    event.sender.send("delete-saved-deck", "delete-saved-deck");
+    event.sender.send(
+      "delete-saved-deck",
+      settings.get("mtgaCardData.savedDecks")
+    );
   }
 });
 
@@ -76,4 +79,18 @@ ipcMain.on("send-restrict-color", (event, arg) => {
 
 ipcMain.on("send-filter-color", (event, arg) => {
   event.sender.send("get-filter-color", arg);
+});
+
+ipcMain.on("get-initialData-DeckGrid", (event, arg) => {
+  const decksList = settings.get("mtgaCardData.minedDecks");
+  const savedDecks = settings.get("mtgaCardData.savedDecks");
+  event.returnValue = { decksList, savedDecks };
+});
+
+ipcMain.on('get-newCards-DisplayCards', (event, arg) => {
+  event.returnValue = settings.get("dataToRender.newCards");
+});
+
+ipcMain.on('get-tokens-TopBar', (event, arg) => {
+  event.returnValue = settings.get('mtgaCardData.playerTokens');
 });

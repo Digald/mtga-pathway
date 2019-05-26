@@ -3,8 +3,18 @@ import SingleCard from "./SingleCard";
 
 class DisplayCards extends Component {
   state = {
-    newCards: global.esettings.get("dataToRender.newCards") || []
+    newCards: []
   };
+
+  componentWillMount() {
+    const res = global.ipcRenderer.sendSync("get-newCards-DisplayCards", "");
+    if (res) {
+      this.setState({
+        newCards: res
+      });
+    }
+  }
+
   render() {
     const { newCards } = this.state;
     console.log(newCards);

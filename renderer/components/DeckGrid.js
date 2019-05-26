@@ -1,13 +1,25 @@
 import React, { Component } from "react";
-// import SingleDeck from "./SingleDeck";
+import SingleDeck from "./SingleDeck";
 
 class DeckGrid extends Component {
   state = {
-    decksList: global.esettings.get("mtgaCardData.minedDecks") || [],
-    savedDecks: global.esettings.get("mtgaCardData.savedDecks") || [],
+    decksList: [],
+    savedDecks: [],
     filteredColors: [],
     restrictColors: false
   };
+
+  componentWillMount() {
+    const res = global.ipcRenderer.sendSync("get-initialData-DeckGrid", "");
+    const { decksList, savedDecks } = res;
+    if (decksList) {
+      this.setState({
+        decksList: decksList
+      });
+    } else if (savedDecks) {
+      savedDecks: savedDecks;
+    }
+  }
 
   componentDidMount() {
     global.ipcRenderer.on("grab-decks-response", this.updateDeckList);
@@ -33,19 +45,15 @@ class DeckGrid extends Component {
   }
 
   updateDeckList = (event, arg) => {
-    if (arg === "done") {
-      this.setState({
-        decksList: global.esettings.get("mtgaCardData.minedDecks")
-      });
-    }
+    this.setState({
+      decksList: arg
+    });
   };
 
   updatedSavedDecks = (event, arg) => {
-    if (arg === "delete-saved-deck") {
-      this.setState({
-        savedDecks: global.esettings.get("mtgaCardData.savedDecks")
-      });
-    }
+    this.setState({
+      savedDecks: arg
+    });
   };
 
   filterColors = (event, color) => {

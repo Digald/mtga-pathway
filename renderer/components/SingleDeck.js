@@ -7,6 +7,11 @@ class SingleDeck extends Component {
   state = {
     buttonText: "SAVE"
   };
+
+  componentDidMount() {
+    
+  }
+
   renderSymbols = color => {
     let displaySymbol;
     switch (color) {

@@ -2,8 +2,18 @@ import React, { Component } from "react";
 
 class TopBar extends Component {
   state = {
-    tokens: global.esettings.get("mtgaCardData.playerTokens")
+    tokens: {}
   };
+
+  componentWillMount() {
+    const res = global.ipcRenderer.sendSync("get-tokens-TopBar", "");
+    if (res) {
+      this.setState({
+        tokens: res
+      });
+    }
+  }
+
   render() {
     const { activePage, title } = this.props;
     const { tokens } = this.state;
