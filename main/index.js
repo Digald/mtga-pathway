@@ -1,6 +1,6 @@
 // Native
 const { join } = require("path");
-const os = require('os');
+const os = require("os");
 const { format } = require("url");
 
 // Packages
@@ -56,7 +56,7 @@ const logData = readLogFile(winAbsPath);
 ipcMain.on("readLog", async (event, message) => {
   await executeLogFile(logData, mainWindow);
   event.sender.send("loading-status", true);
-  event.sender.send('get-newCards', settings.get('dataToRender.newCards'));
+  event.sender.send("get-newCards", settings.get("dataToRender.newCards"));
 });
 
 ipcMain.on("grab-decks", async function(event, args) {
@@ -98,6 +98,10 @@ ipcMain.on("set-decklist", (event, arg) => {
   settings.set("dataToRender.insideDecklist", arg);
 });
 
+ipcMain.on("get-insideDeckList", (event, arg) => {
+  event.returnValue = settings.get("dataToRender.insideDecklist");
+});
+
 ipcMain.on("get-savedDecks", (event, arg) => {
   event.returnValue = settings.get("mtgaCardData.savedDecks");
 });
@@ -106,8 +110,8 @@ ipcMain.on("set-savedDecks", (event, arg) => {
   settings.set("mtgaCardData.savedDecks", arg);
 });
 
-ipcMain.on('get-sysinfo', (event, arg) => {
+ipcMain.on("get-sysinfo", (event, arg) => {
   const platform = os.platform();
-  const usersPath = settings.get('rawData.path');
-  event.returnValue = {platform, usersPath};
+  const usersPath = settings.get("rawData.path");
+  event.returnValue = { platform, usersPath };
 });
