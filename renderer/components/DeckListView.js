@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CardData from "../CardData/CardData";
+import CardData from "./CardData";
 
 class DeckListView extends Component {
   state = {
