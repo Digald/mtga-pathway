@@ -26,8 +26,8 @@ class SideBar extends Component {
         <Link href="/deckfinder">
           <img className="SideBar__icon icon2" src={deck} alt="Decklist" />
         </Link>
-        <Link href="/settings">
-          <img className="SideBar__icon icon3" src={settings} alt="Settings" />
+        <Link href="/sysinfo">
+          <img className="SideBar__icon icon3" src={settings} alt="Sysinfo" />
         </Link>
         <style jsx>{`
           .SideBar {

@@ -1,6 +1,6 @@
 // Native
 const { join } = require("path");
-const path = require("path");
+const os = require('os');
 const { format } = require("url");
 
 // Packages
@@ -104,4 +104,10 @@ ipcMain.on("get-savedDecks", (event, arg) => {
 
 ipcMain.on("set-savedDecks", (event, arg) => {
   settings.set("mtgaCardData.savedDecks", arg);
+});
+
+ipcMain.on('get-sysinfo', (event, arg) => {
+  const platform = os.platform();
+  const usersPath = settings.get('rawData.path');
+  event.returnValue = {platform, usersPath};
 });

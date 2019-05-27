@@ -6,7 +6,8 @@ module.exports = {
     return {
       '/start': { page: '/start' },
       '/': {page: '/'},
-      '/deckfinder': {page: '/deckfinder'}
+      '/deckfinder': {page: '/deckfinder'},
+      '/sysinfo': {page: '/sysinfo'}
     }
   }
 }
