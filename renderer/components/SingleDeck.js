@@ -65,7 +65,7 @@ class SingleDeck extends Component {
   };
 
   checkClick = () => {
-    global.ipcRenderer.sendSync("set-decklist-SingleDeck", this.props.deck);
+    global.ipcRenderer.send("set-decklist", this.props.deck);
   };
 
   render() {

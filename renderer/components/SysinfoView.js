@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-// Components
-// const settings = window.require("electron-settings");
-// const os = window.require("os");
 
 class SysinfoView extends Component {
   state = {

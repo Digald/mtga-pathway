@@ -94,7 +94,7 @@ ipcMain.on("get-tokens-TopBar", (event, arg) => {
   event.returnValue = settings.get("mtgaCardData.playerTokens");
 });
 
-ipcMain.on("set-decklist-SingleDeck", (event, arg) => {
+ipcMain.on("set-decklist", (event, arg) => {
   settings.set("dataToRender.insideDecklist", arg);
 });
 
