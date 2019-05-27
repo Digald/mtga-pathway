@@ -8,8 +8,6 @@ class SingleDeck extends Component {
     buttonText: "SAVE"
   };
 
-  componentDidMount() {}
-
   renderSymbols = color => {
     let displaySymbol;
     switch (color) {
@@ -84,20 +82,20 @@ class SingleDeck extends Component {
       );
     }
     const { name, colors } = this.props.deck;
+    let resizeTitle = '';
+    if (name.length > 20) {
+      resizeTitle = 'resizeTitle'
+    }
     const image = this.props.deck.deckList[0].image;
     const background = {
       backgroundImage: `url(${image})`
     };
     return (
       <div className="SingleDeck" style={background}>
-        <Link
-          className="SingleDeck__titlelink"
-          href="/decklist"
-          onClick={() => this.checkClick()}
-        >
-          <div className="SingleDeck__title">
+        <Link href="/decklist">
+          <a className={`SingleDeck__title ${resizeTitle}`} onClick={() => this.checkClick()}>
             <p>{name}</p>
-          </div>
+          </a>
         </Link>
         <div className="SingleDeck__header">
           <div className="SingleDeck__header__colors">
@@ -114,8 +112,11 @@ class SingleDeck extends Component {
           </div>
           {Button}
         </div>
-        <Link href="/decklist" onClick={() => this.checkClick()}>
-          <div className="SingleDeck__background" />
+        <Link href="/decklist">
+          <a
+            className="SingleDeck__background"
+            onClick={() => this.checkClick()}
+          />
         </Link>
         <DeckPercentageBoxes deck={this.props.deck} />
         <style jsx>{`
@@ -133,13 +134,6 @@ class SingleDeck extends Component {
             max-height: 303px;
           }
 
-          .SingleDeck__titlelink {
-            text-decoration: none;
-            padding: 0;
-            margin: 0;
-            background-color: white;
-          }
-
           .SingleDeck__title {
             display: flex;
             justify-content: center;
@@ -147,10 +141,11 @@ class SingleDeck extends Component {
             background-color: white;
             font-weight: bold;
             color: #a74482;
+            text-decoration: none;
           }
 
-          .SingleDeck__title p {
-            flex-shrink: 0.5;
+          .resizeTitle {
+            font-size: 14px;
           }
 
           .SingleDeck__header {

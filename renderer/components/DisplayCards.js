@@ -7,17 +7,23 @@ class DisplayCards extends Component {
   };
 
   componentWillMount() {
-    const res = global.ipcRenderer.sendSync("get-newCards-DisplayCards", "");
-    if (res) {
+    global.ipcRenderer.on("get-newCards", this.updateNewCards);
+  }
+
+  componentWillUnmount() {
+    global.ipcRenderer.removeListener("get-newCards", this.updateNewCards);
+  }
+
+  updateNewCards = (event, args) => {
+    if (args) {
       this.setState({
-        newCards: res
+        newCards: args
       });
     }
-  }
+  };
 
   render() {
     const { newCards } = this.state;
-    console.log(newCards);
     return (
       <div className="DisplayCards">
         {newCards.map(card => {

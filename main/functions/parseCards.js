@@ -2,6 +2,7 @@ const settings = require("electron-settings");
 const fs = require("fs");
 const path = require("path");
 const updateCardQuantity = require("./updateCardQuantity");
+const updateMatches = require('./updateMatches');
 
 /**
  * Takes all arena id's from the log and parses them into card data taken from arenaCards.json
@@ -68,6 +69,7 @@ module.exports = function(fromPlayerCollection, newQuantities = []) {
       if (newQuantities.length > 0) {
         updateCardQuantity(newQuantities);
       }
+      await updateMatches();
       console.log("Player Cards have been Set");
     } // end callback
   );

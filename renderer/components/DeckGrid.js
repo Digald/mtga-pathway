@@ -9,19 +9,19 @@ class DeckGrid extends Component {
     restrictColors: false
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const res = global.ipcRenderer.sendSync("get-initialData-DeckGrid", "");
     const { decksList, savedDecks } = res;
     if (decksList) {
       this.setState({
         decksList: decksList
       });
-    } else if (savedDecks) {
-      savedDecks: savedDecks;
     }
-  }
-
-  componentDidMount() {
+    if (savedDecks) {
+      this.setState({
+        savedDecks: savedDecks
+      });
+    }
     global.ipcRenderer.on("grab-decks-response", this.updateDeckList);
     global.ipcRenderer.on("delete-saved-deck", this.updatedSavedDecks);
     global.ipcRenderer.on("get-filter-color", this.filterColors);
@@ -120,7 +120,7 @@ class DeckGrid extends Component {
             if (toDisplay.includes(false)) {
               return "";
             }
-            console.log(deck);
+            // console.log(deck);
             return <SingleDeck key={i} fromPage={fromPage} deck={deck} />;
           }
 

@@ -5,7 +5,7 @@ class TopBar extends Component {
     tokens: {}
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const res = global.ipcRenderer.sendSync("get-tokens-TopBar", "");
     if (res) {
       this.setState({

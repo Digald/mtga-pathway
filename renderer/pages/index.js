@@ -14,6 +14,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     // start listening the channel message
+    
     global.ipcRenderer.on("loading-status", this.handleMessage);
   }
 

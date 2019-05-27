@@ -17,11 +17,9 @@ class ScrapeButton extends Component {
   }
 
   decksRecieved = (event, arg) => {
-    if (arg === "done") {
-      this.setState({
-        btnStatus: "default"
-      });
-    }
+    this.setState({
+      btnStatus: "default"
+    });
   };
 
   handleClick = () => {

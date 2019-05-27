@@ -55,9 +55,8 @@ const logData = readLogFile(winAbsPath);
 
 ipcMain.on("readLog", async (event, message) => {
   await executeLogFile(logData, mainWindow);
-  // Begin updating collection matches to scraped decks
-  await updateMatches();
   event.sender.send("loading-status", true);
+  event.sender.send('get-newCards', settings.get('dataToRender.newCards'));
 });
 
 ipcMain.on("grab-decks", async function(event, args) {
@@ -87,8 +86,8 @@ ipcMain.on("get-initialData-DeckGrid", (event, arg) => {
   event.returnValue = { decksList, savedDecks };
 });
 
-ipcMain.on("get-newCards-DisplayCards", (event, arg) => {
-  event.returnValue = settings.get("dataToRender.newCards");
+ipcMain.on("get-newCards", (event, arg) => {
+  event.sender.send("res-newCards", settings.get("dataToRender.newCards"));
 });
 
 ipcMain.on("get-tokens-TopBar", (event, arg) => {
