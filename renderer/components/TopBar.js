@@ -69,6 +69,7 @@ class TopBar extends Component {
             top: 0;
             position: sticky;
             z-index: 9999;
+            -webkit-app-region: drag
           }
 
           .TopBar__title {

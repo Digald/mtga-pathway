@@ -10,6 +10,7 @@ class CornerSpace extends Component {
             background-color: #ff3562;
             top: 0;
             position: sticky;
+            -webkit-app-region: drag;
           }
         `}</style>
       </div>

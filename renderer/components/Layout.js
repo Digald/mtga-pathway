@@ -1,13 +1,16 @@
 import React, { Component } from "react";
+// import TitleBar from "./TitleBar";
 
 class Layout extends Component {
   render() {
     return (
       <div>
+        {/* <TitleBar /> */}
         {this.props.children}
         <style jsx global>{`
           html,
-          body, #__next {
+          body,
+          #__next {
             height: 100%;
             width: 100%;
             padding: 0;
@@ -36,10 +39,10 @@ class Layout extends Component {
           }
         `}</style>
         <style jsx>{`
-            div {
-                height: 100%;
-                width: 100%;
-            }
+          div {
+            height: 100%;
+            width: 100%;
+          }
         `}</style>
       </div>
     );

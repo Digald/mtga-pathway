@@ -8,7 +8,6 @@ const { BrowserWindow, app, ipcMain } = require("electron");
 const isDev = require("electron-is-dev");
 const prepareNext = require("electron-next");
 const settings = require("electron-settings");
-global.esettings = settings;
 // Prepare the renderer once the app is ready
 let mainWindow;
 app.on("ready", async () => {
@@ -39,13 +38,11 @@ app.on("ready", async () => {
 
 // Quit the app once all windows are closed
 app.on("window-all-closed", app.quit);
-
 // import functions
 const readLogFile = require("./functions/readLogFile.js");
 const executeLogFile = require("./functions/executeLogFile.js");
-const updateMatches = require("./functions/updateMatches.js");
 const initiateScrape = require("./functions/initiateScrape.js");
-
+const openDialog = require("./functions/openDialog.js");
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
 const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
@@ -57,6 +54,11 @@ ipcMain.on("readLog", async (event, message) => {
   await executeLogFile(logData, mainWindow);
   event.sender.send("loading-status", true);
   event.sender.send("get-newCards", settings.get("dataToRender.newCards"));
+});
+
+ipcMain.on("openDialog", (event, message) => {
+  console.log('index.js line 60');
+  openDialog(mainWindow);
 });
 
 ipcMain.on("grab-decks", async function(event, args) {
