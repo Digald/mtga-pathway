@@ -1,11 +1,34 @@
 import React, { Component } from "react";
-// import TitleBar from "./TitleBar";
+import ImportButton from './ImportButton';
 
 class Layout extends Component {
+  state = {
+    isInvalidFile: false,
+    message: ""
+  };
+  componentDidMount() {
+    global.ipcRenderer.on("invalid-logfile", this.handleWrongFile);
+  }
+
+  handleWrongFile = (event, arg) => {
+    this.setState({
+      isInvalidFile: true,
+      message: arg
+    });
+  };
+
   render() {
+    const { isInvalidFile, message } = this.state;
+    if (isInvalidFile) {
+      return (
+        <div>
+          {message}
+          <ImportButton />
+        </div>
+      );
+    }
     return (
       <div>
-        {/* <TitleBar /> */}
         {this.props.children}
         <style jsx global>{`
           html,

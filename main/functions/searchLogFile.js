@@ -7,36 +7,35 @@
  */
 
 module.exports = function(logData, mainWindow) {
-    // Use regular express and collect all matches into the var, match
-    const regex = /\{(?:[^{}]|())*\}/g;
-    const match = logData.match(regex);
-  
-    // Define vars to capture the player information
-    // Map over each of the matches extracting desired data
-    let playerTokens;
-    let playerCards;
-  
-    try {
-      match.map(i => {
-        if (i.includes("gold") && i.includes("playerId")) {
-          playerTokens = JSON.parse(i);
-        }
-        const stringPattern = /"\d\d\d\d\d":.\d?\d,/g;
-        if (i.search(stringPattern) > 1) {
-          playerCards = JSON.parse(i);
-        }
-        return null;
-      });
-      const message = "";
-      mainWindow.webContents.send("correct-logfile", message);
-    } 
-    catch (err) {
-      // Tell user that the text file they tried to read is not valid
-      const message = `It looks like we couldn't find the correct MTGA log file. Try hitting CTRL+O or File > Import Log File to select output.txt, wherever it may be (Example: ${
-        process.env.HOME
-      }\\AppData\\LocalLow\\Wizards Of The Coast\\MTGA\\output.txt)'`;
-      
-      mainWindow.webContents.send("invalid-logfile", message);
-    }
-    return { playerTokens, playerCards };
-  };
+  // Use regular express and collect all matches into the var, match
+  const regex = /\{(?:[^{}]|())*\}/g;
+  const match = logData.match(regex);
+
+  // Define vars to capture the player information
+  // Map over each of the matches extracting desired data
+  let playerTokens;
+  let playerCards;
+
+  try {
+    match.map(i => {
+      if (i.includes("gold") && i.includes("playerId")) {
+        playerTokens = JSON.parse(i);
+      }
+      const stringPattern = /"\d\d\d\d\d":.\d?\d,/g;
+      if (i.search(stringPattern) > 1) {
+        playerCards = JSON.parse(i);
+      }
+      return null;
+    });
+    const message = "";
+    mainWindow.webContents.send("correct-logfile", message);
+  } catch (err) {
+    // Tell user that the text file they tried to read is not valid
+    const message = `It looks like we couldn't find the correct MTGA log file. Try importing output.txt, wherever it may be (Example: ${
+      process.env.HOME
+    }\\AppData\\LocalLow\\Wizards Of The Coast\\MTGA\\output.txt)'`;
+
+    mainWindow.webContents.send("invalid-logfile", message);
+  }
+  return { playerTokens, playerCards };
+};

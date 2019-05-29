@@ -46,19 +46,26 @@ const openDialog = require("./functions/openDialog.js");
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
 // const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
-const winAbsPath = `/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
+const winAbsPath = `/AppData/LocalLow/Wizards Of The Coast/MTGA/prodUri.txt`;
 settings.set("rawData.path", winAbsPath);
 // Read the file and format slightly removing new lines and carriage
-const logData = readLogFile(winAbsPath);
+const logData = readLogFile(winAbsPath, mainWindow);
 
 ipcMain.on("readLog", async (event, message) => {
+  if (logData === "send error") {
+    event.sender.send(
+      "invalid-logfile",
+      `There doesn't seem to be a file to read at this path: ${winAbsPath}. Try importing the log file wherever it may be (Example: \\AppData\\LocalLow\\Wizards Of The Coast\\MTGA\\output.txt )`
+    );
+    return;
+  }
   await executeLogFile(logData, mainWindow);
   event.sender.send("loading-status", true);
   event.sender.send("get-newCards", settings.get("dataToRender.newCards"));
 });
 
 ipcMain.on("openDialog", (event, message) => {
-  console.log('index.js line 60');
+  console.log("index.js line 60");
   openDialog(mainWindow);
 });
 

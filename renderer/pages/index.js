@@ -6,7 +6,6 @@ import SideBar from "../components/SideBar";
 import DashBoardView from "../components/DashboardView";
 import LoadingPage from "../components/LoadingPage";
 import Layout from "../components/Layout";
-import FileError from "../components/FileError";
 
 class Dashboard extends Component {
   state = {
@@ -15,7 +14,6 @@ class Dashboard extends Component {
 
   componentDidMount() {
     // start listening the channel message
-    global.ipcRenderer.on('wrongFile', this.wrongFile);
     global.ipcRenderer.on("loading-status", this.handleMessage);
   }
 
@@ -23,7 +21,7 @@ class Dashboard extends Component {
     // stop listening the channel message
     global.ipcRenderer.removeListener("loading-status", this.handleMessage);
   }
-  
+
   handleMessage = (event, message) => {
     this.setState({
       isLoaded: message
