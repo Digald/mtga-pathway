@@ -45,7 +45,8 @@ const initiateScrape = require("./functions/initiateScrape.js");
 const openDialog = require("./functions/openDialog.js");
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
-const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
+// const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
+const winAbsPath = `/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
 settings.set("rawData.path", winAbsPath);
 // Read the file and format slightly removing new lines and carriage
 const logData = readLogFile(winAbsPath);
