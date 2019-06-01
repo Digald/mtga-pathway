@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ImportButton from './ImportButton';
 
 class SysinfoView extends Component {
   state = {
@@ -34,12 +33,6 @@ class SysinfoView extends Component {
           Log File Path:{" "}
           <span className="SettingsView__important-text">{usersPath}</span>
         </p>
-        <ImportButton/>
-        <p className="SettingsView__warning">
-          NOTE: If the app is not propery finding your game's log file, try to
-          import it manually above.
-        </p>
-
         <p>
           OS Platform:{" "}
           <span className="SettingsView__important-text">{platform}</span>
@@ -57,13 +50,6 @@ class SysinfoView extends Component {
           .SettingsView {
             padding: 1rem;
           }
-
-          .SettingsView__warning {
-            border: 1px solid black;
-            padding: 5px;
-            background-color: rgba(255, 0, 0, 0.5);
-          }
-
           .SettingsView__important-text {
             font-weight: bold;
           }

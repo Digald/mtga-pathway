@@ -6,40 +6,53 @@ import SideBar from "../components/SideBar";
 import DashBoardView from "../components/DashboardView";
 import LoadingPage from "../components/LoadingPage";
 import Layout from "../components/Layout";
+import FileError from "../components/FileError";
 
 class Dashboard extends Component {
   state = {
-    isLoaded: false
+    isLoaded: false,
+    isInvalidFile: false,
+    message: ""
   };
 
   componentDidMount() {
     // start listening the channel message
     global.ipcRenderer.on("loading-status", this.handleMessage);
+    global.ipcRenderer.on("invalid-logfile", this.handleWrongFile);
   }
 
   componentWillUnmount() {
     // stop listening the channel message
     global.ipcRenderer.removeListener("loading-status", this.handleMessage);
+    global.ipcRenderer.removeListener("invalid-logfile", this.handleWrongFile);
   }
 
-  handleMessage = (event, message) => {
+  handleMessage = (event, arg) => {
     this.setState({
-      isLoaded: message
+      isLoaded: arg.isLoaded,
+      isInvalidFile: arg.isInvalidFile
+    });
+  };
+
+  handleWrongFile = (event, arg) => {
+    this.setState({
+      isInvalidFile: true,
+      message: arg
     });
   };
 
   render() {
     // testing get
-    const { isLoaded, isWrongFile } = this.state;
+    const { isLoaded, isInvalidFile } = this.state;
+    if (isInvalidFile) {
+      return <FileError message={this.state.message} />;
+    }
     if (!isLoaded)
       return (
         <Layout>
           <LoadingPage />
         </Layout>
       );
-    if (isWrongFile) {
-      return <FileError />;
-    }
     return (
       <Layout>
         <div className="Dashboard main-grid">

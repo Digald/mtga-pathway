@@ -17,7 +17,6 @@ module.exports = async function(logData, mainWindow) {
   // Save player token data immediately
   settings.set("mtgaCardData.playerTokens", playerTokens);
   // Next Update the Raw collection of cards
-  // updateRawCollection(playerCards);
   const playerMainCollection = packageCollection(playerCards);
   const storedRawData = settings.get("rawData.cards");
   let allDifferences = [];

@@ -6,16 +6,21 @@
  */
 
 module.exports = function(playerCards) {
-  const cardIds = Object.keys(playerCards);
-  const cardAmt = Object.values(playerCards);
+  try {
+    const cardIds = Object.keys(playerCards);
+    const cardAmt = Object.values(playerCards);
 
-  const playerMainCollection = [];
-  cardIds.forEach((id, index) => {
-    playerMainCollection.push({
-      arena_id: id,
-      quantity: cardAmt[index]
+    const playerMainCollection = [];
+    cardIds.forEach((id, index) => {
+      playerMainCollection.push({
+        arena_id: id,
+        quantity: cardAmt[index]
+      });
     });
-  });
 
-  return playerMainCollection;
+    return playerMainCollection;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
 };

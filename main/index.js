@@ -45,9 +45,13 @@ const initiateScrape = require("./functions/initiateScrape.js");
 const openDialog = require("./functions/openDialog.js");
 // WINDOWS Get user home drive and username
 const userHome = process.env.HOME;
-// const winAbsPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
-const winAbsPath = `/AppData/LocalLow/Wizards Of The Coast/MTGA/prodUri.txt`;
-settings.set("rawData.path", winAbsPath);
+const setPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
+const hasSetPath = settings.get("rawData.path");
+if (!hasSetPath) {
+  settings.set("rawData.path", setPath);
+}
+const winAbsPath = settings.get("rawData.path");
+
 // Read the file and format slightly removing new lines and carriage
 const logData = readLogFile(winAbsPath, mainWindow);
 
@@ -60,12 +64,11 @@ ipcMain.on("readLog", async (event, message) => {
     return;
   }
   await executeLogFile(logData, mainWindow);
-  event.sender.send("loading-status", true);
+  event.sender.send("loading-status", { isLoaded: true, isInvalidFile: false });
   event.sender.send("get-newCards", settings.get("dataToRender.newCards"));
 });
 
 ipcMain.on("openDialog", (event, message) => {
-  console.log("index.js line 60");
   openDialog(mainWindow);
 });
 

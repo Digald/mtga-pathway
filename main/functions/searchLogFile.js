@@ -37,5 +37,6 @@ module.exports = function(logData, mainWindow) {
 
     mainWindow.webContents.send("invalid-logfile", message);
   }
+  // raw player cards and tokens json
   return { playerTokens, playerCards };
 };
