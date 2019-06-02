@@ -8,6 +8,7 @@ const { BrowserWindow, app, ipcMain } = require("electron");
 const isDev = require("electron-is-dev");
 const prepareNext = require("electron-next");
 const settings = require("electron-settings");
+
 // Prepare the renderer once the app is ready
 let mainWindow;
 app.on("ready", async () => {
@@ -38,12 +39,14 @@ app.on("ready", async () => {
 
 // Quit the app once all windows are closed
 app.on("window-all-closed", app.quit);
-// import functions
+
+// import other functions
 const readLogFile = require("./functions/readLogFile.js");
 const executeLogFile = require("./functions/executeLogFile.js");
 const initiateScrape = require("./functions/initiateScrape.js");
 const openDialog = require("./functions/openDialog.js");
-// WINDOWS Get user home drive and username
+
+// Set user path or get an already existing path from electron-settings
 const userHome = process.env.HOME;
 const setPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
 const hasSetPath = settings.get("rawData.path");
@@ -52,10 +55,12 @@ if (!hasSetPath) {
 }
 const winAbsPath = settings.get("rawData.path");
 
+
 // Read the file and format slightly removing new lines and carriage
 const logData = readLogFile(winAbsPath, mainWindow);
 
-ipcMain.on("readLog", async (event, message) => {
+// Called on startup. Tells frontend when data is ready to load or if there is an error with the log file
+ipcMain.on("readLog", async (event, arg) => {
   if (logData === "send error") {
     event.sender.send(
       "invalid-logfile",
@@ -68,11 +73,12 @@ ipcMain.on("readLog", async (event, message) => {
   event.sender.send("get-newCards", settings.get("dataToRender.newCards"));
 });
 
-ipcMain.on("openDialog", (event, message) => {
+// Sent if a user tries to correct their log file and needs to re-render the app
+ipcMain.on("openDialog", (event, arg) => {
   openDialog(mainWindow);
 });
 
-ipcMain.on("grab-decks", async function(event, args) {
+ipcMain.on("grab-decks", async function(event, arg) {
   await initiateScrape(event);
 });
 
