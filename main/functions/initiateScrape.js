@@ -1,8 +1,8 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
+const settings = require("electron-settings");
 const scrapeDeckList = require("./scrapeDeckList.js");
 const getMatches = require("./getMatches.js");
-const settings = require("electron-settings");
 
 /**
  * Gets data from request, parses the html and collects relevent data into an array

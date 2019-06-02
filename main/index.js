@@ -57,7 +57,7 @@ const winAbsPath = settings.get("rawData.path");
 
 
 // Read the file and format slightly removing new lines and carriage
-const logData = readLogFile(winAbsPath, mainWindow);
+const logData = readLogFile(winAbsPath);
 
 // Called on startup. Tells frontend when data is ready to load or if there is an error with the log file
 ipcMain.on("readLog", async (event, arg) => {

@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-module.exports = function(AbsPath, mainWindow) {
+module.exports = function(AbsPath) {
   // Read the file and format slightly removing new lines and carriage
   const findNewLines = /(\n)/g;
   const findCarriage = /(\r)/g;
