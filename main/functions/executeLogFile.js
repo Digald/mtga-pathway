@@ -19,6 +19,8 @@ module.exports = async function(logData, mainWindow) {
   // Next Update the Raw collection of cards
   const playerMainCollection = packageCollection(playerCards);
   const storedRawData = settings.get("rawData.cards");
+
+  // Set up variables to check difference between last time
   let allDifferences = [];
   let onlyNewCards = [];
   let newQuantities = [];
