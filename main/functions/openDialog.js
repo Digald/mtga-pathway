@@ -23,7 +23,10 @@ module.exports = async function(mainWindow) {
 
   // Run log file data collecting as usual after finding file
   executeLogFile(logData, mainWindow);
-  mainWindow.webContents.send("loading-status", {isLoaded: true, isInvalidFile: false});
+  mainWindow.webContents.send("loading-status", {
+    isLoaded: true,
+    isInvalidFile: false
+  });
   mainWindow.webContents.send(
     "get-newCards",
     settings.get("dataToRender.newCards")

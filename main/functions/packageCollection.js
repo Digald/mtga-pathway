@@ -7,6 +7,7 @@
 
 module.exports = function(playerCards) {
   try {
+    console.log(playerCards);
     const cardIds = Object.keys(playerCards);
     const cardAmt = Object.values(playerCards);
 
@@ -17,7 +18,7 @@ module.exports = function(playerCards) {
         quantity: cardAmt[index]
       });
     });
-
+    console.log(playerMainCollection);
     return playerMainCollection;
   } catch (err) {
     console.log(err);
