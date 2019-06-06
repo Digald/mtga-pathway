@@ -7,12 +7,20 @@
  */
 
 module.exports = function(allUpdates, onlyNewCards) {
-  let newQuantities = [];
-  allUpdates.forEach(element => {
-    const nonMatchingIds = onlyNewCards.filter(element2 => {
-      return element.arena_id !== element2.arena_id;
-    });
-    newQuantities = nonMatchingIds;
-  });
-  return newQuantities;
+  const comparer = otherArray => {
+    return current => {
+      return (
+        otherArray.filter(other => {
+          return other.arena_id == current.arena_id;
+        }).length == 0
+      );
+    };
+  };
+
+  const onlyInAllUpdates = allUpdates.filter(comparer(onlyNewCards));
+  const onlyInOnlyNewCards = onlyNewCards.filter(comparer(allUpdates));
+
+  const result = onlyInAllUpdates.concat(onlyInOnlyNewCards);
+
+  return result;
 };
