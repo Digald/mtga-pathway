@@ -2,7 +2,7 @@ const settings = require("electron-settings");
 const fs = require("fs");
 const path = require("path");
 const updateCardQuantity = require("./updateCardQuantity");
-const updateMatches = require('./updateMatches');
+const updateMatches = require("./updateMatches");
 
 /**
  * Takes all arena id's from the log and parses them into card data taken from arenaCards.json
@@ -12,7 +12,11 @@ const updateMatches = require('./updateMatches');
  * @return
  */
 
-module.exports = function(fromPlayerCollection, newQuantities = []) {
+module.exports = function(
+  fromPlayerCollection,
+  mainWindow,
+  newQuantities = []
+) {
   console.log("have to parse");
   // Read data inside JSON file containing all standard card data
   fs.readFile(
@@ -67,7 +71,7 @@ module.exports = function(fromPlayerCollection, newQuantities = []) {
 
       // After parsing all player cards, update quantities for card already owned
       if (newQuantities.length > 0) {
-        updateCardQuantity(newQuantities);
+        await updateCardQuantity(newQuantities);
       }
       await updateMatches();
       console.log("Player Cards have been Set");

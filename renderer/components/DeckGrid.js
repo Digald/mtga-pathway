@@ -58,7 +58,6 @@ class DeckGrid extends Component {
 
   filterColors = (event, color) => {
     const { filteredColors } = this.state;
-    console.log(filteredColors);
     if (filteredColors.indexOf(color) === -1) {
       filteredColors.push(color);
       this.setState({
@@ -105,7 +104,6 @@ class DeckGrid extends Component {
     displayDecks = displayDecks.sort((a, b) => {
       return b.complete_WO_Wildcards - a.complete_WO_Wildcards;
     });
-    console.log(displayDecks.complete_WO_Wildcards);
     return (
       <div className="DeckGrid">
         {displayDecks.map((deck, i) => {

@@ -7,19 +7,24 @@ class DisplayCards extends Component {
   };
 
   componentWillMount() {
-    global.ipcRenderer.on("get-newCards", this.updateNewCards);
+    global.ipcRenderer.on("loading-status", this.updateNewCards);
+    if (this.state.newCards <= 0) {
+      const newCards = global.ipcRenderer.sendSync("get-newCards");
+      this.setState({
+        newCards
+      });
+    }
   }
 
   componentWillUnmount() {
-    global.ipcRenderer.removeListener("get-newCards", this.updateNewCards);
+    global.ipcRenderer.removeListener("loading-status", this.updateNewCards);
   }
 
   updateNewCards = (event, args) => {
-    if (args) {
-      this.setState({
-        newCards: args
-      });
-    }
+    console.log(args);
+    this.setState({
+      newCards: args.newCards
+    });
   };
 
   render() {

@@ -69,8 +69,7 @@ ipcMain.on("readLog", async (event, arg) => {
     return;
   }
   await executeLogFile(logData, mainWindow);
-  event.sender.send("loading-status", { isLoaded: true, isInvalidFile: false });
-  event.sender.send("get-newCards", settings.get("dataToRender.newCards"));
+  event.sender.send("loading-status", { isLoaded: true, isInvalidFile: false, newCards: settings.get('dataToRender.newCards') });
 });
 
 // Sent if a user tries to correct their log file and needs to re-render the app
@@ -106,7 +105,8 @@ ipcMain.on("get-initialData-DeckGrid", (event, arg) => {
 });
 
 ipcMain.on("get-newCards", (event, arg) => {
-  event.sender.send("res-newCards", settings.get("dataToRender.newCards"));
+  // event.sender.send("res-newCards", settings.get("dataToRender.newCards"));
+  event.returnValue = settings.get('dataToRender.newCards');
 });
 
 ipcMain.on("get-tokens-TopBar", (event, arg) => {

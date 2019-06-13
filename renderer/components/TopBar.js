@@ -17,7 +17,6 @@ class TopBar extends Component {
   render() {
     const { activePage, title } = this.props;
     const { tokens } = this.state;
-    console.log(tokens);
     let icon;
     if (activePage === "dashboard") {
       icon = "/static/navigation/dash-little.svg";

@@ -27,8 +27,4 @@ module.exports = async function(mainWindow) {
     isLoaded: true,
     isInvalidFile: false
   });
-  mainWindow.webContents.send(
-    "get-newCards",
-    settings.get("dataToRender.newCards")
-  );
 };

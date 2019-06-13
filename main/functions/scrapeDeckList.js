@@ -11,79 +11,82 @@ const cheerio = require("cheerio");
 
 module.exports = async function(singleDeck) {
   let response;
+  const deckList = [];
   try {
     response = await axios.get(singleDeck.url);
+    const $ = cheerio.load(response.data);
+
+    // deckList containers list of objects for each card, cardType is where the card belongs in the deck
+    let cardType = "";
+
+    // Loop through each line in the decklist
+    await $(" #tab-arena .deck-view-deck-table tbody tr").each(function(
+      i,
+      elem
+    ) {
+      const singleCardData = {};
+      if (
+        $(this)
+          .children(".deck-header")
+          .text()
+      ) {
+        cardType = $(this)
+          .children(".deck-header")
+          .text()
+          .trim();
+        return;
+      }
+
+      // card name
+      singleCardData.name = $(this)
+        .children(".deck-col-card")
+        .text()
+        .trim();
+
+      // quantity
+      singleCardData.quantity = $(this)
+        .children(".deck-col-qty")
+        .text()
+        .trim();
+
+      // Image
+      singleCardData.image = $(this)
+        .find(".deck-col-card a")
+        .data("full-image");
+
+      // Mana cost; gonna have to loop
+      const cardCost = [];
+      $(this)
+        .find(".manacost")
+        .children()
+        .each(function(i, elem) {
+          cardCost.push(
+            $(this)
+              .attr("alt")
+              .trim()
+          );
+        });
+      singleCardData.mana_cost = cardCost;
+
+      // rarity
+      singleCardData.rarity = $(this)
+        .children(".deck-col-price")
+        .text()
+        .trim()
+        .split("")
+        .slice(2)
+        .join("");
+
+      // card type/placement
+      singleCardData.type = cardType
+        .match(/[a-zA-Z]/g)
+        .slice(0)
+        .join("");
+
+      deckList.push(singleCardData);
+    });
   } catch (err) {
     console.log(err);
   }
-  const $ = cheerio.load(response.data);
-
-  // deckList containers list of objects for each card, cardType is where the card belongs in the deck
-  const deckList = [];
-  let cardType = "";
-
-  // Loop through each line in the decklist
-  await $(" #tab-arena .deck-view-deck-table tbody tr").each(function(i, elem) {
-    const singleCardData = {};
-    if (
-      $(this)
-        .children(".deck-header")
-        .text()
-    ) {
-      cardType = $(this)
-        .children(".deck-header")
-        .text()
-        .trim();
-      return;
-    }
-
-    // card name
-    singleCardData.name = $(this)
-      .children(".deck-col-card")
-      .text()
-      .trim();
-
-    // quantity
-    singleCardData.quantity = $(this)
-      .children(".deck-col-qty")
-      .text()
-      .trim();
-
-    // Image
-    singleCardData.image = $(this)
-      .find(".deck-col-card a")
-      .data("full-image");
-
-    // Mana cost; gonna have to loop
-    const cardCost = [];
-    $(this)
-      .find(".manacost")
-      .children()
-      .each(function(i, elem) {
-        cardCost.push(
-          $(this)
-            .attr("alt")
-            .trim()
-        );
-      });
-    singleCardData.mana_cost = cardCost;
-
-    // rarity
-    singleCardData.rarity = $(this)
-      .children(".deck-col-price")
-      .text()
-      .trim()
-      .split("")
-      .slice(2)
-      .join('');
-
-    // card type/placement
-    singleCardData.type = cardType
-      .match(/[a-zA-Z]/g)
-      .slice(0)
-      .join("");
-
-    deckList.push(singleCardData);
-  });
   return deckList;
 };
