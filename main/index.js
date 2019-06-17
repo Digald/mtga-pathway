@@ -38,7 +38,11 @@ app.on("ready", async () => {
 });
 
 // Quit the app once all windows are closed
-app.on("window-all-closed", app.quit);
+// app.on("window-all-closed", app.quit);
+app.on("window-all-closed", () => {
+  settings.set("rawData.isRunning", false);
+  app.quit();
+});
 
 // import other functions
 const readLogFile = require("./functions/readLogFile.js");
@@ -67,13 +71,16 @@ ipcMain.on("readLog", async (event, arg) => {
     );
     return;
   }
-  await executeLogFile(logData, mainWindow);
-  console.log('index70: ended readLog and should have sent back data');
-  // event.sender.send = {
-  //   isLoaded: true,
-  //   isInvalidFile: false,
-  //   newCards: settings.get("dataToRender.newCards")
-  // };
+  // create if statment if app is already running
+  if (!settings.get("rawData.isRunning")) {
+    await executeLogFile(logData, mainWindow);
+    return;
+  }
+  event.sender.send("loading-status", {
+    isLoaded: true,
+    isInvalidFile: false,
+    newCards: settings.get("dataToRender.newCards")
+  });
 });
 
 // Sent if a user tries to correct their log file and needs to re-render the app

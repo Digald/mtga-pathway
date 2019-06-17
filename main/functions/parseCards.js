@@ -74,12 +74,18 @@ module.exports = function(
         await updateCardQuantity(newQuantities);
       }
       await updateMatches();
-      console.log("Player Cards have been Set");
+
+      // Send status to make front end ready to use
       mainWindow.webContents.send("loading-status", {
         isLoaded: true,
         isInvalidFile: false,
         newCards: settings.get("dataToRender.newCards")
       });
+
+      // Set app state to running
+      settings.set("rawData.isRunning", true);
+
+      console.log("Player Cards have been Set");
     } // end callback
   );
 };

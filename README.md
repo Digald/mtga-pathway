@@ -23,6 +23,7 @@ If a new set comes out or new card data needs to be added to the app, manually r
 rawData: {
     cards: // Array of raw arena id's and quantity from the log file
     path: // Saved path to user's log file
+    isRunning: // boolean to check if app is running or off
 }
 
 mtgaCardData: {

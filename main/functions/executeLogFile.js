@@ -55,6 +55,9 @@ module.exports = async function(logData, mainWindow) {
       isInvalidFile: false,
       newCards: settings.get("dataToRender.newCards")
     });
+
+    // Set app state to running
+    settings.set("rawData.isRunning", true);
     console.log("nothing to update");
   }
 };
