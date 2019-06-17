@@ -55,7 +55,6 @@ if (!hasSetPath) {
 }
 const winAbsPath = settings.get("rawData.path");
 
-
 // Read the file and format slightly removing new lines and carriage
 const logData = readLogFile(winAbsPath);
 
@@ -69,7 +68,12 @@ ipcMain.on("readLog", async (event, arg) => {
     return;
   }
   await executeLogFile(logData, mainWindow);
-  event.sender.send("loading-status", { isLoaded: true, isInvalidFile: false, newCards: settings.get('dataToRender.newCards') });
+  console.log('index70: ended readLog and should have sent back data');
+  // event.sender.send = {
+  //   isLoaded: true,
+  //   isInvalidFile: false,
+  //   newCards: settings.get("dataToRender.newCards")
+  // };
 });
 
 // Sent if a user tries to correct their log file and needs to re-render the app
@@ -106,7 +110,7 @@ ipcMain.on("get-initialData-DeckGrid", (event, arg) => {
 
 ipcMain.on("get-newCards", (event, arg) => {
   // event.sender.send("res-newCards", settings.get("dataToRender.newCards"));
-  event.returnValue = settings.get('dataToRender.newCards');
+  event.returnValue = settings.get("dataToRender.newCards");
 });
 
 ipcMain.on("get-tokens-TopBar", (event, arg) => {

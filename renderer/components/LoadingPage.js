@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
 class LoadingPage extends Component {
-  componentDidMount() {
-    global.ipcRenderer.send("readLog");
-  }
+  // componentDidMount() {
+  //   global.ipcRenderer.send("readLog");
+  // }
 
   render() {
     return (

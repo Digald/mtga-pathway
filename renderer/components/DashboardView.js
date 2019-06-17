@@ -15,7 +15,7 @@ class DashboardView extends Component {
           <h2 className="DashboardView__container__title">
             Newly Added To Collection
           </h2>
-          <DisplayCards />
+          <DisplayCards newCardProps={this.props.newCardProps}/>
         </div>
         <style jsx>{`
           .DashboardView {

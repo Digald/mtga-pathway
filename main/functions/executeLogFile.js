@@ -37,6 +37,7 @@ module.exports = async function(logData, mainWindow) {
   //If this is the first time running or there are new cards to parse, allDiff.length will be greater than 0
   if (allDifferences.length > 0) {
     // Only run for using the app for the first time
+    console.log('executeLogFile40: Ready to parse')
     if (allDifferences[0] === "first-time") {
       await parseCards(playerMainCollection, mainWindow);
     }
@@ -48,6 +49,12 @@ module.exports = async function(logData, mainWindow) {
   }
   // Nothing new to update, more logic to be added
   else {
+    mainWindow.webContents.send("loading-status",
+    {
+      isLoaded: true,
+      isInvalidFile: false,
+      newCards: settings.get("dataToRender.newCards")
+    });
     console.log("nothing to update");
   }
 };

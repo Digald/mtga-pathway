@@ -75,6 +75,11 @@ module.exports = function(
       }
       await updateMatches();
       console.log("Player Cards have been Set");
+      mainWindow.webContents.send("loading-status", {
+        isLoaded: true,
+        isInvalidFile: false,
+        newCards: settings.get("dataToRender.newCards")
+      });
     } // end callback
   );
 };

@@ -12,11 +12,13 @@ class Dashboard extends Component {
   state = {
     isLoaded: false,
     isInvalidFile: false,
-    message: ""
+    message: "",
+    newCards: []
   };
 
   componentDidMount() {
     // start listening the channel message
+    global.ipcRenderer.send("readLog");
     global.ipcRenderer.on("loading-status", this.handleMessage);
     global.ipcRenderer.on("invalid-logfile", this.handleWrongFile);
   }
@@ -30,7 +32,8 @@ class Dashboard extends Component {
   handleMessage = (event, arg) => {
     this.setState({
       isLoaded: arg.isLoaded,
-      isInvalidFile: arg.isInvalidFile
+      isInvalidFile: arg.isInvalidFile,
+      newCards: arg.newCards
     });
   };
 
@@ -42,24 +45,24 @@ class Dashboard extends Component {
   };
 
   render() {
-    // testing get
-    const { isLoaded, isInvalidFile } = this.state;
+    const { isLoaded, isInvalidFile, newCards } = this.state;
     if (isInvalidFile) {
       return <FileError message={this.state.message} />;
     }
-    if (!isLoaded)
+    if (!isLoaded) {
       return (
         <Layout>
           <LoadingPage />
         </Layout>
       );
+    }
     return (
       <Layout>
         <div className="Dashboard main-grid">
           <CornerSpace />
           <TopBar title="DASHBOARD" activePage="dashboard" />
           <SideBar activePage="dashboard" />
-          <DashBoardView />
+          <DashBoardView newCardProps={newCards} />
         </div>
         <style jsx>{`
           .Dashboard {
