@@ -1,7 +1,5 @@
 const settings = require("electron-settings");
 
-// testing for this component being done in electron.js and SingleDeck.js
-// should only be included in initialScrape.js when finished
 /**
  * Gets data from request, parses the html and collects relevent data into an array
  *
@@ -17,7 +15,6 @@ module.exports = function(deck) {
   const playerCards = settings.get("mtgaCardData.playerMtgaCards");
   const playerTokens = settings.get("mtgaCardData.playerTokens");
   const notMatched = [];
-  console.log('hit');
   currDeck.deckList.forEach(deckCard => {
     deckCard.quantity = parseInt(deckCard.quantity);
     const { name, quantity } = deckCard;

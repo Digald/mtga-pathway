@@ -88,5 +88,6 @@ module.exports = async function(singleDeck) {
   } catch (err) {
     console.log(err);
   }
+  // console.log(deckList);
   return deckList;
 };
