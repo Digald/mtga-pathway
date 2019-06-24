@@ -28,7 +28,7 @@ class CardData extends Component {
                 <p className="CardData__card__attr">
                   {card.playerHas}/{card.quantity}
                 </p>
-                {card.playerHas !== card.quantity ? "--- Incomplete" : ""}
+                {card.playerHas !== card.quantity ? "| Incomplete" : ""}
               </div>
             );
           }
