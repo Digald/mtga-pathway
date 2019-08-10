@@ -35,7 +35,7 @@ class ScrapeButton extends Component {
     if (btnStatus === "disabled") {
       return (
         <button className="ScrapeButton--disabled">
-          This may take a moment...
+          This may take a good minute. Please do not close the application.
         </button>
       );
     }
@@ -62,7 +62,6 @@ class ScrapeButton extends Component {
             border: none;
             padding: 20px;
             margin: 0;
-            /* box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.5); */
             box-shadow: inset 1px 1px 10px 5px rgba(0, 0, 0, 0.5);
           }
         `}</style>
