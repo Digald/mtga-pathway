@@ -34,15 +34,24 @@ class ScrapeButton extends Component {
     const { btnStatus } = this.state;
     if (btnStatus === "disabled") {
       return (
-        <button className="ScrapeButton--disabled">
+        <p className="ScrapeButton-disabled">
           This may take a good minute. Please do not close the application.
-        </button>
+        </p>
       );
     }
     return (
       <button className="ScrapeButton" onClick={e => this.handleClick()}>
         Search For New Decks
         <style jsx>{`
+          .ScrapeButton-disabled {
+            border: 2px solid black;
+            background-color: #ff3562;
+            color: white;
+            border: none;
+            padding: 20px;
+            margin: 0;
+            box-shadow: inset 1px 1px 10px 5px rgba(0, 0, 0, 0.5);
+          }
           .ScrapeButton {
             background-color: #ff3562;
             color: white;
@@ -53,15 +62,6 @@ class ScrapeButton extends Component {
           }
 
           .ScrapeButton:active {
-            box-shadow: inset 1px 1px 10px 5px rgba(0, 0, 0, 0.5);
-          }
-
-          .ScrapeButton--disabled {
-            background-color: #ff3562;
-            color: white;
-            border: none;
-            padding: 20px;
-            margin: 0;
             box-shadow: inset 1px 1px 10px 5px rgba(0, 0, 0, 0.5);
           }
         `}</style>

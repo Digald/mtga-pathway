@@ -145,3 +145,9 @@ ipcMain.on("get-sysinfo", (event, arg) => {
   const usersPath = settings.get("rawData.path");
   event.returnValue = { platform, usersPath };
 });
+
+
+/** --------------------------------------------
+ * AUTO UPDATER
+ * ---------------------------------------------
+ */
