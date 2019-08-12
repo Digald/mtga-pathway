@@ -11,9 +11,10 @@
     "test": "jest --watchAll"
   },
   "build": {
-    "asar": false,
+    "appId": "com.mtga-pathway.app",
+    "asar": true,
     "directories": {
-      "buildResources": "resources"
+      "buildResources": "/resources"
     },
     "extraResources": [
       {
