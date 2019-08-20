@@ -2,7 +2,7 @@
   "name": "mtga-pathway",
   "productName": "MTGA Pathway",
   "author": "Mark Alaniz",
-  "version": "0.1.37",
+  "version": "0.1.41",
   "main": "main/index.js",
   "scripts": {
     "start": "electron .",
@@ -16,7 +16,7 @@
     "appId": "com.mtga-pathway.app",
     "asar": false,
     "directories": {
-      "buildResources": "resources"
+      "buildResources": "assets"
     },
     "extraResources": [
       {

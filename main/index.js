@@ -2,17 +2,26 @@
 const { join } = require("path");
 const os = require("os");
 const { format } = require("url");
+var path = require('path')
 
 // Packages
-const { BrowserWindow, app, ipcMain} = require("electron");
+const { BrowserWindow, app, ipcMain } = require("electron");
 const isDev = require("electron-is-dev");
 const prepareNext = require("electron-next");
 const settings = require("electron-settings");
-const log = require('electron-log');
+const log = require("electron-log");
+const { autoUpdater } = require("electron-updater");
+
+// debugging autoUpdater
+autoUpdater.logger = require("electron-log")
+autoUpdater.logger.transports.file.level = "info"
 
 // Prepare the renderer once the app is ready
 let mainWindow;
 app.on("ready", async () => {
+
+  autoUpdater.checkForUpdates();
+
   await prepareNext("./renderer");
   mainWindow = new BrowserWindow({
     width: 800,
@@ -20,7 +29,8 @@ app.on("ready", async () => {
     webPreferences: {
       nodeIntegration: false,
       preload: join(__dirname, "preload.js")
-    }
+    },
+    icon: path.join(__dirname, '../icons/png/64x64.png')
   });
 
   const url = isDev
@@ -33,13 +43,12 @@ app.on("ready", async () => {
 
   mainWindow.loadURL(url);
 
-  /*
+  
   // In the case that dev tools need to be activated, uncomment the following
-  mainWindow.webContents.openDevTools()
-  BrowserWindow.addDevToolsExtension(
-    "C:\\Users\\Mark\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.6.0_0"
-  );
-  */
+  // mainWindow.webContents.openDevTools()
+  // BrowserWindow.addDevToolsExtension(
+  //   "C:\\Users\\Mark\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.6.0_0"
+  // );
 
 });
 
@@ -61,7 +70,7 @@ const openDialog = require("./functions/openDialog.js");
 log.info(`PROD: ABOUT TO GRAB PATHS`);
 const userHome = os.homedir();
 const setPath = `${userHome}\\AppData\\LocalLow\\Wizards Of The Coast\\MTGA\\output_log.txt`;
-log.info(`PROD: ${setPath}`)
+log.info(`PROD: ${setPath}`);
 
 const hasSetPath = settings.get("rawData.path");
 if (!hasSetPath) {
@@ -75,29 +84,29 @@ const logData = readLogFile(winAbsPath);
 
 // Called on startup. Tells frontend when data is ready to load or if there is an error with the log file
 ipcMain.on("readLog", async (event, arg) => {
-  log.info('PROD: RECIEVED READLOG ON MAIN')
+  log.info("PROD: RECIEVED READLOG ON MAIN");
   if (logData === "send error") {
-    log.info('PROD: LOGDATA === SEND ERROR')
+    log.info("PROD: LOGDATA === SEND ERROR");
     event.sender.send(
       "invalid-logfile",
       `There doesn't seem to be a file to read at this path: ${winAbsPath}. Try importing the log file wherever it may be (Example: \\AppData\\LocalLow\\Wizards Of The Coast\\MTGA\\output.txt )`
     );
-    log.info('PROD: ERROR SENT TO FRONT END BECAUSE OF BAD FILE')
+    log.info("PROD: ERROR SENT TO FRONT END BECAUSE OF BAD FILE");
     return;
   }
   // create if statment if app is already running
   if (!settings.get("rawData.isRunning")) {
-    log.info('PROD: SHOULD START EXECUTING LOG FILE FOR THE FIRST TIME')
+    log.info("PROD: SHOULD START EXECUTING LOG FILE FOR THE FIRST TIME");
     await executeLogFile(logData, mainWindow);
     return;
   }
-  log.info('PROD: RIGHT BEFORE SENDING LOADING STATUS')
+  log.info("PROD: RIGHT BEFORE SENDING LOADING STATUS");
   event.sender.send("loading-status", {
     isLoaded: true,
     isInvalidFile: false,
     newCards: settings.get("dataToRender.newCards")
   });
-  log.info('PROD: SHOULD HAVE SENT LOADING STATUS BACK');
+  log.info("PROD: SHOULD HAVE SENT LOADING STATUS BACK");
 });
 
 // Sent if a user tries to correct their log file and needs to re-render the app
@@ -167,3 +176,27 @@ ipcMain.on("get-sysinfo", (event, arg) => {
  * AUTO UPDATER
  * ---------------------------------------------
  */
+autoUpdater.on("checking-for-update", () => {
+  log.info("CHECKING FOR UPDATES");
+});
+
+autoUpdater.on("update-available", info => {
+  log.info("update available");
+});
+
+autoUpdater.on("update-not-available", info => {
+  log.info("update NOT available");
+});
+
+autoUpdater.on("error", err => {
+  log.info(`Error: ${err.toString()}`);
+});
+
+autoUpdater.on("download-progress", progressObj => {
+  log.info(`${progressObj}`);
+});
+
+autoUpdater.on("update-downloaded", info => {
+  log.info(`Installing now`);
+  autoUpdater.quitAndInstall();
+});
