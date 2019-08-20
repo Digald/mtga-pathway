@@ -15,7 +15,6 @@ const path = require("path");
 // File path to the data should just be inside the data folder
 const pathToMainJson = path.resolve(
   __dirname,
-  "data",
   "scryfall-default-cards.json"
 );
 
@@ -53,6 +52,6 @@ allData.forEach(card => {
 console.log(arenaCards.length);
 
 fs.writeFileSync(
-  path.resolve(__dirname, "data", `arenaCards.json`),
+  path.resolve(__dirname,`arenaCards.json`),
   JSON.stringify(arenaCards, null, 2)
 );

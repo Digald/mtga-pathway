@@ -4,16 +4,16 @@ const os = require("os");
 const { format } = require("url");
 
 // Packages
-const { BrowserWindow, app, ipcMain } = require("electron");
+const { BrowserWindow, app, ipcMain} = require("electron");
 const isDev = require("electron-is-dev");
 const prepareNext = require("electron-next");
 const settings = require("electron-settings");
+const log = require('electron-log');
 
 // Prepare the renderer once the app is ready
 let mainWindow;
 app.on("ready", async () => {
   await prepareNext("./renderer");
-
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -26,15 +26,21 @@ app.on("ready", async () => {
   const url = isDev
     ? "http://localhost:8000/"
     : format({
-        pathname: join(__dirname, "../renderer/out/index.html"),
+        pathname: join(__dirname, "../renderer/index.html"),
         protocol: "file:",
         slashes: true
       });
 
   mainWindow.loadURL(url);
+
+  /*
+  // In the case that dev tools need to be activated, uncomment the following
+  mainWindow.webContents.openDevTools()
   BrowserWindow.addDevToolsExtension(
     "C:\\Users\\Mark\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.6.0_0"
   );
+  */
+
 });
 
 // Quit the app once all windows are closed
@@ -51,8 +57,12 @@ const initiateScrape = require("./functions/initiateScrape.js");
 const openDialog = require("./functions/openDialog.js");
 
 // Set user path or get an already existing path from electron-settings
-const userHome = process.env.HOME;
-const setPath = `${userHome}/AppData/LocalLow/Wizards Of The Coast/MTGA/output_log.txt`;
+// log.info(`${JSON.stringify(process)}`)
+log.info(`PROD: ABOUT TO GRAB PATHS`);
+const userHome = os.homedir();
+const setPath = `${userHome}\\AppData\\LocalLow\\Wizards Of The Coast\\MTGA\\output_log.txt`;
+log.info(`PROD: ${setPath}`)
+
 const hasSetPath = settings.get("rawData.path");
 if (!hasSetPath) {
   settings.set("rawData.path", setPath);
@@ -60,27 +70,34 @@ if (!hasSetPath) {
 const winAbsPath = settings.get("rawData.path");
 
 // Read the file and format slightly removing new lines and carriage
+// Try to put this within the read log event
 const logData = readLogFile(winAbsPath);
 
 // Called on startup. Tells frontend when data is ready to load or if there is an error with the log file
 ipcMain.on("readLog", async (event, arg) => {
+  log.info('PROD: RECIEVED READLOG ON MAIN')
   if (logData === "send error") {
+    log.info('PROD: LOGDATA === SEND ERROR')
     event.sender.send(
       "invalid-logfile",
       `There doesn't seem to be a file to read at this path: ${winAbsPath}. Try importing the log file wherever it may be (Example: \\AppData\\LocalLow\\Wizards Of The Coast\\MTGA\\output.txt )`
     );
+    log.info('PROD: ERROR SENT TO FRONT END BECAUSE OF BAD FILE')
     return;
   }
   // create if statment if app is already running
   if (!settings.get("rawData.isRunning")) {
+    log.info('PROD: SHOULD START EXECUTING LOG FILE FOR THE FIRST TIME')
     await executeLogFile(logData, mainWindow);
     return;
   }
+  log.info('PROD: RIGHT BEFORE SENDING LOADING STATUS')
   event.sender.send("loading-status", {
     isLoaded: true,
     isInvalidFile: false,
     newCards: settings.get("dataToRender.newCards")
   });
+  log.info('PROD: SHOULD HAVE SENT LOADING STATUS BACK');
 });
 
 // Sent if a user tries to correct their log file and needs to re-render the app
@@ -145,7 +162,6 @@ ipcMain.on("get-sysinfo", (event, arg) => {
   const usersPath = settings.get("rawData.path");
   event.returnValue = { platform, usersPath };
 });
-
 
 /** --------------------------------------------
  * AUTO UPDATER
