@@ -28,7 +28,7 @@ class CardData extends Component {
                 <p className="CardData__card__attr">
                   {card.playerHas}/{card.quantity}
                 </p>
-                {card.playerHas !== card.quantity ? "| Incomplete" : ""}
+                {card.playerHas !== card.quantity ? "<---Incomplete" : ""}
               </div>
             );
           }
@@ -41,6 +41,26 @@ class CardData extends Component {
 
           .CardData__card__attr {
             margin: 0 1rem;
+          }
+
+          .CardData__Common {
+            color: black;
+            font-weight: bold;
+          }
+
+          .CardData__Uncommon {
+            color: silver;
+            font-weight: bold;
+          }
+
+          .CardData__Rare {
+            color: gold;
+            font-weight: bold;
+          }
+
+          .CardData__Mythic {
+            color: red;
+            font-weight: bold;
           }
 
           .CardData__card__mana {
