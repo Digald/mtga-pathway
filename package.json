@@ -16,7 +16,7 @@
     "appId": "com.mtga-pathway.app",
     "asar": false,
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "icons"
     },
     "extraResources": [
       {

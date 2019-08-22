@@ -29,8 +29,7 @@ app.on("ready", async () => {
     webPreferences: {
       nodeIntegration: false,
       preload: join(__dirname, "preload.js")
-    },
-    icon: path.join(__dirname, '../icons/png/64x64.png')
+    }
   });
 
   const url = isDev
