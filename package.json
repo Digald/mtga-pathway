@@ -2,14 +2,14 @@
   "name": "mtga-pathway",
   "productName": "MTGA Pathway",
   "author": "Mark Alaniz",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "main": "main/index.js",
   "scripts": {
     "start": "electron .",
     "build": "next build renderer && next export renderer",
     "dist": "npm run build && build --dir",
     "test": "jest --watchAll",
-    "package": "./node_modules/.bin/electron-builder build",
+    "package": "./node_modules/.bin/electron-builder build -p always",
     "seed": "node ./main/data/seedArenaCards.js"
   },
   "build": {
@@ -17,6 +17,9 @@
     "asar": false,
     "directories": {
       "buildResources": "icons"
+    },
+    "win": {
+      "publish": ["github"]
     },
     "extraResources": [
       {
