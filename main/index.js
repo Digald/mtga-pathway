@@ -2,10 +2,10 @@
 const { join } = require("path");
 const os = require("os");
 const { format } = require("url");
-var path = require('path')
+var path = require("path");
 
 // Packages
-const { BrowserWindow, app, ipcMain } = require("electron");
+const { BrowserWindow, app, ipcMain, dialog } = require("electron");
 const isDev = require("electron-is-dev");
 const prepareNext = require("electron-next");
 const settings = require("electron-settings");
@@ -13,13 +13,12 @@ const log = require("electron-log");
 const { autoUpdater } = require("electron-updater");
 
 // debugging autoUpdater
-autoUpdater.logger = require("electron-log")
-autoUpdater.logger.transports.file.level = "info"
+autoUpdater.logger = require("electron-log");
+autoUpdater.logger.transports.file.level = "info";
 
 // Prepare the renderer once the app is ready
 let mainWindow;
 app.on("ready", async () => {
-
   autoUpdater.checkForUpdates();
 
   await prepareNext("./renderer");
@@ -42,13 +41,11 @@ app.on("ready", async () => {
 
   mainWindow.loadURL(url);
 
-  
   // In the case that dev tools need to be activated, uncomment the following
   // mainWindow.webContents.openDevTools()
   // BrowserWindow.addDevToolsExtension(
   //   "C:\\Users\\Mark\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.6.0_0"
   // );
-
 });
 
 // Quit the app once all windows are closed
@@ -184,11 +181,26 @@ autoUpdater.on("update-available", info => {
 });
 
 autoUpdater.on("update-not-available", info => {
+  // log that an update is not availabe
   log.info("update NOT available");
 });
 
 autoUpdater.on("error", err => {
   log.info(`Error: ${err.toString()}`);
+  
+  // Send dialog message box to the user
+  const options = {
+    type: "warning",
+    buttons: ["OK"],
+    defaultId: 0,
+    title: "Update Available",
+    message: `An error occurred when checking for, downloading, or installing updates.`,
+    detail: `${err.toString()}`
+  };
+
+  dialog.showMessageBox(null, options, response => {
+    console.log(response);
+  });
 });
 
 autoUpdater.on("download-progress", progressObj => {
@@ -197,5 +209,20 @@ autoUpdater.on("download-progress", progressObj => {
 
 autoUpdater.on("update-downloaded", info => {
   log.info(`Installing now`);
-  autoUpdater.quitAndInstall();
+
+  // Send dialog message box to user asking them to install the updates
+  const options = {
+    type: "info",
+    buttons: ["Yes, please", "No, thanks"],
+    defaultId: 0,
+    title: "Update Available",
+    message: `A new version of MTGA Pathway is available. Would you like to update now?`,
+    detail: `${info}`
+  };
+
+  dialog.showMessageBox(null, options, response => {
+    if (response === 0) {
+      autoUpdater.quitAndInstall();
+    }
+  });
 });
