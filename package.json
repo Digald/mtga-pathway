@@ -2,7 +2,7 @@
   "name": "mtga-pathway",
   "productName": "MTGA Pathway",
   "author": "Mark Alaniz",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "main/index.js",
   "scripts": {
     "start": "electron .",
