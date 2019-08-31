@@ -17,13 +17,13 @@ class ScrapeButton extends Component {
   }
 
   decksRecieved = (event, arg) => {
-    this.setState({
-      btnStatus: "default"
-    });
+    // Leave this out for now until there is a more elegant solution
+    // this.setState({
+    //   btnStatus: "default"
+    // });
   };
 
   handleClick = () => {
-    console.log("clicked");
     this.setState({
       btnStatus: "disabled"
     });
@@ -35,15 +35,10 @@ class ScrapeButton extends Component {
     if (btnStatus === "disabled") {
       return (
         <p className="ScrapeButton-disabled">
-          This may take a good minute. Please do not close the application.
-        </p>
-      );
-    }
-    return (
-      <button className="ScrapeButton" onClick={e => this.handleClick()}>
-        Search For New Decks
-        <style jsx>{`
+          This may take a good minute. Decks will appear bellow when the search is done!
+          <style jsx>{`
           .ScrapeButton-disabled {
+            font-size: 12px;
             border: 2px solid black;
             background-color: #ff3562;
             color: white;
@@ -52,6 +47,17 @@ class ScrapeButton extends Component {
             margin: 0;
             box-shadow: inset 1px 1px 10px 5px rgba(0, 0, 0, 0.5);
           }
+          .ScrapeButton:active {
+            box-shadow: inset 1px 1px 10px 5px rgba(0, 0, 0, 0.5);
+          }
+        `}</style>
+        </p>
+      );
+    }
+    return (
+      <button className="ScrapeButton" onClick={e => this.handleClick()}>
+        Search For New Decks
+        <style jsx>{`
           .ScrapeButton {
             background-color: #ff3562;
             color: white;

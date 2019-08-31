@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 class CardData extends Component {
   render() {
-    console.log(this.props);
     const { card, type } = this.props;
     return (
       <div className="CardData">

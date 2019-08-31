@@ -118,7 +118,6 @@ class DeckGrid extends Component {
             if (toDisplay.includes(false)) {
               return "";
             }
-            // console.log(deck);
             return <SingleDeck key={i} fromPage={fromPage} deck={deck} />;
           }
 

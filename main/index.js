@@ -12,15 +12,17 @@ const settings = require("electron-settings");
 const log = require("electron-log");
 const { autoUpdater } = require("electron-updater");
 
-// debugging autoUpdater
+// Debugging electron-updater by creating log files
 autoUpdater.logger = require("electron-log");
 autoUpdater.logger.transports.file.level = "info";
 
 // Prepare the renderer once the app is ready
 let mainWindow;
 app.on("ready", async () => {
+  // Run check for updates as soon as app is ready
   autoUpdater.checkForUpdates();
 
+  // Prepare the renderer process and create the main window
   await prepareNext("./renderer");
   mainWindow = new BrowserWindow({
     width: 800,
@@ -31,6 +33,7 @@ app.on("ready", async () => {
     }
   });
 
+  // Display localhost or production html file
   const url = isDev
     ? "http://localhost:8000/"
     : format({
@@ -41,15 +44,16 @@ app.on("ready", async () => {
 
   mainWindow.loadURL(url);
 
-  // In the case that dev tools need to be activated, uncomment the following
+  // In the case that dev tools need to be activated by force, uncomment the following:
   // mainWindow.webContents.openDevTools()
+
+  // To use react dev tools, uncomment the following. Be sure to update the path when new versions come out.
   // BrowserWindow.addDevToolsExtension(
-  //   "C:\\Users\\Mark\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.6.0_0"
+  //   "C:\\Users\\Mark\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.0.6_0"
   // );
 });
 
 // Quit the app once all windows are closed
-// app.on("window-all-closed", app.quit);
 app.on("window-all-closed", () => {
   settings.set("rawData.isRunning", false);
   app.quit();
@@ -62,7 +66,6 @@ const initiateScrape = require("./functions/initiateScrape.js");
 const openDialog = require("./functions/openDialog.js");
 
 // Set user path or get an already existing path from electron-settings
-// log.info(`${JSON.stringify(process)}`)
 log.info(`PROD: ABOUT TO GRAB PATHS`);
 const userHome = os.homedir();
 const setPath = `${userHome}\\AppData\\LocalLow\\Wizards Of The Coast\\MTGA\\output_log.txt`;
@@ -81,6 +84,8 @@ const logData = readLogFile(winAbsPath);
 // Called on startup. Tells frontend when data is ready to load or if there is an error with the log file
 ipcMain.on("readLog", async (event, arg) => {
   log.info("PROD: RECIEVED READLOG ON MAIN");
+  
+  // If the log file doesn't exist then send an error screen to the user
   if (logData === "send error") {
     log.info("PROD: LOGDATA === SEND ERROR");
     event.sender.send(
@@ -90,7 +95,8 @@ ipcMain.on("readLog", async (event, arg) => {
     log.info("PROD: ERROR SENT TO FRONT END BECAUSE OF BAD FILE");
     return;
   }
-  // create if statment if app is already running
+
+  // If the app has not already been running, start parsing log file contents
   if (!settings.get("rawData.isRunning")) {
     log.info("PROD: SHOULD START EXECUTING LOG FILE FOR THE FIRST TIME");
     await executeLogFile(logData, mainWindow);
@@ -103,6 +109,8 @@ ipcMain.on("readLog", async (event, arg) => {
     newCards: settings.get("dataToRender.newCards")
   });
   log.info("PROD: SHOULD HAVE SENT LOADING STATUS BACK");
+
+  // end of readLog event
 });
 
 // Sent if a user tries to correct their log file and needs to re-render the app
@@ -121,6 +129,8 @@ ipcMain.on("delete-saved-deck", (event, arg) => {
       settings.get("mtgaCardData.savedDecks")
     );
   }
+
+  // end of delete-saved-deck event
 });
 
 ipcMain.on("send-restrict-color", (event, arg) => {
@@ -187,13 +197,13 @@ autoUpdater.on("update-not-available", info => {
 
 autoUpdater.on("error", err => {
   log.info(`Error: ${err.toString()}`);
-  
+
   // Send dialog message box to the user
   const options = {
     type: "warning",
     buttons: ["OK"],
     defaultId: 0,
-    title: "Update Available",
+    title: "Can't check for updates",
     message: `An error occurred when checking for, downloading, or installing updates.`,
     detail: `${err.toString()}`
   };
