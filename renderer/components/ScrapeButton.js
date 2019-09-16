@@ -35,7 +35,7 @@ class ScrapeButton extends Component {
     if (btnStatus === "disabled") {
       return (
         <p className="ScrapeButton-disabled">
-          This may take a good minute. Decks will appear bellow when the search is done!
+          This may take a good minute. Decks will appear below when the search is done!
           <style jsx>{`
           .ScrapeButton-disabled {
             font-size: 12px;
