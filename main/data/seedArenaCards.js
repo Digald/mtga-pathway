@@ -24,7 +24,7 @@ console.log(pathToMainJson);
 const allData = JSON.parse(fs.readFileSync(pathToMainJson, "utf-8"));
 
 // Initialize mtg set variables for writing json data
-let arenaCards = [];
+let arenaCards = {};
 
 // The loop that will break the files down
 allData.forEach(card => {
@@ -45,11 +45,9 @@ allData.forEach(card => {
     };
 
     // For those that are in mtga, extract cards for each specific sets
-    arenaCards.push(desiredData);
+    arenaCards[card.arena_id] = desiredData
   }
 });
-
-console.log(arenaCards.length);
 
 fs.writeFileSync(
   path.resolve(__dirname,`arenaCards.json`),
