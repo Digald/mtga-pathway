@@ -12,9 +12,7 @@ Find the closest competitive or meta MTGA decks you are closest to building with
 
 * Have Magic: The Gathering Arena installed on your home directory. The `output_log.txt` 
 
-* Packaging configuration was set up for Windows OS specifically. At the moment of writing this, MTGA is only available on Windows.
-
-* It's recommended to have a `dev-app-update.yml` file at the root of the project since the app checks for updates on startup.
+* At the moment of writing this, MTGA is only available on Windows. So Windows is required at the moment.
 
 ### Installing
 
@@ -50,6 +48,12 @@ dataToRender: {
     insideDecklist: // Object containing the metadata and details of a single deck
 }
 ```
+
+## Troubleshooting
+A troubleshooting and FAQ section will be added to the app's website.
+- Confirm that "detailed logs" are selected in your Magic Arena account settings.
+- Delete the Settings.txt file from `..\AppData\Roaming\MTGA Pathway` to refresh the app or clear any saved data.
+- Disable your anti-virus AT YOUR OWN RISK since MTGA Pathway is considered a 3rd party app.
 
 ## Running the tests
 
@@ -88,4 +92,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 * [Scryfall](https://scryfall.com/docs/api) - Bulk Card Data
 * [MTGGoldfish](https://scryfall.com/docs/api) - Competitve Deck Lists
-* You
+* You - For using my app.
