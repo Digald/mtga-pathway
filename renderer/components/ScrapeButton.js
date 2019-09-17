@@ -35,22 +35,22 @@ class ScrapeButton extends Component {
     if (btnStatus === "disabled") {
       return (
         <p className="ScrapeButton-disabled">
-          This may take a good minute. Decks will appear below when the search is done!
+          This may take a good minute.
           <style jsx>{`
-          .ScrapeButton-disabled {
-            font-size: 12px;
-            border: 2px solid black;
-            background-color: #ff3562;
-            color: white;
-            border: none;
-            padding: 20px;
-            margin: 0;
-            box-shadow: inset 1px 1px 10px 5px rgba(0, 0, 0, 0.5);
-          }
-          .ScrapeButton:active {
-            box-shadow: inset 1px 1px 10px 5px rgba(0, 0, 0, 0.5);
-          }
-        `}</style>
+            .ScrapeButton-disabled {
+              font-size: 12px;
+              border: 2px solid black;
+              background-color: #ff3562;
+              color: white;
+              border: none;
+              padding: 20px;
+              margin: 0;
+              box-shadow: inset 1px 1px 10px 5px rgba(0, 0, 0, 0.5);
+            }
+            .ScrapeButton:active {
+              box-shadow: inset 1px 1px 10px 5px rgba(0, 0, 0, 0.5);
+            }
+          `}</style>
         </p>
       );
     }

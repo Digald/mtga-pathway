@@ -81,4 +81,5 @@ module.exports = function(
       console.log("Player Cards have been Set");
     } // end callback
   );
+  return;
 };

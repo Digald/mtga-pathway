@@ -19,8 +19,10 @@ autoUpdater.logger.transports.file.level = "info";
 // Prepare the renderer once the app is ready
 let mainWindow;
 app.on("ready", async () => {
-  // Run check for updates as soon as app is ready
-  autoUpdater.checkForUpdates();
+  // Run check for updates as soon as app is ready, skip for development
+  if (!isDev) {
+    autoUpdater.checkForUpdates();
+  }
 
   // Prepare the renderer process and create the main window
   await prepareNext("./renderer");
@@ -84,7 +86,7 @@ const logData = readLogFile(winAbsPath);
 // Called on startup. Tells frontend when data is ready to load or if there is an error with the log file
 ipcMain.on("readLog", async (event, arg) => {
   log.info("PROD: RECIEVED READLOG ON MAIN");
-  
+
   // If the log file doesn't exist then send an error screen to the user
   if (logData === "send error") {
     log.info("PROD: LOGDATA === SEND ERROR");
@@ -223,11 +225,10 @@ autoUpdater.on("update-downloaded", info => {
   // Send dialog message box to user asking them to install the updates
   const options = {
     type: "info",
-    buttons: ["Yes, please", "No, thanks"],
+    buttons: ["OK"],
     defaultId: 0,
     title: "Update Available",
-    message: `A new version of MTGA Pathway is available. Would you like to update now?`,
-    detail: `${info}`
+    message: `A new version of MTGA Pathway is ready to install. Hit "OK" to update now.`
   };
 
   dialog.showMessageBox(null, options, response => {
