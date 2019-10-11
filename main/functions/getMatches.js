@@ -15,19 +15,26 @@ module.exports = function(deck) {
   const playerCards = settings.get("mtgaCardData.playerMtgaCards");
   const playerTokens = settings.get("mtgaCardData.playerTokens");
   const notMatched = [];
+  // For each deck, loop through the deck list
   currDeck.deckList.forEach(deckCard => {
     deckCard.quantity = parseInt(deckCard.quantity);
     const { name, quantity } = deckCard;
+    // Find out which player cards match the cards in the deck
     const hasCondition = playerCards.filter(playerCard => {
       if (playerCard) {
         return playerCard.name === name;
       }
     });
 
-    // Transfer quantities that players own
+    // Transfer quantities that players own to the deckCard
     if (hasCondition.length > 0) {
       deckCard.playerHas = hasCondition[0].quantity;
-    } else if (
+    } else {
+      deckCard.playerHas = 0;
+    }
+
+    // Find the basic lands and give max quantity no matter what
+    if (
       name === "Forest" ||
       name === "Mountain" ||
       name === "Island" ||
@@ -35,10 +42,7 @@ module.exports = function(deck) {
       name === "Swamp"
     ) {
       deckCard.playerHas = 999;
-    } else {
-      deckCard.playerHas = 0;
     }
-
     // Make owned quantity equal to needed quantity
     if (deckCard.playerHas >= quantity) {
       deckCard.playerHas = quantity;
@@ -98,5 +102,6 @@ module.exports = function(deck) {
       currDeck.totalNeeds) *
     100
   ).toFixed(0);
+  console.log(currDeck);
   return currDeck;
 };

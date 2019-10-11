@@ -2,7 +2,7 @@
 
 Find the closest competitive or meta MTGA decks you are closest to building with your current collection. This desktop application helps new and veteran Magic: The Gathering Arena players focus how to make the most of their current collection by following what competitive decks can be played now.
 
-**Check it out at: https://digald.github.io/mtgapathway/** 
+**Check it out at: https://mtgapathway.netlify.com/** 
 
 ![Preview!](https://i.gyazo.com/3359b407d5db2244f5f8b90d0b9bb85a.png)
 

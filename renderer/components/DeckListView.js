@@ -31,6 +31,7 @@ class DeckListView extends Component {
 
   render() {
     const { decklist, types } = this.state;
+    console.log(decklist);
     return (
       <div className="DeckListView">
         <button className="DeckListView__backButton">
