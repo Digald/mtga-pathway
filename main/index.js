@@ -11,6 +11,8 @@ const prepareNext = require("electron-next");
 const settings = require("electron-settings");
 const log = require("electron-log");
 const { autoUpdater } = require("electron-updater");
+const Sentry = require('@sentry/node');
+Sentry.init({ dsn: 'https://ef7e5dfa75a644c895fde8c124290f0e@sentry.io/1758855' });
 
 // Debugging electron-updater by creating log files
 autoUpdater.logger = require("electron-log");
@@ -83,6 +85,10 @@ const winAbsPath = settings.get("rawData.path");
 // Try to put this within the read log event
 const logData = readLogFile(winAbsPath);
 
+/*--------------------------------------------------------
+ * IPC FUNCTIONS
+ *--------------------------------------------------------- 
+ */
 // Called on startup. Tells frontend when data is ready to load or if there is an error with the log file
 ipcMain.on("readLog", async (event, arg) => {
   log.info("PROD: RECIEVED READLOG ON MAIN");
