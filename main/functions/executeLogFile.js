@@ -1,13 +1,11 @@
 const settings = require("electron-settings");
 const searchLogFile = require("./searchLogFile.js");
 const packageCollection = require("./packageCollection.js");
-const calculateCountDiff = require("./calculateCountDiff.js");
-const sortDifferences = require("./sortDifferences.js");
-const extractNewCardQuantity = require("./extractNewCardQuantity.js");
 const parseCards = require("./parseCards.js");
+const checkForRawUserData = require("./checkForRawUserData");
 
 /**
- * NON pure function to run every time the app starts
+ * Runs when the app starts
  */
 module.exports = async function(logData, mainWindow) {
   // Grab player data from the read log file
@@ -20,24 +18,15 @@ module.exports = async function(logData, mainWindow) {
   const storedRawData = settings.get("rawData.cards");
 
   // Set up variables to check difference between last time
-  let allDifferences = [];
-  let onlyNewCards = [];
-  let newQuantities = [];
-  if (!storedRawData) {
-    settings.set("rawData.cards", playerMainCollection);
-    allDifferences = ["first-time"];
-  } else {
-    allDifferences = await calculateCountDiff(
-      storedRawData,
-      playerMainCollection
-    );
-    onlyNewCards = await sortDifferences(storedRawData, playerMainCollection);
-    newQuantities = await extractNewCardQuantity(allDifferences, onlyNewCards);
-  }
+  const { allDifferences, onlyNewCards, newQuantities } = checkForRawUserData(
+    storedRawData,
+    playerMainCollection
+  );
+
   //If this is the first time running or there are new cards to parse, allDiff.length will be greater than 0
   if (allDifferences.length > 0) {
     // Only run for using the app for the first time
-    console.log('executeLogFile40: Ready to parse')
+    console.log("executeLogFile40: Ready to parse");
     if (allDifferences[0] === "first-time") {
       await parseCards(playerMainCollection, mainWindow);
     }
@@ -49,8 +38,7 @@ module.exports = async function(logData, mainWindow) {
   }
   // Nothing new to update, more logic to be added
   else {
-    mainWindow.webContents.send("loading-status",
-    {
+    mainWindow.webContents.send("loading-status", {
       isLoaded: true,
       isInvalidFile: false,
       newCards: settings.get("dataToRender.newCards")

@@ -9,7 +9,13 @@ class CardData extends Component {
         {card.map(card => {
           if (card.type === type) {
             return (
-              <div key={card.name} className="CardData__card">
+              <div
+                key={card.name}
+                className={`CardData__card ${
+                  card.playerHas !== card.quantity ? "incomplete" : ""
+                }`}
+              >
+                {/* <img src={card.image} alt="Preview Not Available" /> */}
                 <p className="CardData__card__attr">{card.name}</p>
                 {card.mana_cost.map((mana, index) => {
                   return (
@@ -27,7 +33,6 @@ class CardData extends Component {
                 <p className="CardData__card__attr">
                   {card.playerHas}/{card.quantity}
                 </p>
-                {card.playerHas !== card.quantity ? "<---Incomplete" : ""}
               </div>
             );
           }
@@ -36,6 +41,10 @@ class CardData extends Component {
         <style jsx>{`
           .CardData__card {
             display: flex;
+          }
+
+          .incomplete {
+            background-color: rgba(255, 0, 0, 0.5);
           }
 
           .CardData__card__attr {
