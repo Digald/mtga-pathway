@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import * as Sentry from '@sentry/browser';
-Sentry.init({dsn: "https://43aed916fca04830b52f3fc1330db07a@sentry.io/1777349"});
+import * as Sentry from "@sentry/browser";
+Sentry.init({
+  dsn: "https://43aed916fca04830b52f3fc1330db07a@sentry.io/1777349"
+});
 // Components
 import CornerSpace from "../components/CornerSpace";
 import TopBar from "../components/TopBar";
@@ -9,6 +11,8 @@ import DashBoardView from "../components/DashboardView";
 import LoadingPage from "../components/LoadingPage";
 import Layout from "../components/Layout";
 import FileError from "../components/FileError";
+import ExampleWorker from "../utils/example.worker";
+// import WebWorker from "../utils/WebWorker";
 
 class Dashboard extends Component {
   state = {
@@ -18,7 +22,15 @@ class Dashboard extends Component {
     newCards: []
   };
 
-  componentDidMount() {
+  onWorkerMessage = (event) => this.setState({ latestMessage: event.data })
+
+  componentDidMount = () => {
+    // worker test
+    if (window.Worker) {
+      this.worker = new ExampleWorker();
+      this.worker.postMessage("from Host");
+      this.worker.addEventListener('message', this.onWorkerMessage)
+    }
     // start listening the channel message
     global.ipcRenderer.send("readLog");
     global.ipcRenderer.on("loading-status", this.handleMessage);
@@ -26,6 +38,7 @@ class Dashboard extends Component {
   }
 
   componentWillUnmount() {
+    this.worker.terminate()
     // stop listening the channel message
     global.ipcRenderer.removeListener("loading-status", this.handleMessage);
     global.ipcRenderer.removeListener("invalid-logfile", this.handleWrongFile);
