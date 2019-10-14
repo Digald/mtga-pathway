@@ -1,5 +1,4 @@
 const settings = require("electron-settings");
-
 /**
  * Updates the card quantity for all stored player collection cards
  *
@@ -19,7 +18,7 @@ module.exports = function(cardsToUpdate) {
     settings.set("mtgaCardData.playerMtgaCards", playerMtgaCards);
     return playerMtgaCards;
   } catch (err) {
-    Sentry.captureException(err);
+    console.log(err);
     return [];
   }
 };

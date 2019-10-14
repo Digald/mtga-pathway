@@ -1,6 +1,5 @@
 const settings = require("electron-settings");
 const getMatches = require("./getMatches");
-
 /**
  * Grabs all scraped decks and for each one, updates the percentage of cards owned by the user
  */
@@ -13,6 +12,6 @@ module.exports = function() {
       getMatches(singleDeck);
     });
   } catch (err) {
-    Sentry.captureException(err);
+    console.log(err);
   }
 };

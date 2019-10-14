@@ -1,6 +1,5 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
-
 /**
  * Take the meta data of each deck and request the page with the deck list. Aquire that data and return a completed object
  *
@@ -86,7 +85,7 @@ module.exports = async function(singleDeck) {
       deckList.push(singleCardData);
     });
   } catch (err) {
-    Sentry.captureException(err);
+    console.log(err);
   }
   return deckList;
 };

@@ -1,3 +1,4 @@
+
 /**
  * Calculates the difference between two input arrays only returns the brand new cards obtained
  *
@@ -15,9 +16,8 @@ module.exports = function(prevArr, currArr) {
         })
     );
     return differences;
-  } catch(err) {
-    Sentry.captureException(err);
-    return []
+  } catch (err) {
+    console.log(err);
+    return [];
   }
-  
 };

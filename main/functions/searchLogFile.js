@@ -1,3 +1,4 @@
+
 /**
  * This is one of the first functions that reads the log file and scrapes all the card data and player token data I need from it.
  *
@@ -30,7 +31,7 @@ module.exports = function(logData, mainWindow) {
     const message = "";
     mainWindow.webContents.send("correct-logfile", message);
   } catch (err) {
-    Sentry.captureException(err);
+    console.log(err);
     // Tell user that the text file they tried to read is not valid
     const message = `It looks like we couldn't find the correct MTGA log file. Try importing output.txt, wherever it may be (Example: ${
       process.env.HOME

@@ -2,6 +2,7 @@
 const { join } = require("path");
 const os = require("os");
 const { format } = require("url");
+require('events').EventEmitter.defaultMaxListeners = 20;
 // var path = require("path");
 
 // Packages
@@ -50,6 +51,7 @@ app.on("ready", async () => {
   try {
     mainWindow.loadURL(url);
   } catch(err) {
+    console.log(err);
     Sentry.captureException(err);
   }
 
@@ -67,7 +69,6 @@ app.on("window-all-closed", () => {
   settings.set("rawData.isRunning", false);
   app.quit();
 });
-
 // import other functions
 const readLogFile = require("./functions/readLogFile.js");
 const executeLogFile = require("./functions/executeLogFile.js");
@@ -210,6 +211,7 @@ autoUpdater.on("update-not-available", info => {
 
 autoUpdater.on("error", err => {
   log.info(`Error: ${err.toString()}`);
+  console.log(err);
   Sentry.captureException(err);
   // Send dialog message box to the user
   const options = {

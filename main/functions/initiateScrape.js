@@ -91,14 +91,12 @@ module.exports = async function(event) {
           setTimeout(checkForReturn, 5000);
         }
       } catch (err) {
-        Sentry.captureException(err);
         return [];
       }
     }
 
     return checkForReturn();
   } catch (err) {
-    Sentry.captureException(err);
     return [];
   }
 };

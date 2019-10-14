@@ -1,3 +1,4 @@
+
 /**
  * Pulls are only cards that have an updated quantity
  *
@@ -25,7 +26,7 @@ module.exports = function(allUpdates, onlyNewCards) {
 
     return result;
   } catch (err) {
-    Sentry.captureException(err);
+    console.log(err);
     return [];
   }
 };

@@ -2,7 +2,6 @@ const settings = require("electron-settings");
 const calculateCountDiff = require("./calculateCountDiff.js");
 const sortDifferences = require("./sortDifferences.js");
 const extractNewCardQuantity = require("./extractNewCardQuantity.js");
-
 /**
  * Checks to see if there is already card data stored. If none, saved the log file cards and say it is the first time running. If there are cards, check for any differences and return them.
  * @param {array} storedRawData list of objects containing arena card ids and quantities of those cards that have been stored in settings already
@@ -24,7 +23,7 @@ module.exports = function(storedRawData, playerMainCollection) {
       newQuantities = extractNewCardQuantity(allDifferences, onlyNewCards);
     }
   } catch (err) {
-    Sentry.captureException(err);
+    console.log(err);
   }
   return { allDifferences, onlyNewCards, newQuantities };
 };

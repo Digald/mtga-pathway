@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require("path");
 const updateCardQuantity = require("./updateCardQuantity");
 const updateMatches = require("./updateMatches");
-
 /**
  * Takes all arena id's from the log and parses them into card data taken from arenaCards.json
  *
@@ -26,7 +25,6 @@ module.exports = function(
       async (err, data) => {
         if (err) {
           console.log(err);
-          Sentry.captureException(err);
         }
 
         // Saves all that data locally
@@ -86,7 +84,7 @@ module.exports = function(
       } // end callback
     );
   } catch (err) {
-    Sentry.captureException(err);
+    console.log(err);
   }
   return;
 };

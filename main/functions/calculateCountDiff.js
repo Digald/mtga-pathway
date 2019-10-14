@@ -18,7 +18,7 @@ module.exports = function(prevArr, currArr) {
     );
     return differences;
   } catch(err) {
-    Sentry.captureException(err);
+    console.log(err);
     return [];
   }
 };

@@ -19,7 +19,7 @@ module.exports = function(playerCards) {
     });
     return playerMainCollection;
   } catch (err) {
-    Sentry.captureException(err);
+    console.log(err);
     return [];
   }
 };

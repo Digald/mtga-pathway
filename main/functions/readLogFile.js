@@ -1,5 +1,4 @@
 const fs = require('fs');
-
 module.exports = function(absPath) {
   // Read the file and format slightly removing new lines and carriage
   const findNewLines = /(\n)/g;
@@ -12,7 +11,7 @@ module.exports = function(absPath) {
       .replace(findCarriage, "")
       .replace(" ", "");
   } catch (err) {
-    Sentry.captureException(err);
+    console.log(err);
     return 'send error';
   }
   return logData;

@@ -1,5 +1,4 @@
 const settings = require("electron-settings");
-
 /**
  * Gets data from request, parses the html and collects relevent data into an array
  *
@@ -105,7 +104,7 @@ module.exports = function(deck) {
     ).toFixed(0);
     return currDeck;
   } catch (err) {
-    Sentry.captureException(err);
+    console.log(err);
     return {};
   }
 };

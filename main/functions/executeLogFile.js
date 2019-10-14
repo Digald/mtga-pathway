@@ -50,6 +50,6 @@ module.exports = async function(logData, mainWindow) {
       console.log("nothing to update");
     }
   } catch (err) {
-    Sentry.captureException(err);
+    console.log(err);
   }
 };
