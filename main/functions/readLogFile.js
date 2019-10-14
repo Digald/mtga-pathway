@@ -12,6 +12,7 @@ module.exports = function(absPath) {
       .replace(findCarriage, "")
       .replace(" ", "");
   } catch (err) {
+    Sentry.captureException(err);
     return 'send error';
   }
   return logData;

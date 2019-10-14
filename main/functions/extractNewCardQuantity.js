@@ -7,20 +7,25 @@
  */
 
 module.exports = function(allUpdates, onlyNewCards) {
-  const comparer = otherArray => {
-    return current => {
-      return (
-        otherArray.filter(other => {
-          return other.arena_id == current.arena_id;
-        }).length == 0
-      );
+  try {
+    const comparer = otherArray => {
+      return current => {
+        return (
+          otherArray.filter(other => {
+            return other.arena_id == current.arena_id;
+          }).length == 0
+        );
+      };
     };
-  };
 
-  const onlyInAllUpdates = allUpdates.filter(comparer(onlyNewCards));
-  const onlyInOnlyNewCards = onlyNewCards.filter(comparer(allUpdates));
+    const onlyInAllUpdates = allUpdates.filter(comparer(onlyNewCards));
+    const onlyInOnlyNewCards = onlyNewCards.filter(comparer(allUpdates));
 
-  const result = onlyInAllUpdates.concat(onlyInOnlyNewCards);
+    const result = onlyInAllUpdates.concat(onlyInOnlyNewCards);
 
-  return result;
+    return result;
+  } catch (err) {
+    Sentry.captureException(err);
+    return [];
+  }
 };

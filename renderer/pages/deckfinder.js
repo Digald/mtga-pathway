@@ -18,7 +18,6 @@ class DeckFinder extends Component {
           <CornerSpace />
           <TopBar title="DECK FINDER" activePage="deckfinder" />
           <SideBar activePage="deckfinder" />
-          <div onClick={somefunc()}></div>
           <DeckFinderView />
           <style jsx>{`
             .DeckFinder {

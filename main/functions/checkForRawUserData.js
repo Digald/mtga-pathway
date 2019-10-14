@@ -14,13 +14,17 @@ module.exports = function(storedRawData, playerMainCollection) {
   let allDifferences = [],
     onlyNewCards = [],
     newQuantities = [];
-  if (!storedRawData) {
-    settings.set("rawData.cards", playerMainCollection);
-    allDifferences = ["first-time"];
-  } else {
-    allDifferences = calculateCountDiff(storedRawData, playerMainCollection);
-    onlyNewCards = sortDifferences(storedRawData, playerMainCollection);
-    newQuantities = extractNewCardQuantity(allDifferences, onlyNewCards);
+  try {
+    if (!storedRawData) {
+      settings.set("rawData.cards", playerMainCollection);
+      allDifferences = ["first-time"];
+    } else {
+      allDifferences = calculateCountDiff(storedRawData, playerMainCollection);
+      onlyNewCards = sortDifferences(storedRawData, playerMainCollection);
+      newQuantities = extractNewCardQuantity(allDifferences, onlyNewCards);
+    }
+  } catch (err) {
+    Sentry.captureException(err);
   }
   return { allDifferences, onlyNewCards, newQuantities };
 };

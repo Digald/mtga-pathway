@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@sentry/browser": "^5.7.0",
+    "@sentry/electron": "0.17.4",
     "@sentry/node": "5.7.0",
     "axios": "^0.18.1",
     "cheerio": "^1.0.0-rc.3",

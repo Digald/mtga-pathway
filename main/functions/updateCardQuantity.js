@@ -7,14 +7,19 @@ const settings = require("electron-settings");
  */
 
 module.exports = function(cardsToUpdate) {
-  const playerMtgaCards = settings.get("mtgaCardData.playerMtgaCards");
-  playerMtgaCards.forEach(card => {
-    cardsToUpdate.forEach(newData => {
-      if (card && newData && card.arena_id == newData.arena_id) {
-        card.quantity = newData.quantity;
-      }
+  try {
+    const playerMtgaCards = settings.get("mtgaCardData.playerMtgaCards");
+    playerMtgaCards.forEach(card => {
+      cardsToUpdate.forEach(newData => {
+        if (card && newData && card.arena_id == newData.arena_id) {
+          card.quantity = newData.quantity;
+        }
+      });
     });
-  });
-  settings.set("mtgaCardData.playerMtgaCards", playerMtgaCards);
-  return playerMtgaCards;
+    settings.set("mtgaCardData.playerMtgaCards", playerMtgaCards);
+    return playerMtgaCards;
+  } catch (err) {
+    Sentry.captureException(err);
+    return [];
+  }
 };

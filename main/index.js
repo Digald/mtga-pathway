@@ -2,7 +2,7 @@
 const { join } = require("path");
 const os = require("os");
 const { format } = require("url");
-var path = require("path");
+// var path = require("path");
 
 // Packages
 const { BrowserWindow, app, ipcMain, dialog } = require("electron");
@@ -11,8 +11,8 @@ const prepareNext = require("electron-next");
 const settings = require("electron-settings");
 const log = require("electron-log");
 const { autoUpdater } = require("electron-updater");
-const Sentry = require('@sentry/node');
-Sentry.init({ dsn: 'https://ef7e5dfa75a644c895fde8c124290f0e@sentry.io/1758855' });
+const Sentry = require('@sentry/electron');
+Sentry.init({dsn: 'https://ef7e5dfa75a644c895fde8c124290f0e@sentry.io/1758855'});
 
 // Debugging electron-updater by creating log files
 autoUpdater.logger = require("electron-log");
@@ -46,7 +46,12 @@ app.on("ready", async () => {
         slashes: true
       });
 
-  mainWindow.loadURL(url);
+  // Try loading the main window
+  try {
+    mainWindow.loadURL(url);
+  } catch(err) {
+    Sentry.captureException(err);
+  }
 
   // In the case that dev tools need to be activated by force, uncomment the following:
   // mainWindow.webContents.openDevTools()
@@ -205,7 +210,7 @@ autoUpdater.on("update-not-available", info => {
 
 autoUpdater.on("error", err => {
   log.info(`Error: ${err.toString()}`);
-
+  Sentry.captureException(err);
   // Send dialog message box to the user
   const options = {
     type: "warning",
@@ -216,9 +221,9 @@ autoUpdater.on("error", err => {
     detail: `${err.toString()}`
   };
 
-  dialog.showMessageBox(null, options, response => {
-    console.log(response);
-  });
+  // dialog.showMessageBox(null, options, response => {
+  //   console.log(response);
+  // });
 });
 
 autoUpdater.on("download-progress", progressObj => {

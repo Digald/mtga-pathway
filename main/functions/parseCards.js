@@ -17,69 +17,76 @@ module.exports = function(
   mainWindow,
   newQuantities = []
 ) {
-  console.log("have to parse");
-  // Read data inside JSON file containing all standard card data
-  fs.readFile(
-    path.resolve(__dirname, "../data/arenaCards.json"),
-    "utf8",
-    async (err, data) => {
-      if (err) {
-        console.log(err);
-      }
-
-      // Saves all that data locally
-      settings.set("mtgaCardData.allMtgaCards", JSON.parse(data));
-      const allCards = settings.get('mtgaCardData.allMtgaCards');
-
-      // Map through the new cards you want to translate
-      const pullOutPlayersCards = fromPlayerCollection.map(async playerCard => {
-        foundCard = allCards[playerCard.arena_id];
-        if (foundCard) {
-          foundCard.quantity = playerCard.quantity;
-          return foundCard;
+  try {
+    console.log("have to parse");
+    // Read data inside JSON file containing all standard card data
+    fs.readFile(
+      path.resolve(__dirname, "../data/arenaCards.json"),
+      "utf8",
+      async (err, data) => {
+        if (err) {
+          console.log(err);
+          Sentry.captureException(err);
         }
-        return;
-      });
-      
-      // Wait for the promise before using the parsed player cards
-      const pulledPlayerCards = await Promise.all(pullOutPlayersCards);
 
-      // Finally set the player cards into storage
-      let spreadNewPlayerCards = [];
-      if (
-        !settings.get("mtgaCardData.playerMtgaCards") ||
-        settings.get("mtgaCardData.playerMtgaCards").length < 1
-      ) {
-        spreadNewPlayerCards = pulledPlayerCards;
-      } else {
-        spreadNewPlayerCards = [
-          ...settings.get("mtgaCardData.playerMtgaCards"),
-          ...pulledPlayerCards
-        ];
-      }
+        // Saves all that data locally
+        settings.set("mtgaCardData.allMtgaCards", JSON.parse(data));
+        const allCards = settings.get("mtgaCardData.allMtgaCards");
 
-      // Store relevent data
-      settings.set("dataToRender.newCards", pulledPlayerCards);
-      settings.set("mtgaCardData.playerMtgaCards", spreadNewPlayerCards);
+        // Map through the new cards you want to translate
+        const pullOutPlayersCards = fromPlayerCollection.map(
+          async playerCard => {
+            foundCard = allCards[playerCard.arena_id];
+            if (foundCard) {
+              foundCard.quantity = playerCard.quantity;
+              return foundCard;
+            }
+            return;
+          }
+        );
 
-      // After parsing all player cards, update quantities for card already owned
-      if (newQuantities.length > 0) {
-        await updateCardQuantity(newQuantities);
-      }
-      await updateMatches();
+        // Wait for the promise before using the parsed player cards
+        const pulledPlayerCards = await Promise.all(pullOutPlayersCards);
 
-      // Send status to make front end ready to use
-      mainWindow.webContents.send("loading-status", {
-        isLoaded: true,
-        isInvalidFile: false,
-        newCards: settings.get("dataToRender.newCards")
-      });
+        // Finally set the player cards into storage
+        let spreadNewPlayerCards = [];
+        if (
+          !settings.get("mtgaCardData.playerMtgaCards") ||
+          settings.get("mtgaCardData.playerMtgaCards").length < 1
+        ) {
+          spreadNewPlayerCards = pulledPlayerCards;
+        } else {
+          spreadNewPlayerCards = [
+            ...settings.get("mtgaCardData.playerMtgaCards"),
+            ...pulledPlayerCards
+          ];
+        }
 
-      // Set app state to running
-      settings.set("rawData.isRunning", true);
+        // Store relevent data
+        settings.set("dataToRender.newCards", pulledPlayerCards);
+        settings.set("mtgaCardData.playerMtgaCards", spreadNewPlayerCards);
 
-      console.log("Player Cards have been Set");
-    } // end callback
-  );
+        // After parsing all player cards, update quantities for card already owned
+        if (newQuantities.length > 0) {
+          await updateCardQuantity(newQuantities);
+        }
+        await updateMatches();
+
+        // Send status to make front end ready to use
+        mainWindow.webContents.send("loading-status", {
+          isLoaded: true,
+          isInvalidFile: false,
+          newCards: settings.get("dataToRender.newCards")
+        });
+
+        // Set app state to running
+        settings.set("rawData.isRunning", true);
+
+        console.log("Player Cards have been Set");
+      } // end callback
+    );
+  } catch (err) {
+    Sentry.captureException(err);
+  }
   return;
 };

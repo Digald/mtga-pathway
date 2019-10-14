@@ -30,6 +30,7 @@ module.exports = function(logData, mainWindow) {
     const message = "";
     mainWindow.webContents.send("correct-logfile", message);
   } catch (err) {
+    Sentry.captureException(err);
     // Tell user that the text file they tried to read is not valid
     const message = `It looks like we couldn't find the correct MTGA log file. Try importing output.txt, wherever it may be (Example: ${
       process.env.HOME

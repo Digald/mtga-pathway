@@ -7,11 +7,17 @@
  */
 
 module.exports = function(prevArr, currArr) {
-  const differences = currArr.filter(
-    element =>
-      !prevArr.some(element2 => {
-        return element.arena_id === element2.arena_id;
-      })
-  );
-  return differences;
+  try {
+    const differences = currArr.filter(
+      element =>
+        !prevArr.some(element2 => {
+          return element.arena_id === element2.arena_id;
+        })
+    );
+    return differences;
+  } catch(err) {
+    Sentry.captureException(err);
+    return []
+  }
+  
 };

@@ -86,8 +86,7 @@ module.exports = async function(singleDeck) {
       deckList.push(singleCardData);
     });
   } catch (err) {
-    console.log(err);
+    Sentry.captureException(err);
   }
-  // console.log(deckList);
   return deckList;
 };
