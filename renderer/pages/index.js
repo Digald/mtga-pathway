@@ -12,7 +12,6 @@ import LoadingPage from "../components/LoadingPage";
 import Layout from "../components/Layout";
 import FileError from "../components/FileError";
 import ExampleWorker from "../utils/example.worker";
-// import WebWorker from "../utils/WebWorker";
 
 class Dashboard extends Component {
   state = {
@@ -22,15 +21,30 @@ class Dashboard extends Component {
     newCards: []
   };
 
-  onWorkerMessage = (event) => this.setState({ latestMessage: event.data })
+  onWorkerMessage = event => this.setState({ latestMessage: event.data });
 
-  componentDidMount = () => {
-    // worker test
-    if (window.Worker) {
-      this.worker = new ExampleWorker();
-      this.worker.postMessage("from Host");
-      this.worker.addEventListener('message', this.onWorkerMessage)
+  componentDidMount() {
+    const decksAge = localStorage.getItem("decksAge");
+    // check the time set in local storage
+    if (!decksAge) {
+      localStorage.setItem("decksAge", Date.now() / 1000);
+      console.log("NO TIME DATA");
     }
+
+    // Test to see if more than two days have passed
+    if (Date.now() / 1000 - decksAge >= 172800) {
+      console.log("TIME TO SCRAPE");
+      // if so, run worker to get new decks for the user
+      if (window.Worker) {
+        this.worker = new ExampleWorker();
+        this.worker.postMessage("from Host");
+        this.worker.addEventListener("message", this.onWorkerMessage);
+      }
+    }
+    // test worker
+    this.worker = new ExampleWorker();
+    this.worker.postMessage("from Host");
+    this.worker.addEventListener("message", this.onWorkerMessage);
     // start listening the channel message
     global.ipcRenderer.send("readLog");
     global.ipcRenderer.on("loading-status", this.handleMessage);
@@ -38,7 +52,8 @@ class Dashboard extends Component {
   }
 
   componentWillUnmount() {
-    this.worker.terminate()
+    // stop listening to worker
+    // this.worker.terminate();
     // stop listening the channel message
     global.ipcRenderer.removeListener("loading-status", this.handleMessage);
     global.ipcRenderer.removeListener("invalid-logfile", this.handleWrongFile);

@@ -3,7 +3,6 @@ const { join } = require("path");
 const os = require("os");
 const { format } = require("url");
 require('events').EventEmitter.defaultMaxListeners = 20;
-// var path = require("path");
 
 // Packages
 const { BrowserWindow, app, ipcMain, dialog } = require("electron");

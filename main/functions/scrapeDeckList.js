@@ -14,7 +14,6 @@ module.exports = async function(singleDeck) {
   try {
     response = await axios.get(singleDeck.url);
     const $ = cheerio.load(response.data);
-
     // deckList containers list of objects for each card, cardType is where the card belongs in the deck
     let cardType = "";
 
