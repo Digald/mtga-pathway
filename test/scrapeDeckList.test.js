@@ -27,7 +27,8 @@ describe("Confirm that deck list is properly added from deck metadata", async ()
   // };
 
   it("Should return an array", async () => {
-    expect(await scrapeDeckList(singleDeck)).toEqual(expect.any(Array));
+    const result = await scrapeDeckList(singleDeck);
+    expect(result).toEqual(expect.any(Array));
   });
 
   // it("Should return certain properties in each object in array", async () => {

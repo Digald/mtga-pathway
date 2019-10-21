@@ -11,7 +11,7 @@ import DashBoardView from "../components/DashboardView";
 import LoadingPage from "../components/LoadingPage";
 import Layout from "../components/Layout";
 import FileError from "../components/FileError";
-import ExampleWorker from "../utils/example.worker";
+import FetchWorker from "../utils/fetch.worker";
 
 class Dashboard extends Component {
   state = {
@@ -36,13 +36,13 @@ class Dashboard extends Component {
       console.log("TIME TO SCRAPE");
       // if so, run worker to get new decks for the user
       if (window.Worker) {
-        this.worker = new ExampleWorker();
+        this.worker = new FetchWorker();
         this.worker.postMessage("from Host");
         this.worker.addEventListener("message", this.onWorkerMessage);
       }
     }
     // test worker
-    this.worker = new ExampleWorker();
+    this.worker = new FetchWorker();
     this.worker.postMessage("from Host");
     this.worker.addEventListener("message", this.onWorkerMessage);
     // start listening the channel message
@@ -53,7 +53,7 @@ class Dashboard extends Component {
 
   componentWillUnmount() {
     // stop listening to worker
-    // this.worker.terminate();
+    this.worker.terminate();
     // stop listening the channel message
     global.ipcRenderer.removeListener("loading-status", this.handleMessage);
     global.ipcRenderer.removeListener("invalid-logfile", this.handleWrongFile);

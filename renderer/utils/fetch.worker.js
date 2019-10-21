@@ -1,7 +1,9 @@
 import axios from "axios";
 import cheerio from "cheerio";
+import scrapeDeckList from "./scrapeDeckList";
 
 self.addEventListener("message", async event => {
+  // initiate scrape (function 1)
   const mainURL =
     "https://cors-anywhere.herokuapp.com/https://www.mtggoldfish.com/metagame/arena_standard/full#paper";
   let response;
@@ -10,8 +12,8 @@ self.addEventListener("message", async event => {
   } catch (err) {
     console.log(err);
   }
-  const $ = cheerio.load(response.data);
-  await $(".archetype-tile").each(async function(i, elem) {
+  const $ = await cheerio.load(response.data);
+  $(".archetype-tile").each(async function(i, elem) {
     let singleDeck = {};
 
     // name
@@ -42,8 +44,14 @@ self.addEventListener("message", async event => {
       .attr("href")
       .trim();
     const finalUrl = baseUrl + pathLink.replace("#paper", "#arena");
-    singleDeck.url = finalUrl;
+    singleDeck.url = "https://cors-anywhere.herokuapp.com/" + finalUrl;
 
+    // decklist (function 2)
+    const finishedSingleDeck = await scrapeDeckList(singleDeck);
+    singleDeck.deckList = finishedSingleDeck;
+    console.log('New Deck -------------')
     console.log(singleDeck);
   });
+
+  // get matches for decks (function 3)
 });
