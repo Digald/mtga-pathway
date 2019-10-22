@@ -23,29 +23,17 @@ class Dashboard extends Component {
     playerTokens: []
   };
 
-  onWorkerMessage = event => this.setState({ latestMessage: event.data });
+  // onWorkerMessage = event => this.setState({ latestMessage: event.data });
+  componentDidUpdate() {
+    this.dispatchWorker();
+  }
 
   componentDidMount() {
-    const decksAge = localStorage.getItem("decksAge");
-    // check the time set in local storage
     if (!decksAge) {
+      // have to run the first time no matter what
       localStorage.setItem("decksAge", parseFloat(Date.now()) / 1000);
-      console.log("NO TIME DATA");
     }
-    // Test to see if more than two days have passed
-    if ((parseFloat(Date.now()) / 1000) - parseFloat(decksAge) >= 172800) {
-      console.log("TIME TO SCRAPE");
-      // if so, run worker to get new decks for the user
-      if (window.Worker) {
-        // this.worker = new FetchWorker();
-        // this.worker.postMessage("from Host");
-        // this.worker.addEventListener("message", this.onWorkerMessage);
-      }
-    }
-    // test worker
-    // this.worker = new FetchWorker();
-    // this.worker.postMessage("from Host");
-    // this.worker.addEventListener("message", this.onWorkerMessage);
+    this.dispatchWorker();
     // start listening the channel message
     global.ipcRenderer.send("readLog");
     global.ipcRenderer.on("loading-status", this.handleInitialMessage);
@@ -54,7 +42,7 @@ class Dashboard extends Component {
 
   componentWillUnmount() {
     // stop listening to worker
-    // this.worker.terminate();
+    this.worker.terminate();
     // stop listening the channel message
     global.ipcRenderer.removeListener(
       "loading-status",
@@ -62,6 +50,19 @@ class Dashboard extends Component {
     );
     global.ipcRenderer.removeListener("invalid-logfile", this.handleWrongFile);
   }
+
+  dispatchWorker = () => {
+    const decksAge = localStorage.getItem("decksAge");
+    const { playerCards, playerTokens } = this.state;
+
+    if (playerCards.length > 0 && playerTokens && window.Worker) {
+      console.log("TIME TO send worker");
+      // test worker
+      this.worker = new FetchWorker();
+      this.worker.postMessage({ playerCards, playerTokens, decksAge });
+      // this.worker.addEventListener("message", this.onWorkerMessage);
+    }
+  };
 
   handleInitialMessage = (event, arg) => {
     this.setState({

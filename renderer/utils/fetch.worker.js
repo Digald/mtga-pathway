@@ -1,9 +1,15 @@
 import axios from "axios";
 import cheerio from "cheerio";
 import scrapeDeckList from "./scrapeDeckList";
-import getMatches from './getMatches';
+import getMatches from "./getMatches";
 
 self.addEventListener("message", async event => {
+  const { decksAge, playerCards, playerTokens } = event.data;
+  // Test to see if more than two days have passed
+  if (parseFloat(Date.now()) / 1000 - parseFloat(decksAge) >= 172800) {
+  }
+
+  /*
   // initiate scrape (function 1)
   const allDecksData = [];
   const mainURL =
@@ -58,4 +64,5 @@ self.addEventListener("message", async event => {
     // still need to import player cards and tokens
     // const calculatedSingleDeck = getMatches(singleDeck, )
   });
+  */
 });
