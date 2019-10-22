@@ -34,7 +34,9 @@ module.exports = function(
         // Map through the new cards you want to translate
         const pullOutPlayersCards = fromPlayerCollection.map(
           async playerCard => {
+            console.log(playerCard);
             foundCard = allCards[playerCard.arena_id];
+            console.log(foundCard);
             if (foundCard) {
               foundCard.quantity = playerCard.quantity;
               return foundCard;
@@ -71,10 +73,13 @@ module.exports = function(
         await updateMatches();
 
         // Send status to make front end ready to use
+        // console.log(settings.get("mtgaCardData.playerMtgaCards"));
         mainWindow.webContents.send("loading-status", {
           isLoaded: true,
           isInvalidFile: false,
-          newCards: settings.get("dataToRender.newCards")
+          newCards: settings.get("dataToRender.newCards"),
+          playerCards: settings.get("mtgaCardData.playerMtgaCards"),
+          playerTokens: settings.get("mtgaCardData.playerTokens")
         });
 
         // Set app state to running

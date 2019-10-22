@@ -2,7 +2,7 @@
 const { join } = require("path");
 const os = require("os");
 const { format } = require("url");
-require('events').EventEmitter.defaultMaxListeners = 20;
+require("events").EventEmitter.defaultMaxListeners = 20;
 
 // Packages
 const { BrowserWindow, app, ipcMain, dialog } = require("electron");
@@ -11,8 +11,10 @@ const prepareNext = require("electron-next");
 const settings = require("electron-settings");
 const log = require("electron-log");
 const { autoUpdater } = require("electron-updater");
-const Sentry = require('@sentry/electron');
-Sentry.init({dsn: 'https://ef7e5dfa75a644c895fde8c124290f0e@sentry.io/1758855'});
+const Sentry = require("@sentry/electron");
+Sentry.init({
+  dsn: "https://ef7e5dfa75a644c895fde8c124290f0e@sentry.io/1758855"
+});
 
 // Debugging electron-updater by creating log files
 autoUpdater.logger = require("electron-log");
@@ -49,7 +51,7 @@ app.on("ready", async () => {
   // Try loading the main window
   try {
     mainWindow.loadURL(url);
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     Sentry.captureException(err);
   }
@@ -92,7 +94,7 @@ const logData = readLogFile(winAbsPath);
 
 /*--------------------------------------------------------
  * IPC FUNCTIONS
- *--------------------------------------------------------- 
+ *---------------------------------------------------------
  */
 // Called on startup. Tells frontend when data is ready to load or if there is an error with the log file
 ipcMain.on("readLog", async (event, arg) => {
@@ -119,7 +121,9 @@ ipcMain.on("readLog", async (event, arg) => {
   event.sender.send("loading-status", {
     isLoaded: true,
     isInvalidFile: false,
-    newCards: settings.get("dataToRender.newCards")
+    newCards: settings.get("dataToRender.newCards"),
+    playerCards: settings.get("mtgaCardData.playerMtgaCards"),
+    playerTokens: settings.get("mtgaCardData.playerTokens")
   });
   log.info("PROD: SHOULD HAVE SENT LOADING STATUS BACK");
 

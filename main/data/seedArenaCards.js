@@ -53,3 +53,5 @@ fs.writeFileSync(
   path.resolve(__dirname,`arenaCards.json`),
   JSON.stringify(arenaCards, null, 2)
 );
+
+console.log('All Done!')

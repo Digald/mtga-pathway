@@ -18,7 +18,9 @@ class Dashboard extends Component {
     isLoaded: false,
     isInvalidFile: false,
     message: "",
-    newCards: []
+    newCards: [],
+    playerCards: [],
+    playerTokens: []
   };
 
   onWorkerMessage = event => this.setState({ latestMessage: event.data });
@@ -27,43 +29,47 @@ class Dashboard extends Component {
     const decksAge = localStorage.getItem("decksAge");
     // check the time set in local storage
     if (!decksAge) {
-      localStorage.setItem("decksAge", Date.now() / 1000);
+      localStorage.setItem("decksAge", parseFloat(Date.now()) / 1000);
       console.log("NO TIME DATA");
     }
-
     // Test to see if more than two days have passed
-    if (Date.now() / 1000 - decksAge >= 172800) {
+    if ((parseFloat(Date.now()) / 1000) - parseFloat(decksAge) >= 172800) {
       console.log("TIME TO SCRAPE");
       // if so, run worker to get new decks for the user
       if (window.Worker) {
-        this.worker = new FetchWorker();
-        this.worker.postMessage("from Host");
-        this.worker.addEventListener("message", this.onWorkerMessage);
+        // this.worker = new FetchWorker();
+        // this.worker.postMessage("from Host");
+        // this.worker.addEventListener("message", this.onWorkerMessage);
       }
     }
     // test worker
-    this.worker = new FetchWorker();
-    this.worker.postMessage("from Host");
-    this.worker.addEventListener("message", this.onWorkerMessage);
+    // this.worker = new FetchWorker();
+    // this.worker.postMessage("from Host");
+    // this.worker.addEventListener("message", this.onWorkerMessage);
     // start listening the channel message
     global.ipcRenderer.send("readLog");
-    global.ipcRenderer.on("loading-status", this.handleMessage);
+    global.ipcRenderer.on("loading-status", this.handleInitialMessage);
     global.ipcRenderer.on("invalid-logfile", this.handleWrongFile);
   }
 
   componentWillUnmount() {
     // stop listening to worker
-    this.worker.terminate();
+    // this.worker.terminate();
     // stop listening the channel message
-    global.ipcRenderer.removeListener("loading-status", this.handleMessage);
+    global.ipcRenderer.removeListener(
+      "loading-status",
+      this.handleInitialMessage
+    );
     global.ipcRenderer.removeListener("invalid-logfile", this.handleWrongFile);
   }
 
-  handleMessage = (event, arg) => {
+  handleInitialMessage = (event, arg) => {
     this.setState({
       isLoaded: arg.isLoaded,
       isInvalidFile: arg.isInvalidFile,
-      newCards: arg.newCards
+      newCards: arg.newCards,
+      playerCards: arg.playerCards,
+      playerTokens: arg.playerTokens
     });
   };
 
@@ -75,6 +81,7 @@ class Dashboard extends Component {
   };
 
   render() {
+    console.log(this.state);
     const { isLoaded, isInvalidFile, newCards } = this.state;
     if (isInvalidFile) {
       return <FileError message={this.state.message} />;

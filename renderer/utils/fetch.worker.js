@@ -1,9 +1,11 @@
 import axios from "axios";
 import cheerio from "cheerio";
 import scrapeDeckList from "./scrapeDeckList";
+import getMatches from './getMatches';
 
 self.addEventListener("message", async event => {
   // initiate scrape (function 1)
+  const allDecksData = [];
   const mainURL =
     "https://cors-anywhere.herokuapp.com/https://www.mtggoldfish.com/metagame/arena_standard/full#paper";
   let response;
@@ -51,7 +53,9 @@ self.addEventListener("message", async event => {
     singleDeck.deckList = finishedSingleDeck;
     console.log('New Deck -------------')
     console.log(singleDeck);
-  });
 
-  // get matches for decks (function 3)
+    // get matches for decks (function 3)
+    // still need to import player cards and tokens
+    // const calculatedSingleDeck = getMatches(singleDeck, )
+  });
 });
