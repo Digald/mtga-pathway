@@ -20,7 +20,8 @@ class Dashboard extends Component {
     message: "",
     newCards: [],
     playerCards: [],
-    playerTokens: []
+    playerTokens: [],
+    isFirstTimeWorker: false
   };
 
   // onWorkerMessage = event => this.setState({ latestMessage: event.data });
@@ -32,6 +33,9 @@ class Dashboard extends Component {
     if (!decksAge) {
       // have to run the first time no matter what
       localStorage.setItem("decksAge", parseFloat(Date.now()) / 1000);
+      this.setState({
+        isFirstTimeWorker: True
+      });
     }
     this.dispatchWorker();
     // start listening the channel message
@@ -53,13 +57,13 @@ class Dashboard extends Component {
 
   dispatchWorker = () => {
     const decksAge = localStorage.getItem("decksAge");
-    const { playerCards, playerTokens } = this.state;
+    const { playerCards, playerTokens, isFirstTimeWorker } = this.state;
 
     if (playerCards.length > 0 && playerTokens && window.Worker) {
       console.log("TIME TO send worker");
       // test worker
       this.worker = new FetchWorker();
-      this.worker.postMessage({ playerCards, playerTokens, decksAge });
+      this.worker.postMessage({ playerCards, playerTokens, decksAge, isFirstTimeWorker });
       // this.worker.addEventListener("message", this.onWorkerMessage);
     }
   };

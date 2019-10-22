@@ -4,9 +4,9 @@ import scrapeDeckList from "./scrapeDeckList";
 import getMatches from "./getMatches";
 
 self.addEventListener("message", async event => {
-  const { decksAge, playerCards, playerTokens } = event.data;
-  // Test to see if more than two days have passed
-  if (parseFloat(Date.now()) / 1000 - parseFloat(decksAge) >= 172800) {
+  const { decksAge, playerCards, playerTokens, isFirstTimeWorker } = event.data;
+  // Test to see if more than a day has passed
+  if (parseFloat(Date.now()) / 1000 - parseFloat(decksAge) >= 86400) {
   }
 
   /*
