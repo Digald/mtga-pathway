@@ -6,10 +6,14 @@ import getMatches from "./getMatches";
 self.addEventListener("message", async event => {
   const { decksAge, playerCards, playerTokens, isFirstTimeWorker } = event.data;
   // Test to see if more than a day has passed
-  if (parseFloat(Date.now()) / 1000 - parseFloat(decksAge) >= 86400) {
+  if (
+    parseFloat(Date.now()) / 1000 - parseFloat(decksAge) < 86400 ||
+    !isFirstTimeWorker
+  ) {
+    // grab local storage decks
+    // const decks = localStorage.getItem('decks')
+    // const calculatedSingleDeck = getMatches(decks, playerCards, playerTokens);
   }
-
-  /*
   // initiate scrape (function 1)
   const allDecksData = [];
   const mainURL =
@@ -57,12 +61,14 @@ self.addEventListener("message", async event => {
     // decklist (function 2)
     const finishedSingleDeck = await scrapeDeckList(singleDeck);
     singleDeck.deckList = finishedSingleDeck;
-    console.log('New Deck -------------')
-    console.log(singleDeck);
 
     // get matches for decks (function 3)
-    // still need to import player cards and tokens
-    // const calculatedSingleDeck = getMatches(singleDeck, )
+    const calculatedSingleDeck = getMatches(
+      singleDeck,
+      playerCards,
+      playerTokens
+    );
+    console.log("New Deck -------------");
+    console.log(calculatedSingleDeck);
   });
-  */
 });

@@ -20,7 +20,6 @@ class Dashboard extends Component {
     message: "",
     newCards: [],
     playerCards: [],
-    playerTokens: [],
     isFirstTimeWorker: false
   };
 
@@ -30,7 +29,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    if (!decksAge) {
+    if (!localStorage.getItem('decksAge')) {
       // have to run the first time no matter what
       localStorage.setItem("decksAge", parseFloat(Date.now()) / 1000);
       this.setState({
