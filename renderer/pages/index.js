@@ -20,23 +20,29 @@ class Dashboard extends Component {
     message: "",
     newCards: [],
     playerCards: [],
-    isFirstTimeWorker: false
+    isFirstTimeWorker: false,
+    workerReady: false
   };
 
-  // onWorkerMessage = event => this.setState({ latestMessage: event.data });
-  componentDidUpdate() {
-    this.dispatchWorker();
-  }
+  // componentDidUpdate() {
+  //   this.dispatchWorker();
+  //   if (this.worker) {
+  //     this.worker.addEventListener("message", this.onWorkerMessage);
+  //   }
+  // }
 
   componentDidMount() {
-    if (!localStorage.getItem('decksAge')) {
+    if (!localStorage.getItem("decksAge")) {
       // have to run the first time no matter what
       localStorage.setItem("decksAge", parseFloat(Date.now()) / 1000);
       this.setState({
-        isFirstTimeWorker: True
+        isFirstTimeWorker: true
       });
     }
     this.dispatchWorker();
+    if (this.worker) {
+      this.worker.addEventListener("message", this.onWorkerMessage);
+    }
     // start listening the channel message
     global.ipcRenderer.send("readLog");
     global.ipcRenderer.on("loading-status", this.handleInitialMessage);
@@ -57,14 +63,28 @@ class Dashboard extends Component {
   dispatchWorker = () => {
     const decksAge = localStorage.getItem("decksAge");
     const { playerCards, playerTokens, isFirstTimeWorker } = this.state;
-
-    if (playerCards.length > 0 && playerTokens && window.Worker) {
+    if (typeof playerCards === "object" && playerTokens && window.Worker) {
       console.log("TIME TO send worker");
       // test worker
+      console.log(isFirstTimeWorker);
       this.worker = new FetchWorker();
-      this.worker.postMessage({ playerCards, playerTokens, decksAge, isFirstTimeWorker });
-      // this.worker.addEventListener("message", this.onWorkerMessage);
+      this.worker.postMessage({
+        playerCards,
+        playerTokens,
+        decksAge,
+        isFirstTimeWorker
+      });
     }
+  };
+
+  onWorkerMessage = event => {
+    if (!localStorage.getItem("decks")) {
+      localStorage.setItem("decks", JSON.stringify(event.data));
+      return;
+    }
+    console.log('on worker message');
+    console.log(event.data);
+    localStorage.setItem("decks", JSON.stringify(event.data));
   };
 
   handleInitialMessage = (event, arg) => {
@@ -73,7 +93,8 @@ class Dashboard extends Component {
       isInvalidFile: arg.isInvalidFile,
       newCards: arg.newCards,
       playerCards: arg.playerCards,
-      playerTokens: arg.playerTokens
+      playerTokens: arg.playerTokens,
+      workerReady: true
     });
   };
 
@@ -85,10 +106,13 @@ class Dashboard extends Component {
   };
 
   render() {
-    console.log(this.state);
-    const { isLoaded, isInvalidFile, newCards } = this.state;
+    const { isLoaded, isInvalidFile, newCards, workerReady } = this.state;
     if (isInvalidFile) {
       return <FileError message={this.state.message} />;
+    }
+    if (workerReady) {
+      this.dispatchWorker();
+      this.worker.addEventListener("message", this.onWorkerMessage);
     }
     if (!isLoaded) {
       return (

@@ -57,7 +57,7 @@ app.on("ready", async () => {
   }
 
   // In the case that dev tools need to be activated by force, uncomment the following:
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools();
 
   // To use react dev tools, uncomment the following. Be sure to update the path when new versions come out.
   // BrowserWindow.addDevToolsExtension(

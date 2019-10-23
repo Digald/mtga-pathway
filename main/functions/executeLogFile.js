@@ -42,7 +42,9 @@ module.exports = async function(logData, mainWindow) {
       mainWindow.webContents.send("loading-status", {
         isLoaded: true,
         isInvalidFile: false,
-        newCards: settings.get("dataToRender.newCards")
+        newCards: settings.get("dataToRender.newCards"),
+        playerCards: settings.get("mtgaCardData.playerMtgaCards"),
+        playerTokens: settings.get("mtgaCardData.playerTokens")
       });
 
       // Set app state to running

@@ -6,16 +6,19 @@ import getMatches from "./getMatches";
 self.addEventListener("message", async event => {
   const { decksAge, playerCards, playerTokens, isFirstTimeWorker } = event.data;
   // Test to see if more than a day has passed
-  if (
-    parseFloat(Date.now()) / 1000 - parseFloat(decksAge) < 86400 ||
-    !isFirstTimeWorker
-  ) {
-    // grab local storage decks
-    // const decks = localStorage.getItem('decks')
-    // const calculatedSingleDeck = getMatches(decks, playerCards, playerTokens);
-  }
+  // if (
+  //   parseFloat(Date.now()) / 1000 - parseFloat(decksAge) < 86400 ||
+  //   !isFirstTimeWorker
+  // ) {
+  //   console.log('just matches nothing else');
+  //   self.postMessage('just matches nothing else');
+  //   return;
+  //   // grab local storage decks
+  //   // const decks = localStorage.getItem('decks')
+  //   // const calculatedSingleDeck = getMatches(decks, playerCards, playerTokens);
+  // }
   // initiate scrape (function 1)
-  const allDecksData = [];
+  // const allDecksData = [];
   const mainURL =
     "https://cors-anywhere.herokuapp.com/https://www.mtggoldfish.com/metagame/arena_standard/full#paper";
   let response;
@@ -25,7 +28,7 @@ self.addEventListener("message", async event => {
     console.log(err);
   }
   const $ = await cheerio.load(response.data);
-  $(".archetype-tile").each(async function(i, elem) {
+  const allDecksData = $(".archetype-tile").map(async function(i, elem) {
     let singleDeck = {};
 
     // name
@@ -69,6 +72,9 @@ self.addEventListener("message", async event => {
       playerTokens
     );
     console.log("New Deck -------------");
-    console.log(calculatedSingleDeck);
+    return calculatedSingleDeck;
+  }).get();
+  Promise.all(allDecksData).then(vals => {
+    self.postMessage(vals);
   });
 });
