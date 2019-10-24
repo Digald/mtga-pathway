@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 
 class LoadingPage extends Component {
-
   render() {
+    console.log(this.props);
     return (
       <div className="LoadingPage">
-        <h2 className="LoadingPage__title">LOADING...</h2>
+        <h1 className="LoadingPage__title1">MTGA PATHWAY</h1>
+        <h2 className="LoadingPage__title2">
+          {this.props.isLoaded
+            ? "LOADING CARD DATA..."
+            : "CHECKING DECKS..."}
+        </h2>
         <div className="lds-dual-ring" />
-        <p>Is this your first time loading the app?</p>
-        <p>Putting together data may take a minute.</p>
         <style jsx>{`
           .LoadingPage {
             background-color: #ff3562;
@@ -20,7 +23,7 @@ class LoadingPage extends Component {
             height: 100%;
           }
 
-          .LoadingPage__title {
+          .LoadingPage__title2 {
             font-size: 24px;
             letter-spacing: 0.23em;
           }

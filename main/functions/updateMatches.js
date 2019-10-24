@@ -6,7 +6,7 @@ const getMatches = require("./getMatches");
 
 module.exports = function() {
   try {
-    const arrayOfDecksToUpdate = settings.get("mtgaCardData.minedDecks");
+    const arrayOfDecksToUpdate = settings.get("mtgaCardData.savedDecks");
     if (!arrayOfDecksToUpdate) return;
     arrayOfDecksToUpdate.forEach(singleDeck => {
       getMatches(singleDeck);

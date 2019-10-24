@@ -16,6 +16,7 @@ import FetchWorker from "../utils/fetch.worker";
 class Dashboard extends Component {
   state = {
     isLoaded: false,
+    hasDecks: false,
     isInvalidFile: false,
     message: "",
     newCards: [],
@@ -23,13 +24,6 @@ class Dashboard extends Component {
     isFirstTimeWorker: false,
     workerReady: false
   };
-
-  // componentDidUpdate() {
-  //   this.dispatchWorker();
-  //   if (this.worker) {
-  //     this.worker.addEventListener("message", this.onWorkerMessage);
-  //   }
-  // }
 
   componentDidMount() {
     if (!localStorage.getItem("decksAge")) {
@@ -39,10 +33,7 @@ class Dashboard extends Component {
         isFirstTimeWorker: true
       });
     }
-    this.dispatchWorker();
-    if (this.worker) {
-      this.worker.addEventListener("message", this.onWorkerMessage);
-    }
+
     // start listening the channel message
     global.ipcRenderer.send("readLog");
     global.ipcRenderer.on("loading-status", this.handleInitialMessage);
@@ -62,17 +53,16 @@ class Dashboard extends Component {
 
   dispatchWorker = () => {
     const decksAge = localStorage.getItem("decksAge");
+    const decks = JSON.parse(localStorage.getItem("decks"));
     const { playerCards, playerTokens, isFirstTimeWorker } = this.state;
     if (typeof playerCards === "object" && playerTokens && window.Worker) {
-      console.log("TIME TO send worker");
-      // test worker
-      console.log(isFirstTimeWorker);
       this.worker = new FetchWorker();
       this.worker.postMessage({
         playerCards,
         playerTokens,
         decksAge,
-        isFirstTimeWorker
+        isFirstTimeWorker,
+        decks
       });
     }
   };
@@ -80,11 +70,15 @@ class Dashboard extends Component {
   onWorkerMessage = event => {
     if (!localStorage.getItem("decks")) {
       localStorage.setItem("decks", JSON.stringify(event.data));
+      this.setState({
+        hasDecks: true
+      });
       return;
     }
-    console.log('on worker message');
-    console.log(event.data);
     localStorage.setItem("decks", JSON.stringify(event.data));
+    this.setState({
+      hasDecks: true
+    });
   };
 
   handleInitialMessage = (event, arg) => {
@@ -106,18 +100,24 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { isLoaded, isInvalidFile, newCards, workerReady } = this.state;
+    const {
+      isLoaded,
+      hasDecks,
+      isInvalidFile,
+      newCards,
+      workerReady
+    } = this.state;
     if (isInvalidFile) {
       return <FileError message={this.state.message} />;
     }
-    if (workerReady) {
+    if (workerReady && !hasDecks) {
       this.dispatchWorker();
       this.worker.addEventListener("message", this.onWorkerMessage);
     }
-    if (!isLoaded) {
+    if (!isLoaded || !hasDecks) {
       return (
         <Layout>
-          <LoadingPage />
+          <LoadingPage status={{ isLoaded, hasDecks }} />
         </Layout>
       );
     }

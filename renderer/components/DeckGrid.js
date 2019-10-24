@@ -11,7 +11,8 @@ class DeckGrid extends Component {
 
   componentDidMount() {
     const res = global.ipcRenderer.sendSync("get-initialData-DeckGrid", "");
-    const { decksList, savedDecks } = res;
+    const {savedDecks } = res;
+    const decksList = JSON.parse(localStorage.getItem('decks'))
     if (decksList) {
       this.setState({
         decksList: decksList
