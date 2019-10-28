@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 class LoadingPage extends Component {
   render() {
-    console.log(this.props);
     return (
       <div className="LoadingPage">
         <h1 className="LoadingPage__title1">MTGA PATHWAY</h1>

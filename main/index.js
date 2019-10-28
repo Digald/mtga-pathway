@@ -73,7 +73,6 @@ app.on("window-all-closed", () => {
 // import other functions
 const readLogFile = require("./functions/readLogFile.js");
 const executeLogFile = require("./functions/executeLogFile.js");
-const initiateScrape = require("./functions/initiateScrape.js");
 const openDialog = require("./functions/openDialog.js");
 
 // Set user path or get an already existing path from electron-settings
@@ -135,10 +134,6 @@ ipcMain.on("openDialog", (event, arg) => {
   openDialog(mainWindow);
 });
 
-ipcMain.on("grab-decks", async function(event, arg) {
-  await initiateScrape(event);
-});
-
 ipcMain.on("delete-saved-deck", (event, arg) => {
   if (arg === "delete-saved-deck") {
     event.sender.send(
@@ -165,7 +160,6 @@ ipcMain.on("get-initialData-DeckGrid", (event, arg) => {
 });
 
 ipcMain.on("get-newCards", (event, arg) => {
-  // event.sender.send("res-newCards", settings.get("dataToRender.newCards"));
   event.returnValue = settings.get("dataToRender.newCards");
 });
 
@@ -225,10 +219,6 @@ autoUpdater.on("error", err => {
     message: `An error occurred when checking for, downloading, or installing updates.`,
     detail: `${err.toString()}`
   };
-
-  // dialog.showMessageBox(null, options, response => {
-  //   console.log(response);
-  // });
 });
 
 autoUpdater.on("download-progress", progressObj => {

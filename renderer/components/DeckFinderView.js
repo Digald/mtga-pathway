@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 // Components
-import ScrapeButton from "./ScrapeButton";
 import DeckGrid from "./DeckGrid";
 import DeckFilter from "./DeckFilter";
 
@@ -9,10 +8,6 @@ class DeckFinderView extends Component {
     return (
       <div className="DeckFinderView">
         <div className="DeckFinderView__container">
-          {/* <div className="DeckFinderView__container__btnContainer">
-            
-            <ScrapeButton />
-          </div> */}
           <DeckFilter />
           <p className="DeckFinderView__container__btnContainer__text">
               Note: Searching for new decks will replace currently displayed decks. Be
@@ -35,6 +30,7 @@ class DeckFinderView extends Component {
           }
 
           .DeckFinderView__container__btnContainer__text {
+            font-weight: bold;
             text-align: center;
             padding: 5px;
           }
