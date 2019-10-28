@@ -9,14 +9,15 @@ class DeckFinderView extends Component {
     return (
       <div className="DeckFinderView">
         <div className="DeckFinderView__container">
-          <div className="DeckFinderView__container__btnContainer">
-            <p className="DeckFinderView__container__btnContainer__text">
+          {/* <div className="DeckFinderView__container__btnContainer">
+            
+            <ScrapeButton />
+          </div> */}
+          <DeckFilter />
+          <p className="DeckFinderView__container__btnContainer__text">
               Note: Searching for new decks will replace currently displayed decks. Be
               sure to save those that you want to refernce later.
             </p>
-            <ScrapeButton />
-          </div>
-          <DeckFilter />
         </div>
         <DeckGrid fromPage="DeckFinderView" />
         <style jsx>{`
@@ -24,13 +25,6 @@ class DeckFinderView extends Component {
             display: grid;
             grid-template-columns: auto;
             grid-template-rows: auto auto;
-          }
-
-          .DeckFinderView__container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto;
-            padding: 2rem;
           }
 
           .DeckFinderView__container__btnContainer {
