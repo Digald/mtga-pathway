@@ -12,16 +12,17 @@ module.exports = async function(singleDeck) {
   let response;
   const deckList = [];
   try {
-    response = await axios.get(singleDeck.url);
-    const $ =  await cheerio.load(response.data);
+    response = await axios({
+      method: "get",
+      url: singleDeck.url,
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+    });
+    const $ = await cheerio.load(response.data);
     // deckList containers list of objects for each card, cardType is where the card belongs in the deck
     let cardType = "";
 
     // Loop through each line in the decklist
-    $(" #tab-arena .deck-view-deck-table tbody tr").each(function(
-      i,
-      elem
-    ) {
+    $(" #tab-arena .deck-view-deck-table tbody tr").each(function(i, elem) {
       const singleCardData = {};
       if (
         $(this)

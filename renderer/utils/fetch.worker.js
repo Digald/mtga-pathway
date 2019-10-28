@@ -17,6 +17,7 @@ self.addEventListener("message", async event => {
       !isFirstTimeWorker) ||
     decks
   ) {
+    console.log("Updating decks");
     // grab local storage decks
     const allDecksData = decks.map(singleDeck => {
       const calculatedSingleDeck = getMatches(
@@ -34,7 +35,11 @@ self.addEventListener("message", async event => {
     "https://cors-anywhere.herokuapp.com/https://www.mtggoldfish.com/metagame/arena_standard/full#paper";
   let response;
   try {
-    response = await axios.get(mainURL);
+    response = await axios({
+      method: "get",
+      url: mainURL,
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+    });
   } catch (err) {
     console.log(err);
   }

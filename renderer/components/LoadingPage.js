@@ -8,7 +8,7 @@ class LoadingPage extends Component {
         <h2 className="LoadingPage__title2">
           {this.props.isLoaded
             ? "LOADING CARD DATA..."
-            : "CHECKING DECKS..."}
+            : "LOADING YOUR DECKS..."}
         </h2>
         <div className="lds-dual-ring" />
         <style jsx>{`
