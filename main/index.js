@@ -5,12 +5,13 @@ const { format } = require("url");
 require("events").EventEmitter.defaultMaxListeners = 20;
 
 // Packages
-const { BrowserWindow, app, ipcMain, dialog } = require("electron");
+const { BrowserWindow, app, ipcMain, dialog, Menu } = require("electron");
 const isDev = require("electron-is-dev");
 const prepareNext = require("electron-next");
 const settings = require("electron-settings");
 const log = require("electron-log");
 const { autoUpdater } = require("electron-updater");
+const template = require("./functions/menuTemplate");
 const Sentry = require("@sentry/electron");
 Sentry.init({
   dsn: "https://ef7e5dfa75a644c895fde8c124290f0e@sentry.io/1758855"
@@ -56,10 +57,17 @@ app.on("ready", async () => {
     Sentry.captureException(err);
   }
 
-  // In the case that dev tools need to be activated by force, uncomment the following:
-  mainWindow.webContents.openDevTools();
+  // Build Electron Menu
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+  /*
+  In the case that dev tools need to be activated by force, uncomment the following:
+  */
+  // mainWindow.webContents.openDevTools();
 
-  // To use react dev tools, uncomment the following. Be sure to update the path when new versions come out.
+  /*
+  To use react dev tools, uncomment the following. Be sure to update the path when new versions come out.
+  */
   // BrowserWindow.addDevToolsExtension(
   //   "C:\\Users\\Mark\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.0.6_0"
   // );

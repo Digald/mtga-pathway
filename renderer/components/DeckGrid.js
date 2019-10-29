@@ -96,7 +96,6 @@ class DeckGrid extends Component {
     return (
       <div className="DeckGrid">
         {displayDecks.map((deck, i) => {
-          console.log(deck.deckList.length);
           // Find decks that includes selected colors
           if (!restrictColors) {
             const toDisplay = filteredColors.map(mana => {
@@ -109,7 +108,6 @@ class DeckGrid extends Component {
               return "";
             }
             if (deck.deckList.length < 1) {
-              console.log(deck);
               return "";
             }
             return <SingleDeck key={i} fromPage={fromPage} deck={deck} />;
@@ -129,7 +127,6 @@ class DeckGrid extends Component {
             return "";
           }
           if (deck.deckList.length < 1) {
-            console.log(deck);
             return "";
           }
           return <SingleDeck key={i} fromPage={fromPage} deck={deck} />;

@@ -11,6 +11,7 @@ class LoadingPage extends Component {
             : "LOADING YOUR DECKS..."}
         </h2>
         <div className="lds-dual-ring" />
+        <p>We're working hard in the background. Please wait a moment.</p>
         <style jsx>{`
           .LoadingPage {
             background-color: #ff3562;
@@ -22,7 +23,7 @@ class LoadingPage extends Component {
             height: 100%;
           }
 
-          .LoadingPage__title2 {
+          .LoadingPage__title1 {
             font-size: 24px;
             letter-spacing: 0.23em;
           }

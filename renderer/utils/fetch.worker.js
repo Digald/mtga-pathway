@@ -17,7 +17,7 @@ self.addEventListener("message", async event => {
       !isFirstTimeWorker) ||
     decks
   ) {
-    console.log("Updating decks");
+    console.log("Updating Decks");
     // grab local storage decks
     const allDecksData = decks.map(singleDeck => {
       const calculatedSingleDeck = getMatches(
@@ -30,6 +30,7 @@ self.addEventListener("message", async event => {
     self.postMessage(allDecksData);
     return;
   }
+  console.log('Fetching Decks')
   // initiate scrape (function 1)
   const mainURL =
     "https://cors-anywhere.herokuapp.com/https://www.mtggoldfish.com/metagame/arena_standard/full#paper";
