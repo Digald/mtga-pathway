@@ -52,7 +52,7 @@ module.exports = async function(singleDeck) {
       singleCardData.image = $(this)
         .find(".deck-col-card a")
         .data("full-image");
-
+ 
       // Mana cost; gonna have to loop
       const cardCost = [];
       $(this)

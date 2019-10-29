@@ -23,17 +23,12 @@ class DeckGrid extends Component {
         savedDecks: savedDecks
       });
     }
-    global.ipcRenderer.on("grab-decks-response", this.updateDeckList);
     global.ipcRenderer.on("delete-saved-deck", this.updatedSavedDecks);
     global.ipcRenderer.on("get-filter-color", this.filterColors);
     global.ipcRenderer.on("get-restrict-color", this.restrictColors);
   }
 
   componentWillUnmount() {
-    global.ipcRenderer.removeListener(
-      "grab-decks-response",
-      this.updateDeckList
-    );
     global.ipcRenderer.removeListener(
       "delete-saved-deck",
       this.updatedSavedDecks
@@ -44,13 +39,6 @@ class DeckGrid extends Component {
       this.restrictColors
     );
   }
-
-  updateDeckList = (event, arg) => {
-    this.setState({
-      decksList: arg
-    });
-  };
-
   updatedSavedDecks = (event, arg) => {
     this.setState({
       savedDecks: arg
@@ -108,6 +96,7 @@ class DeckGrid extends Component {
     return (
       <div className="DeckGrid">
         {displayDecks.map((deck, i) => {
+          console.log(deck.deckList.length);
           // Find decks that includes selected colors
           if (!restrictColors) {
             const toDisplay = filteredColors.map(mana => {
@@ -117,6 +106,10 @@ class DeckGrid extends Component {
               return false;
             });
             if (toDisplay.includes(false)) {
+              return "";
+            }
+            if (deck.deckList.length < 1) {
+              console.log(deck);
               return "";
             }
             return <SingleDeck key={i} fromPage={fromPage} deck={deck} />;
@@ -133,6 +126,10 @@ class DeckGrid extends Component {
             return false;
           });
           if (toDisplay.includes(false)) {
+            return "";
+          }
+          if (deck.deckList.length < 1) {
+            console.log(deck);
             return "";
           }
           return <SingleDeck key={i} fromPage={fromPage} deck={deck} />;

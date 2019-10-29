@@ -87,8 +87,7 @@ class SingleDeck extends Component {
       resizeTitle = "resizeTitle";
     }
     const image =
-      this.props.deck.deckList[0].image ||
-      "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Magic_the_gathering-card_back.jpg/220px-Magic_the_gathering-card_back.jpg";
+      this.props.deck.deckList[0].image
     const background = {
       backgroundImage: `url(${image})`
     };
