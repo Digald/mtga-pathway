@@ -15,7 +15,6 @@ class CardData extends Component {
                   card.playerHas !== card.quantity ? "incomplete" : ""
                 }`}
               >
-                {/* <img src={card.image} alt="Preview Not Available" /> */}
                 <p className="CardData__card__attr">{card.name}</p>
                 {card.mana_cost.map((mana, index) => {
                   return (

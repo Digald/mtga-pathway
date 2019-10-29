@@ -82,18 +82,23 @@ class SingleDeck extends Component {
       );
     }
     const { name, colors } = this.props.deck;
-    let resizeTitle = '';
+    let resizeTitle = "";
     if (name.length > 20) {
-      resizeTitle = 'resizeTitle'
+      resizeTitle = "resizeTitle";
     }
-    const image = this.props.deck.deckList[0].image;
+    const image =
+      this.props.deck.deckList[0].image ||
+      "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Magic_the_gathering-card_back.jpg/220px-Magic_the_gathering-card_back.jpg";
     const background = {
       backgroundImage: `url(${image})`
     };
     return (
       <div className="SingleDeck" style={background}>
         <Link href="/decklist">
-          <a className={`SingleDeck__title ${resizeTitle}`} onClick={() => this.checkClick()}>
+          <a
+            className={`SingleDeck__title ${resizeTitle}`}
+            onClick={() => this.checkClick()}
+          >
             <p>{name}</p>
           </a>
         </Link>
