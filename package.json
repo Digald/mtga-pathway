@@ -43,7 +43,7 @@
     "@sentry/browser": "^5.7.0",
     "@sentry/electron": "0.17.4",
     "@zeit/next-workers": "^1.0.1-canary.1",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.3",
     "electron-is-dev": "^1.0.1",
     "electron-log": "^3.0.7",
